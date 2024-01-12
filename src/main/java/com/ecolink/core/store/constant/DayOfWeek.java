@@ -3,7 +3,7 @@ package com.ecolink.core.store.constant;
 import lombok.Getter;
 
 @Getter
-public enum Week {
+public enum DayOfWeek {
 
 	SUN("일"),
 	MON("월"),
@@ -15,7 +15,7 @@ public enum Week {
 
 	private final String name;
 
-	Week(String name) {
+	DayOfWeek(String name) {
 		this.name = name;
 	}
 

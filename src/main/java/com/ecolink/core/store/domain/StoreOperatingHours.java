@@ -3,7 +3,7 @@ package com.ecolink.core.store.domain;
 import java.time.LocalTime;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
-import com.ecolink.core.store.constant.Week;
+import com.ecolink.core.store.constant.DayOfWeek;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,7 +27,7 @@ public class StoreOperatingHours extends BaseTimeEntity {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private Week week;
+	private DayOfWeek dayOfWeek;
 
 	@NotNull
 	private LocalTime startTime;
