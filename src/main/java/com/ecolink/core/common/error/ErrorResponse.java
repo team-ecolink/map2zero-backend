@@ -16,4 +16,17 @@ public class ErrorResponse<T> {
 		this.code = code;
 		this.message = message;
 	}
+
+	public static ErrorResponse error(String code, String message) {
+		return error(code, message);
+	}
+
+	public static <T>ErrorResponse error(String code, String message, T data) {
+		return ErrorResponse.builder()
+			.code(code)
+			.data(data)
+			.message(message)
+			.build();
+	}
+
 }

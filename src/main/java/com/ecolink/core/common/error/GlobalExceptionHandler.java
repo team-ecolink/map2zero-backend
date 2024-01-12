@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.ecolink.core.common.response.ResponseUtils;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,17 +35,17 @@ public class GlobalExceptionHandler {
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("errors", errors);
-		return ResponseUtils.error(ErrorCode.INVALID_TYPE_VALUE.getCode(), ErrorCode.INVALID_TYPE_VALUE.getMessage(), data);
+		return ErrorResponse.error(ErrorCode.INVALID_TYPE_VALUE.getCode(), ErrorCode.INVALID_TYPE_VALUE.getMessage(), data);
 	}
 
 	/**
 	 * 커스텀 예외
 	 */
 	@ExceptionHandler(value = GeneralException.class)
-	public ResponseEntity<ErrorResponse> handleHummingbirdException(GeneralException e) {
+	public ResponseEntity<ErrorResponse> handleCustomException(GeneralException e) {
 		ErrorCode errorCode = e.getErrorCode();
 		return ResponseEntity.status(errorCode.getHttpStatus())
-			.body(ResponseUtils.error(errorCode.getCode(), errorCode.getMessage()));
+			.body(ErrorResponse.error(errorCode.getCode(), errorCode.getMessage()));
 	}
 }
 
