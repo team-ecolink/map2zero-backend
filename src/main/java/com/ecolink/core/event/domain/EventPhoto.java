@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -26,9 +28,11 @@ public class EventPhoto extends BaseTimeEntity {
 	@NotNull
 	private Integer givenOrder;
 
-	@Valid
 	@NotNull
-	@Embedded
 	private ImageFile file;
+
+	@ManyToOne
+	@JoinColumn(name = "event_id")
+	private Event event;
 
 }
