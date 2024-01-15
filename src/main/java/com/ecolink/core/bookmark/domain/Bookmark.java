@@ -2,6 +2,7 @@ package com.ecolink.core.bookmark.domain;
 
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.store.domain.Store;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,8 +30,8 @@ public class Bookmark extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Avatar avatar;
 
-	// @NotNull
-	// @JoinColumn(name = "store_id")
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// private Store store;
+	@NotNull
+	@JoinColumn(name = "store_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Store store;
 }

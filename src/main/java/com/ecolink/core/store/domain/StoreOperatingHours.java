@@ -8,9 +8,12 @@ import com.ecolink.core.store.constant.DayOfWeek;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,9 +44,9 @@ public class StoreOperatingHours extends BaseTimeEntity {
 
 	private boolean regularHoliday;
 
-	// @NotNull
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "store_id")
-	// private Store store;
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "store_id")
+	private Store store;
 
 }
