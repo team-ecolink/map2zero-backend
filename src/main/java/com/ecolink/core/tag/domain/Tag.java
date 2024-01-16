@@ -1,8 +1,11 @@
 package com.ecolink.core.tag.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.tag.constant.TagCategory;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +29,7 @@ public class Tag extends BaseTimeEntity {
 	private String color;
 
 	@NotNull
-	private String category;
+	@Enumerated(EnumType.STRING)
+	private TagCategory category;
 
 }

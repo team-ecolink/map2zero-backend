@@ -2,14 +2,20 @@ package com.ecolink.core.store.domain;
 
 import java.math.BigDecimal;
 
-import org.hibernate.annotations.ColumnDefault;
-
+import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.manager.domain.StoreRegistration;
 
+import jakarta.annotation.Nullable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,17 +50,10 @@ public class Store extends BaseTimeEntity {
 
 	private double totalScore;
 
+	@Valid
 	@NotNull
-	private String province;
-
-	@NotNull
-	private String city;
-
-	@NotNull
-	private String streetName;
-
-	@NotNull
-	private String detailAddress;
+	@Embedded
+	private Address address;
 
 	@NotNull
 	private BigDecimal x;
@@ -62,5 +61,9 @@ public class Store extends BaseTimeEntity {
 	@NotNull
 	private BigDecimal y;
 
+	@Nullable
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "store_registration_id")
+	private StoreRegistration storeRegistration;
 
 }
