@@ -1,19 +1,17 @@
 package com.ecolink.core.common.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class ApiResponse<T> {
 	private final Integer status;
 	private final String message;
 	private final T data;
 
-	private ApiResponse(final Integer status, final String message) {
+	private ApiResponse(Integer status, String message, T data) {
 		this.status = status;
 		this.message = message;
-		this.data = null;
+		this.data = data;
 	}
 
 	public static <T> ApiResponse<T> of(Integer status, String message, T data) {
