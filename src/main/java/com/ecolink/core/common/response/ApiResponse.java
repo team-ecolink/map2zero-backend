@@ -1,32 +1,22 @@
 package com.ecolink.core.common.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Builder
 @Getter
 public class ApiResponse<T> {
-	private Integer status;
-	private String message;
-	private T data;
+	private final Integer status;
+	private final String message;
+	private final T data;
 
-	public ApiResponse(final Integer status, final String message){
+	private ApiResponse(final Integer status, final String message) {
 		this.status = status;
 		this.message = message;
 		this.data = null;
 	}
 
-	public static<T> ApiResponse<T> of(final BaseResponseType response){
-		return of(response, null);
-	}
-
-	public static<T> ApiResponse<T> of(final BaseResponseType response, final T t){
-		return ApiResponse.<T>builder()
-			.status(response.getCode())
-			.message(response.getMessage())
-			.data(t)
-			.build();
+	public static <T> ApiResponse<T> of(Integer status, String message, T data) {
+		return new ApiResponse<>(status, message, data);
 	}
 }
