@@ -63,7 +63,7 @@ public class Store extends BaseTimeEntity {
 
 	@Nullable
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "photo_id")
-	private StoreRegistration photo;
+	@JoinColumn(name = "store_registration_id")
+	private StoreRegistration storeRegistration;
 
 }
