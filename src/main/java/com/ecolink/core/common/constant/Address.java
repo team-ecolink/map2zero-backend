@@ -11,9 +11,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Embeddable
 public class Address {
 

@@ -20,8 +20,8 @@ public class HealthCheckController {
 	private final Environment environment;
 
 	@Tag(name = "Health check")
-	@GetMapping("/health")
 	@Operation(summary = "서버 Health Check API", description = "현재 서버가 정상적으로 기동이 된 상태인지 검사하는 API")
+	@GetMapping("/health")
 	public HealthCheckResponse healthCheck() {
 		return HealthCheckResponse.ok(Arrays.asList(environment.getActiveProfiles()));
 	}
