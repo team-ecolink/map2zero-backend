@@ -2,6 +2,7 @@ package com.ecolink.core.common.error;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ecolink.core.common.response.ErrorResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,18 +26,18 @@ public class GlobalExceptionHandler {
 		Map<String, String> errors = new HashMap<>();
 
 		BindingResult bindingResult = e.getBindingResult();
-		for(FieldError er : bindingResult.getFieldErrors()) {
-			if(errors.containsKey(er.getField())) {
+		for (FieldError er : bindingResult.getFieldErrors()) {
+			if (errors.containsKey(er.getField())) {
 				errors.put(er.getField(), errors.get(er.getField()) + " " + er.getDefaultMessage());
-			}
-			else {
+			} else {
 				errors.put(er.getField(), er.getDefaultMessage());
 			}
 		}
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("errors", errors);
-		return ErrorResponse.error(ErrorCode.INVALID_TYPE_VALUE.getCode(), ErrorCode.INVALID_TYPE_VALUE.getMessage(), data);
+		return ErrorResponse.error(data, ErrorCode.INVALID_TYPE_VALUE.getCode(),
+			ErrorCode.INVALID_TYPE_VALUE.getMessage());
 	}
 
 	/**
