@@ -3,4 +3,5 @@ swagger:
     sign-in: '01. 로그인'
     sign-up: '02. 회원가입'
     search: '03. 검색페이지'
+    my-page: '04. 마이페이지'
 
