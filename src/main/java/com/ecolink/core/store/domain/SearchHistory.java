@@ -30,4 +30,9 @@ public class SearchHistory extends BaseTimeEntity {
 	@JoinColumn(name = "avatar_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Avatar avatar;
+
+	public SearchHistory(String word, Avatar avatar) {
+		this.word = word;
+		this.avatar = avatar;
+	}
 }
