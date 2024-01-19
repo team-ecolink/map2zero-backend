@@ -7,13 +7,13 @@ import lombok.Getter;
 @Getter
 public class ErrorResponse<T> {
 
-	private final T data;
+	private final Map<String, T> data;
 
 	private final String code;
 
 	private final String message;
 
-	private ErrorResponse(T data, String code, String message) {
+	private ErrorResponse(Map<String, T> data, String code, String message) {
 		this.data = data;
 		this.code = code;
 		this.message = message;
@@ -23,7 +23,7 @@ public class ErrorResponse<T> {
 		return error(Map.of(), code, message);
 	}
 
-	public static <T> ErrorResponse<T> error(T data, String code, String message) {
+	public static <T> ErrorResponse<T> error(Map<String, T> data, String code, String message) {
 		return new ErrorResponse<>(data, code, message);
 	}
 
