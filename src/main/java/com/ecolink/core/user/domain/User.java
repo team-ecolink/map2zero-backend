@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.user.constant.Password;
+import com.ecolink.core.user.constant.RoleType;
 import com.ecolink.core.user.constant.UserType;
 
 import jakarta.persistence.Column;
@@ -25,8 +26,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-// TODO MySQL 전환시 테이블명 `user`로 원복해야함
-@Entity(name = "users")
+@Entity
 public class User extends BaseTimeEntity {
 
 	@Id
@@ -77,4 +77,12 @@ public class User extends BaseTimeEntity {
 	@JoinColumn(name = "role_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Role role;
+
+	/**
+	 * 영속성 컨텍스트에 Role 이 없을 경우 FetchType.LAZY 옵션 때문에 SELECT 쿼리가 나가게됨
+	 */
+	public boolean isManager() {
+		return RoleType.MANAGER.equals(this.role.getType());
+	}
+
 }
