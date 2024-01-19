@@ -37,6 +37,6 @@ public class StoreSearchController {
 	public ResponseEntity<List<StoreSearchDto>> searchStores(
 		@ParameterObject @Valid StoreSearchRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return new ResponseEntity<>(storeSearchService.searchStores(request, 1L), HttpStatus.OK);
+		return new ResponseEntity<>(storeSearchService.searchStores(request, principal.getAvatarId()), HttpStatus.OK);
 	}
 }
