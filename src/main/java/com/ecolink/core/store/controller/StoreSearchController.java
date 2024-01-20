@@ -5,6 +5,7 @@ import java.util.List;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +22,24 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Store search", description = "매장 검색 관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/stores")
+@RequestMapping("${api.prefix}/stores")
 public class StoreSearchController {
 
 	private final StoreSearchService storeSearchService;
 
 	@Tag(name = "Store search")
 	@Operation(summary = "매장 검색 조회 API - 인증 선택",
-		description = "검색어가 포함된 매장을 조회하는 API",
+		description = "검색어가 포함된 매장을 조회하는 API - 인증 선택",
 		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/search")
 	public ResponseEntity<List<StoreSearchDto>> searchStores(
 		@ParameterObject @Valid StoreSearchRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return new ResponseEntity<>(storeSearchService.searchStores(request, principal.getAvatarId()), HttpStatus.OK);
+		return new ResponseEntity<>(storeSearchService.searchStores(request, principal.getAvatarId(),
+			request.getCursorId(), request.getPageSize()), HttpStatus.OK);
 	}
+
 }

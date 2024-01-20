@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,6 @@ import com.ecolink.core.store.event.SaveSearchHistoryEvent;
 import com.ecolink.core.store.repository.StoreJpaRepository;
 import com.ecolink.core.store.repository.StorePhotoRepository;
 import com.ecolink.core.store.repository.StoreProductJpaRepository;
-import com.ecolink.core.store.repository.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class StoreSearchService {
 
-	private final StoreRepository storeRepository;
 	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductJpaRepository storeProductJpaRepository;
 	private final StorePhotoRepository storePhotoRepository;
@@ -38,22 +37,23 @@ public class StoreSearchService {
 	private final ApplicationEventPublisher eventPublisher;
 
 	@Transactional
-	public List<StoreSearchDto> searchStores(StoreSearchRequest request, Long userId) {
+	public List<StoreSearchDto> searchStores(StoreSearchRequest request, Long userId, Long cursorId,
+		int pageSize) {
 
 		String keyword = request.getKeyword();
 		String type = request.getType();
 		Avatar avatar = avatarService.getById(userId);
-		List<Store> stores;
+		Page<Store> stores;
 		List<StoreSearchDto> result;
 
 		// 메인 로직
 		if (type.equals("매장")) {
-			stores = storeRepository.findAllByNameContainingOrderByBookmarkCntDesc(keyword);
+			stores = storeJpaRepository.findPageByNameContainingOrderByBookmarkCntDesc(keyword, cursorId, pageSize);
 			result = stores.stream()
 				.flatMap(store -> {
-					List<StoreProduct> top3Products = storeProductJpaRepository.findTop3ByStoreOrderByProductName(
+					List<StoreProduct> products = storeProductJpaRepository.findTop3ByStoreOrderByProductName(
 						store);
-					List<StoreProductDto> storeProductDtos = top3Products.stream()
+					List<StoreProductDto> storeProductDtos = products.stream()
 						.map(storeProduct -> new StoreProductDto(storeProduct.getId(),
 							storeProduct.getProduct().getName()))
 						.toList();
@@ -66,13 +66,12 @@ public class StoreSearchService {
 				})
 				.toList();
 		} else {
-			stores = storeJpaRepository.findAllByProductNameOrderByBookmarkCntDesc(keyword);
+			stores = storeJpaRepository.findPageByProductNameOrderByBookmarkCntDesc(keyword, cursorId, pageSize);
 			result = stores.stream()
 				.flatMap(store -> {
-					List<StoreProduct> top2Products = storeProductJpaRepository.findTop2ByStoreOrderByProductName(
-						store);
-					top2Products.add(storeProductJpaRepository.findStoreProductByProductName(keyword));
-					List<StoreProductDto> storeProductDtos = top2Products.stream()
+					List<StoreProduct> products = storeProductJpaRepository.findTop3ByStoreOrderByProductName(
+						keyword, store);
+					List<StoreProductDto> storeProductDtos = products.stream()
 						.map(storeProduct -> new StoreProductDto(storeProduct.getId(),
 							storeProduct.getProduct().getName()))
 						.toList();

@@ -2,6 +2,7 @@ package com.ecolink.core.store.repository;
 
 import static com.ecolink.core.store.domain.QStoreProduct.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,22 +32,32 @@ public class StoreProductJpaRepository {
 			.fetch();
 	}
 
-	public List<StoreProduct> findTop2ByStoreOrderByProductName(Store store) {
+	public List<StoreProduct> findTop3ByStoreOrderByProductName(String keyword, Store store) {
 
-		return queryFactory
+		StoreProduct firstProduct = queryFactory
 			.selectFrom(storeProduct)
-			.where(storeProduct.store.eq(store))
+			.where(
+				storeProduct.product.name.like("%" + keyword + "%")
+					.and(storeProduct.store.eq(store))
+			)
+			.fetchOne();
+
+		assert firstProduct != null;
+		List<StoreProduct> restProducts = queryFactory
+			.selectFrom(storeProduct)
+			.where(
+				storeProduct.store.eq(store)
+					.and(storeProduct.id.ne(firstProduct.getId()))
+			)
 			.orderBy(storeProduct.product.name.asc())
 			.limit(2)
 			.fetch();
-	}
 
-	public StoreProduct findStoreProductByProductName(String keyword) {
+		List<StoreProduct> result = new ArrayList<>();
+		result.add(firstProduct);
+		result.addAll(restProducts);
 
-		return queryFactory
-			.selectFrom(storeProduct)
-			.where(storeProduct.product.name.eq(keyword))
-			.fetchOne();
+		return result;
 	}
 
 }
