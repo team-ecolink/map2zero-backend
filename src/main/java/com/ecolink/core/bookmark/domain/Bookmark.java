@@ -34,4 +34,9 @@ public class Bookmark extends BaseTimeEntity {
 	@JoinColumn(name = "store_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
+
+	public Bookmark(Avatar avatar, Store store) {
+		this.avatar = avatar;
+		this.store = store;
+	}
 }
