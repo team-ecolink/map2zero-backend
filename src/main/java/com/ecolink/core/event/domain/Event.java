@@ -1,11 +1,15 @@
 package com.ecolink.core.event.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.event.constant.EventStatus;
 import com.ecolink.core.store.domain.Store;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +20,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,8 +39,10 @@ public class Event extends BaseTimeEntity {
 	@NotNull
 	private String title;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime startDate;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime endDate;
 
 	private String applicationUrl;
@@ -52,4 +59,6 @@ public class Event extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<EventPhoto> eventPhotos = new ArrayList<>();
 }

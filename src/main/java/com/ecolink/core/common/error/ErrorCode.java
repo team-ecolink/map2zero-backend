@@ -29,10 +29,14 @@ public enum ErrorCode {
 	/**
 	 * 닉네임 관련 오류
 	 */
-	FAIL_TO_FIND_UNIQUE_NICKNAME(HttpStatus.INTERNAL_SERVER_ERROR, "N-001", "유일한 닉네임을 찾는데 실패했습니다.");
+	FAIL_TO_FIND_UNIQUE_NICKNAME(HttpStatus.INTERNAL_SERVER_ERROR, "N-001", "유일한 닉네임을 찾는데 실패했습니다."),
+
+	/**
+	 * 스토어 관련 오류
+	 */
+	STORE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "S-001", "주어진 식별자로 가게를 찾을 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
 	private final String message;
-
 }

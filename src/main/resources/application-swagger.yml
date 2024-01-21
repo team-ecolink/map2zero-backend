@@ -4,4 +4,5 @@ swagger:
     sign-up: '02. 회원가입'
     search: '03. 검색페이지'
     my-page: '04. 마이페이지'
+    store: '05. 매장 상세 페이지'
 
