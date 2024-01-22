@@ -1,4 +1,4 @@
-package com.ecolink.core.config.security;
+package com.ecolink.core.common.config.security;
 
 import java.util.List;
 
