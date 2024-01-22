@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ecolink.core.common.response.ErrorResponse;
@@ -17,12 +16,25 @@ import com.ecolink.core.common.response.ErrorResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<ErrorResponse<Object>> handleException(Exception e) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+			.body(ErrorResponse.error("500", e.getMessage()));
+	}
+
+	@ExceptionHandler(value = RuntimeException.class)
+	public ResponseEntity<ErrorResponse<Object>> handleRuntimeException(RuntimeException e) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+			.body(ErrorResponse.error("500", e.getMessage()));
+	}
+
 	/**
 	 * 객체, 파라미터 데이터 값이 유효하지 않은 경우
 	 */
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	protected ErrorResponse<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+	protected ResponseEntity<ErrorResponse<String>> handleMethodArgumentNotValidException(
+		MethodArgumentNotValidException e) {
 		Map<String, String> errors = new HashMap<>();
 
 		BindingResult bindingResult = e.getBindingResult();
@@ -34,8 +46,9 @@ public class GlobalExceptionHandler {
 			}
 		}
 
-		return ErrorResponse.error(errors, ErrorCode.INVALID_TYPE_VALUE.getCode(),
-			ErrorCode.INVALID_TYPE_VALUE.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ErrorResponse.error(errors, ErrorCode.INVALID_TYPE_VALUE.getCode(),
+				ErrorCode.INVALID_TYPE_VALUE.getMessage()));
 	}
 
 	/**
@@ -47,5 +60,6 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(errorCode.getHttpStatus())
 			.body(ErrorResponse.error(errorCode.getCode(), errorCode.getMessage()));
 	}
+
 }
 
