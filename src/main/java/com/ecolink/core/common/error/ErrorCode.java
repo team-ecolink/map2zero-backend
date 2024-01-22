@@ -14,7 +14,15 @@ public enum ErrorCode {
 	 */
 	INVALID_TYPE_VALUE(HttpStatus.BAD_REQUEST, "E-001", "잘못된 요청입니다."),
 
-	AVATAR_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "A-001", "주어진 식별자로 아바타를 찾을 수 없습니다.");
+	/**
+	 * 아바타 관련 오류
+	 */
+	AVATAR_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "A-001", "주어진 식별자로 아바타를 찾을 수 없습니다."),
+
+	/**
+	 * 인증 관련 오류
+	 */
+	INVALID_PROVIDER(HttpStatus.BAD_REQUEST, "OA-001", "유효하지 않은 provider입니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
