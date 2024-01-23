@@ -1,6 +1,5 @@
 package com.ecolink.core.bookmark.controller;
 
-import com.ecolink.core.bookmark.dto.request.BookmarkRequest;
 import com.ecolink.core.bookmark.dto.response.BookmarkResponse;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.response.ApiResponse;
@@ -16,22 +15,22 @@ import com.ecolink.core.auth.token.UserPrincipal;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("${api.prefix}/store")
+@RequestMapping("${api.prefix}/stores")
 public class BookmarkController {
 
 	private final BookmarkService bookmarkService;
 
-	@Tag(name = "${swagger.tag.store}")
+	@Tag(name = "${swagger.tag.bookmark}")
 	@Operation(summary = "매장 북마크 등록 API - 인증 필요",
 		description = "매장 북마크 등록 - 인증 필요",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
-	@PostMapping("/{storeId}/bookmarks")
+	@PostMapping("/{Id}/bookmarks")
 	public ApiResponse<BookmarkResponse> addBookmark(
-		@PathVariable Long storeId,
+		@PathVariable("Id") Long storeId,
+		@RequestParam Long avatarId,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		BookmarkRequest request = new BookmarkRequest(principal.getAvatarId(), storeId);
-		BookmarkResponse bookmarkResponse = bookmarkService.addBookmark(request);
+		BookmarkResponse bookmarkResponse = bookmarkService.addBookmark(avatarId, storeId);
 		return ApiResponse.ok(bookmarkResponse);
 	}
 }

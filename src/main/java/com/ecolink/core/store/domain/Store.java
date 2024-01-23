@@ -66,4 +66,7 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
+	public void addBookmarkCount() {
+		this.bookmarkCnt++;
+	}
 }
