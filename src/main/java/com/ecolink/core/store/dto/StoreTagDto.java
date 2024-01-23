@@ -5,16 +5,15 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 
-@Getter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class StoreTagDto {
+public record StoreTagDto (
 
 	@Schema(description = "시설물 아이콘 아이디", example = "1")
-	Long id;
+	Long id,
 	@Schema(description = "시설물 아이콘 이름", example = "반려동물 동반")
-	String name;
+	String name
+)	{
 
 	public StoreTagDto(Long id, String name) {
 		this.id = id;

@@ -7,7 +7,6 @@ import java.util.List;
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.event.constant.EventStatus;
 import com.ecolink.core.store.domain.Store;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,10 +38,8 @@ public class Event extends BaseTimeEntity {
 	@NotNull
 	private String title;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime startDate;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime endDate;
 
 	private String applicationUrl;

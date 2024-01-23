@@ -5,15 +5,14 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 
-@Getter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class StorePhotoDto {
+public record StorePhotoDto (
 	@Schema(description = "사진 URL", example = "https://www.~~~.com")
-	String url;
+	String url,
 	@Schema(description = "사진 순서", example = "1")
-	Integer givenOrder;
+	Integer givenOrder
+)	{
 
 	public StorePhotoDto(String url, Integer givenOrder) {
 		this.url = url;
