@@ -2,10 +2,14 @@ package com.ecolink.core.common.response;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ErrorResponse<T> {
 
 	@Schema(description = "에러가 발생한 데이터")
