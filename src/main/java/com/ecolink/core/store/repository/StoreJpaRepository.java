@@ -1,14 +1,18 @@
 package com.ecolink.core.store.repository;
 
+import static com.ecolink.core.store.domain.QStore.*;
+import static com.ecolink.core.store.domain.QStoreProduct.*;
+import static com.ecolink.core.tag.domain.QProduct.*;
+
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Repository;
 
-import com.ecolink.core.store.domain.QStore;
-import com.ecolink.core.store.domain.QStoreProduct;
+import com.ecolink.core.store.constant.SearchType;
 import com.ecolink.core.store.domain.Store;
+import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -22,52 +26,33 @@ public class StoreJpaRepository {
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 
-	public Page<Store> findPageByNameContainingOrderByBookmarkCntDesc(String keyword, Long cursorId,
-		int pageSize) {
+	public Page<Store> findStoresByKeywordContainingOrderByBookmarkCntDesc(StoreSearchRequest request) {
 
-		QStore store = QStore.store;
+		BooleanExpression condition;
 
-		BooleanExpression condition = store.name.like("%" + keyword + "%");
+		if (request.getType() == SearchType.STORE) {
+			condition = store.name.like("%" + request.getKeyword() + "%");
+		} else {
+			condition = storeProduct.product.name.like("%" + request.getKeyword() + "%");
+		}
 
-		if (cursorId != null) {
-			condition = condition
-				.and(store.bookmarkCnt.lt(cursorId)
-					.or(store.bookmarkCnt.eq(cursorId.intValue())));
+		if (request.getCursor() != null) {
+			condition = condition.and(
+				store.bookmarkCnt.lt(request.getCursor())
+					.or(store.bookmarkCnt.eq(request.getCursor().intValue()))
+					.and(store.id.lt(request.getStoreId())));
 		}
 
 		List<Store> stores = queryFactory
 			.selectFrom(store)
+			.leftJoin(store.storeProducts, storeProduct)
+			.leftJoin(storeProduct.product, product)
 			.where(condition)
 			.orderBy(store.bookmarkCnt.desc(), store.name.asc())
-			.limit(pageSize)
-			.fetch();
-
-		return new PageImpl<>(stores);
-
-	}
-
-	public Page<Store> findPageByProductNameOrderByBookmarkCntDesc(String keyword, Long cursorId,
-		int pageSize) {
-
-		QStore store = QStore.store;
-		QStoreProduct storeProduct = QStoreProduct.storeProduct;
-
-		BooleanExpression condition = storeProduct.product.name.like("%" + keyword + "%");
-
-		if (cursorId != null) {
-			condition = condition
-				.and(store.bookmarkCnt.lt(cursorId)
-					.or(store.bookmarkCnt.eq(cursorId.intValue())));
-		}
-
-		List<Store> stores = queryFactory
-			.selectFrom(store)
-			.join(storeProduct).on(store.id.eq(storeProduct.store.id))
-			.where(condition)
-			.orderBy(store.bookmarkCnt.desc(), store.name.asc())
-			.limit(pageSize)
+			.limit(request.getPageSize())
 			.fetch();
 
 		return new PageImpl<>(stores);
 	}
+
 }

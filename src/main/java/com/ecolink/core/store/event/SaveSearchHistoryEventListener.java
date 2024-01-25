@@ -1,23 +1,24 @@
 package com.ecolink.core.store.event;
 
-import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
-import com.ecolink.core.store.domain.SearchHistory;
-import com.ecolink.core.store.repository.SearchHistoryRepository;
+import com.ecolink.core.store.service.SearchHistoryService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Component
-public class SaveSearchHistoryEventListener implements ApplicationListener<SaveSearchHistoryEvent> {
+public class SaveSearchHistoryEventListener {
 
-	private final SearchHistoryRepository searchHistoryRepository;
+	private final SearchHistoryService searchHistoryService;
 
-	public SaveSearchHistoryEventListener(SearchHistoryRepository searchHistoryRepository) {
-		this.searchHistoryRepository = searchHistoryRepository;
-	}
-
-	@Override
-	public void onApplicationEvent(SaveSearchHistoryEvent event) {
-		SearchHistory searchHistory = event.getSearchHistory();
-		searchHistoryRepository.save(searchHistory);
+	@Async
+	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION, classes = SaveSearchHistoryEvent.class)
+	public void saveSearchHistory(SaveSearchHistoryEvent event) {
+		searchHistoryService.saveSearchHistory(event.getSearchHistory().getWord(),
+			event.getSearchHistory().getAvatar());
 	}
 }

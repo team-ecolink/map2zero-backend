@@ -3,15 +3,13 @@ package com.ecolink.core.store.controller;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
+import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
 import com.ecolink.core.store.service.StoreSearchService;
@@ -29,17 +27,16 @@ public class StoreSearchController {
 
 	private final StoreSearchService storeSearchService;
 
-	@Tag(name = "Store search")
+	@Tag(name = "${swagger.tag.search}")
 	@Operation(summary = "매장 검색 조회 API - 인증 선택",
 		description = "검색어가 포함된 매장을 조회하는 API - 인증 선택",
 		security = {@SecurityRequirement(name = "session-token")})
-	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/search")
-	public ResponseEntity<List<StoreSearchDto>> searchStores(
+	public ApiResponse<List<StoreSearchDto>> searchStores(
 		@ParameterObject @Valid StoreSearchRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return new ResponseEntity<>(storeSearchService.searchStores(request, principal.getAvatarId(),
-			request.getCursorId(), request.getPageSize()), HttpStatus.OK);
-	}
 
+		//TODO 인증 안한 로직 수행
+		return ApiResponse.ok(storeSearchService.searchStores(request, principal.getAvatarId()));
+	}
 }
