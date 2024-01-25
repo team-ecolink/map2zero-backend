@@ -32,7 +32,7 @@ public class OAuth2RequestService {
 
 	public OAuth2StateResponse createRequest(HttpServletRequest request, HttpServletResponse response, String provider) {
 		if(clientRegistrationRepository.findByRegistrationId(provider) == null)
-			throw new InvalidProviderException(ErrorCode.INVALID_PROVIDER);
+			throw new InvalidProviderException(ErrorCode.UNREGISTERED_PROVIDER);
 
 		// OAuth 인가 요청을 생성
 		OAuth2AuthorizationRequest oAuth2AuthorizationRequest = oAuth2AuthorizationRequestResolver.resolve(request,

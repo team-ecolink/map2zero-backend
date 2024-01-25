@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.ecolink.core.auth.model.OAuth2Attributes;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.InvalidProviderException;
 import com.ecolink.core.user.constant.UserType;
 
 @Service
@@ -26,7 +28,7 @@ public class OAuth2UserLoadingService implements OAuth2UserService<OAuth2UserReq
 		String userNameAttributeName = userRequest.getClientRegistration()
 			.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 		UserType type = UserType.fromString(registrationId)
-			.orElseThrow(() -> new IllegalArgumentException("정의되지 않은 프로바이더가 입력되었습니다."));
+			.orElseThrow(() -> new InvalidProviderException(ErrorCode.UNDEFINED_PROVIDER));
 
 		OAuth2Attributes attributes = type.extract(userNameAttributeName, oAuth2User.getAttributes());
 
