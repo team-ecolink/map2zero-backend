@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - '80:80'
+    depends_on:
+      - redis
+    environment:
+      - ACTIVE_PROFILE=dev
+
+  redis:
+    image: redis
