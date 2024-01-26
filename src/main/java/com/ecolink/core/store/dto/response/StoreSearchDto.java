@@ -1,18 +1,22 @@
 package com.ecolink.core.store.dto.response;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ecolink.core.common.constant.Address;
+import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.store.domain.Store;
+import com.ecolink.core.store.domain.StorePhoto;
 import com.ecolink.core.store.dto.StoreProductDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.querydsl.core.annotations.QueryProjection;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class StoreSearchDto {
@@ -36,26 +40,29 @@ public class StoreSearchDto {
 	private final int bookmarkCnt;
 
 	@Schema(description = "매장 대표 사진 URL", example = "https.www.~")
-	private final String photoUrl;
-
-	@Schema(description = "매장 상품 이름 (최대 3가지)")
-	private final List<StoreProductDto> products;
+	private final ImageFile photo;
 
 	@Schema(description = "해당 유저의 매장 북마크 여부", example = "true")
 	private final boolean bookmarked;
 
-	public static StoreSearchDto of(Store store, String photoUrl, List<StoreProductDto> products, boolean bookmarked) {
-		return StoreSearchDto.builder()
-			.id(store.getId())
-			.name(store.getName())
-			.address(store.getAddress())
-			.totalScore(store.getTotalScore())
-			.reviewCnt(store.getReviewCnt())
-			.bookmarkCnt(store.getBookmarkCnt())
-			.photoUrl(photoUrl)
-			.products(products)
-			.bookmarked(bookmarked)
-			.build();
+	@Schema(description = "매장 상품 이름 (최대 3가지)")
+	private List<StoreProductDto> products;
+
+	@QueryProjection
+	public StoreSearchDto(Store store, StorePhoto storePhoto, boolean bookmarked) {
+		this.id = store.getId();
+		this.name = store.getName();
+		this.address = store.getAddress();
+		this.totalScore = store.getTotalScore();
+		this.reviewCnt = store.getReviewCnt();
+		this.bookmarkCnt = store.getBookmarkCnt();
+		this.photo = storePhoto != null ? storePhoto.getFile() : null;
+		this.bookmarked = bookmarked;
+		this.products = new ArrayList<>();
+	}
+
+	public void addStoreProductDto(StoreProductDto dto) {
+		this.products.add(dto);
 	}
 
 }

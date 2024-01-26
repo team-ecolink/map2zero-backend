@@ -1,5 +1,6 @@
 package com.ecolink.core.store.dto;
 
+import com.ecolink.core.store.domain.StoreProduct;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -16,8 +17,8 @@ public class StoreProductDto {
 	@Schema(description = "매장 상품 이름", example = "연필")
 	private final String name;
 
-	public StoreProductDto(Long id, String name) {
-		this.id = id;
-		this.name = name;
+	public StoreProductDto(StoreProduct storeProduct) {
+		this.id = storeProduct.getId();
+		this.name = storeProduct.getProduct().getName();
 	}
 }
