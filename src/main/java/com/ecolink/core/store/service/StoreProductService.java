@@ -24,32 +24,58 @@ public class StoreProductService {
 
 	private final StoreProductRepository storeProductRepository;
 
-	public void addTop3ProductsToDto(StoreSearchRequest request, List<StoreSearchDto> searchDtos) {
-		String keyword = request.getKeyword();
-		Map<Long, StoreSearchDto> map = searchDtos.stream().collect(Collectors.toMap(StoreSearchDto::getId, s -> s));
+	public void getTop3StoreProducts(StoreSearchRequest request, List<StoreSearchDto> storeSearchDtos) {
+
+		addStoreProductsToStoreSearchDto(storeSearchDtos);
+
+		for (StoreSearchDto dto : storeSearchDtos) {
+			if (SearchType.PRODUCT.equals(request.getType())) {
+				processProductType(dto, request.getKeyword());
+			}
+			if (SearchType.STORE.equals(request.getType())) {
+				processStoreType(dto);
+			}
+		}
+	}
+
+	private void addStoreProductsToStoreSearchDto(List<StoreSearchDto> storeSearchDtos) {
+
+		Map<Long, StoreSearchDto> map = storeSearchDtos.stream()
+			.collect(Collectors.toMap(StoreSearchDto::getId, s -> s));
 		List<StoreProduct> products = storeProductRepository.findByStoreIdIn(map.keySet());
+
 		products.forEach(
 			p -> map.get(p.getStore().getId()).addStoreProductDto(new StoreProductDto(p))
 		);
+	}
 
-		for (StoreSearchDto dto : searchDtos) {
+	private void processProductType(StoreSearchDto dto, String keyword) {
 
-			if (SearchType.PRODUCT.equals(request.getType())) {
-				dto.getProducts().sort((a, b) -> {
-					boolean aFirst = a.getName().contains(keyword);
-					boolean bFirst = b.getName().contains(keyword);
-					if (aFirst == bFirst) {
-						return a.getName().compareTo(b.getName());
-					}
-					if (bFirst)
-						return 1;
-					return -1;
-				});
-			}
+		List<StoreProductDto> sortedStoreProducts = dto.getProducts().stream()
+			.sorted((a, b) -> {
+				boolean aFirst = a.getName().contains(keyword);
+				boolean bFirst = b.getName().contains(keyword);
+				if (aFirst == bFirst) {
+					return a.getName().compareTo(b.getName());
+				}
+				return bFirst ? 1 : -1;
+			}).limit(3).toList();
 
-			if (SearchType.STORE.equals(request.getType())) {
-				dto.getProducts().sort(Comparator.comparing(StoreProductDto::getName));
-			}
+		addTop3SortedStoreProductsToDto(dto, sortedStoreProducts);
+	}
+
+	private void processStoreType(StoreSearchDto dto) {
+		List<StoreProductDto> sortedStoreProducts = dto.getProducts().stream()
+			.sorted(Comparator.comparing(StoreProductDto::getName))
+			.limit(3)
+			.toList();
+
+		addTop3SortedStoreProductsToDto(dto, sortedStoreProducts);
+	}
+
+	private void addTop3SortedStoreProductsToDto(StoreSearchDto dto, List<StoreProductDto> sortedProducts) {
+		for (StoreProductDto productDto : sortedProducts) {
+			dto.addStoreProductDto(productDto);
 		}
 	}
 }

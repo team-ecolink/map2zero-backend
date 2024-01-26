@@ -24,11 +24,11 @@ public class StoreSearchService {
 	private final ApplicationEventPublisher eventPublisher;
 
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {
+
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
-		// 매장 제품 3개만 잘라서 넣기
-		storeProductService.addTop3ProductsToDto(request, storeSearchDtos);
-		
+		storeProductService.getTop3StoreProducts(request, storeSearchDtos);
+
 		eventPublisher.publishEvent(new StoreSearchEvent(request.getKeyword(), avatarId));
 
 		return CursorPage.of(storeSearchDtos, request.getSize(), StoreSearchDto::getId);
