@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.common.response.ApiResponse;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
 import com.ecolink.core.store.service.StoreSearchService;
@@ -35,8 +36,9 @@ public class StoreSearchController {
 		@ParameterObject @Valid StoreSearchRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 
-		//TODO 인증 안한 로직 수행
-		// return ApiResponse.ok(storeSearchService.searchStores(request, null));
-		return ApiResponse.ok(storeSearchService.searchStores(request, principal.getAvatarId()));
+		if (AuthorityUtil.hasUserAuthority(principal)) {
+			return ApiResponse.ok(storeSearchService.searchStores(request, principal.getAvatarId()));
+		}
+		return ApiResponse.ok(storeSearchService.searchStores(request, null));
 	}
 }
