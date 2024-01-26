@@ -22,12 +22,7 @@ public enum ErrorCode {
 	/**
 	 * 인증 관련 오류
 	 */
-	INVALID_PROVIDER(HttpStatus.BAD_REQUEST, "OA-001", "유효하지 않은 provider입니다."),
-
-	/**
-	 * 상점 관련 오류
-	 */
-	STORE_MAIN_PHOTO_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "S-002", "가게의 메인 이미지를 찾을 수 없습니다.");
+	INVALID_PROVIDER(HttpStatus.BAD_REQUEST, "OA-001", "유효하지 않은 provider입니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
