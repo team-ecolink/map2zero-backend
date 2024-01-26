@@ -71,19 +71,19 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "store")
 	private List<StorePhoto> storePhotos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "store")
 	private List<StoreProduct> storeProduct = new ArrayList<>();
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "store")
 	private List<Event> events = new ArrayList<>();
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "store")
 	private List<StoreOperatingHours> storeOperatingHour = new ArrayList<>();
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "store")
 	private List<StoreTag> storeTags = new ArrayList<>();
 
 }

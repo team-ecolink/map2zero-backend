@@ -1,11 +1,14 @@
 package com.ecolink.core.store.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.response.ApiResponse;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.store.dto.response.StoreDetailResponse;
 import com.ecolink.core.store.service.StoreSearchService;
 
@@ -22,13 +25,15 @@ public class StoreController {
 	private final StoreSearchService storeSearchService;
 
 	@Tag(name = "${swagger.tag.store}")
-	@Operation(summary = "매장 상세 페이지 API", description = "매장 상세 페이지 - 인증 선택",
+	@Operation(summary = "매장 상세 페이지 API - 인증 선택", description = "매장 상세 페이지 - 인증 선택",
 		security = {@SecurityRequirement(name = "session-token")})
 	@GetMapping("/{id}")
-	public ApiResponse<StoreDetailResponse> storeInfo(@PathVariable("id") Long id) {
-		// if(userPrincipal.getAuthorities().contains(new SimpleGrantedAuthority(RoleType.USER.getAuthority()))){
-		// 	return ApiResponse.ok(storeQueryService.getStoreDetailPage(id, userPrincipal.getAvatarId()));
-		// }
+	public ApiResponse<StoreDetailResponse> storeInfo(
+		@PathVariable("id") Long id,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		if(AuthorityUtil.hasUserAuthority(principal)){
+			return ApiResponse.ok(storeSearchService.getStoreDetailPage(id, principal.getAvatarId()));
+		}
 		return ApiResponse.ok(storeSearchService.getStoreDetailPage(id, null));
 	}
 }

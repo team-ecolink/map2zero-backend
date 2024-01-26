@@ -2,10 +2,11 @@ package com.ecolink.core.store.dto.response;
 
 import java.util.List;
 
+import com.ecolink.core.common.constant.Address;
+import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.store.domain.Store;
-import com.ecolink.core.store.dto.AddressDto;
+import com.ecolink.core.store.domain.StorePhoto;
 import com.ecolink.core.store.dto.OperatingHourDto;
-import com.ecolink.core.store.dto.StorePhotoDto;
 import com.ecolink.core.store.dto.StoreTagDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -31,11 +32,11 @@ public record StoreDetailResponse(
 	@Schema(description = "리뷰 점수", example = "4.5")
 	Double score,
 	@Schema(description = "매장 사진")
-	List<StorePhotoDto> photos,
+	List<ImageFile> photos,
 	@Schema(description = "연락처", example = "02-111-1111")
 	String contact,
 	@Schema(description = "매장 주소")
-	AddressDto address,
+	Address address,
 	@Schema(description = "매장 영업 시간")
 	List<OperatingHourDto> operatingHours,
 	@Schema(description = "시설물 태그(아이콘)")
@@ -52,9 +53,9 @@ public record StoreDetailResponse(
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
 			.photos(store.getStorePhotos().stream()
-				.map(StorePhotoDto::of).toList())
+				.map(StorePhoto::getFile).toList())
 			.contact(store.getContact())
-			.address(AddressDto.of(store))
+			.address(store.getAddress())
 			.operatingHours(store.getStoreOperatingHour().stream()
 				.map(OperatingHourDto::of).toList())
 			.storeTags(store.getStoreTags().stream()

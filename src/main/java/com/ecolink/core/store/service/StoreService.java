@@ -18,7 +18,13 @@ public class StoreService {
 	private final StoreRepository storeRepository;
 
 	public Store getById(Long id) {
-		return storeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
+		return storeRepository.findById(id).orElseThrow(
+			() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
+	}
+
+	public Store getStoreGraphById(Long id) {
+		return storeRepository.findStoreGraphById(id).orElseThrow(
+			() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
 	}
 
 }
