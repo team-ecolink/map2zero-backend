@@ -1,10 +1,12 @@
 package com.ecolink.core.bookmark.controller;
 
+import java.util.Map;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
@@ -31,7 +33,7 @@ public class BookmarkController {
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
 	public ApiResponse<BookmarkResponse> addBookmark(
-		@RequestParam Long storeId,
+		@RequestBody Long storeId,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), storeId));
 	}
