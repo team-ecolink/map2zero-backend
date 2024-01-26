@@ -11,11 +11,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ecolink.core.common.error.exception.DuplicatedEmailException;
 import com.ecolink.core.common.response.ErrorResponse;
+import com.ecolink.core.user.constant.UserType;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
 
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<ErrorResponse<Object>> handleException(Exception e) {
@@ -59,6 +60,18 @@ public class GlobalExceptionHandler {
 		ErrorCode errorCode = e.getErrorCode();
 		return ResponseEntity.status(errorCode.getHttpStatus())
 			.body(ErrorResponse.error(errorCode.getCode(), errorCode.getMessage()));
+	}
+
+	/**
+	 * 소셜 로그인시 다른 프로바이더에서 해당 이메일로 가입했을 경우 발생하는 예외
+	 */
+	@ExceptionHandler(value = DuplicatedEmailException.class)
+	public ResponseEntity<ErrorResponse<UserType>> handleDuplicatedEmailException(DuplicatedEmailException e) {
+		ErrorCode errorCode = e.getErrorCode();
+		Map<String, UserType> data = Map.of("requestedType", e.getRequestedType(), "existingType", e.getExistingType());
+
+		return ResponseEntity.status(errorCode.getHttpStatus())
+			.body(ErrorResponse.error(data, errorCode.getCode(), errorCode.getMessage()));
 	}
 
 }

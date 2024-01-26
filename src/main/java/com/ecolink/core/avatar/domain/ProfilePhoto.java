@@ -28,4 +28,8 @@ public class ProfilePhoto extends BaseTimeEntity {
 	@Embedded
 	private ImageFile file;
 
+	public ProfilePhoto(ImageFile file) {
+		this.file = file;
+	}
+
 }

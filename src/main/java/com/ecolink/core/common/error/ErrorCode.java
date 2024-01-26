@@ -22,9 +22,17 @@ public enum ErrorCode {
 	/**
 	 * 인증 관련 오류
 	 */
-	INVALID_PROVIDER(HttpStatus.BAD_REQUEST, "OA-001", "유효하지 않은 provider입니다.");
+	UNREGISTERED_PROVIDER(HttpStatus.BAD_REQUEST, "OA-001", "등록되지 않은 프로바이더가 입력되었습니다."),
+	EMAIL_IS_REGISTER_WITH_ANOTHER_PROVIDER(HttpStatus.BAD_REQUEST, "OA-002", "같은 이메일이 다른 소셜 로그인 플랫폼으로 가입되어 있습니다."),
+	UNDEFINED_PROVIDER(HttpStatus.INTERNAL_SERVER_ERROR, "OA-003", "유저타입에 정의되지 않은 프로바이더가 입력되었습니다."),
+
+	/**
+	 * 닉네임 관련 오류
+	 */
+	FAIL_TO_FIND_UNIQUE_NICKNAME(HttpStatus.INTERNAL_SERVER_ERROR, "N-001", "유일한 닉네임을 찾는데 실패했습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
 	private final String message;
+
 }

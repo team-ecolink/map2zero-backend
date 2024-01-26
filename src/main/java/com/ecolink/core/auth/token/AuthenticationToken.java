@@ -19,7 +19,7 @@ public class AuthenticationToken extends AbstractAuthenticationToken {
 		this.principal = principal;
 	}
 
-	public static AuthenticationToken of(User user, Avatar avatar, Set<SimpleGrantedAuthority> authorities) {
+	public static AuthenticationToken of(User user, Avatar avatar, Set<? extends GrantedAuthority> authorities) {
 		return new AuthenticationToken(UserPrincipal.of(user, avatar, authorities), authorities);
 	}
 
@@ -51,4 +51,5 @@ public class AuthenticationToken extends AbstractAuthenticationToken {
 		result = 31 * result + principal.hashCode();
 		return result;
 	}
+
 }

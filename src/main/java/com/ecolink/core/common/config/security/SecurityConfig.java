@@ -17,16 +17,23 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.ecolink.core.auth.handler.OAuth2SuccessHandler;
+import com.ecolink.core.auth.service.OAuth2UserLoadingService;
+
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
 
 	private static final String AUTHORIZATION_HEADER = "Authorization";
-
+	private final OAuth2SuccessHandler oauth2SuccessHandler;
+	private final OAuth2UserLoadingService oauth2UserLoadingService;
 	private final String apiPrefix;
 
-	public SecurityConfig(@Value("${api.prefix}") String apiPrefix) {
+	public SecurityConfig(OAuth2SuccessHandler oauth2SuccessHandler, OAuth2UserLoadingService oauth2UserLoadingService,
+		@Value("${api.prefix}") String apiPrefix) {
+		this.oauth2SuccessHandler = oauth2SuccessHandler;
+		this.oauth2UserLoadingService = oauth2UserLoadingService;
 		this.apiPrefix = apiPrefix;
 	}
 
@@ -37,7 +44,9 @@ public class SecurityConfig {
 			.formLogin(AbstractHttpConfigurer::disable)
 			.oauth2Login(oauth ->
 				oauth.authorizationEndpoint(authorization -> authorization.baseUri(apiPrefix + "/oauth2/authorization"))
-					.redirectionEndpoint(redirection -> redirection.baseUri(apiPrefix + "/oauth2/code")))
+					.redirectionEndpoint(redirection -> redirection.baseUri(apiPrefix + "/oauth2/code"))
+					.userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserLoadingService))
+					.successHandler(oauth2SuccessHandler))
 			.headers(headers ->
 				headers.addHeaderWriter(
 					new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
@@ -62,5 +71,6 @@ public class SecurityConfig {
 	static HttpSessionIdResolver httpSessionIdResolver() {
 		return new HeaderHttpSessionIdResolver(AUTHORIZATION_HEADER);
 	}
+
 }
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.user.constant.UserType;
@@ -36,9 +36,9 @@ public class UserPrincipal implements Serializable {
 	private String nickname;
 
 	// Role
-	private final Set<SimpleGrantedAuthority> authorities;
+	private final Set<? extends GrantedAuthority> authorities;
 
-	public static UserPrincipal of(User user, Avatar avatar, Set<SimpleGrantedAuthority> authoritySet) {
+	public static UserPrincipal of(User user, Avatar avatar, Set<? extends GrantedAuthority> authoritySet) {
 		return UserPrincipal.builder()
 			.userId(user.getId())
 			.email(user.getEmail())
