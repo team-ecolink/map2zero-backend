@@ -11,14 +11,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class SaveSearchHistoryEventListener {
+public class StoreSearchEventListener {
 
 	private final SearchHistoryService searchHistoryService;
 
 	@Async
-	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION, classes = SaveSearchHistoryEvent.class)
-	public void saveSearchHistory(SaveSearchHistoryEvent event) {
-		searchHistoryService.saveSearchHistory(event.getSearchHistory().getWord(),
-			event.getSearchHistory().getAvatar());
+	@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT, classes = StoreSearchEvent.class)
+	public void saveSearchHistory(StoreSearchEvent event) {
+		searchHistoryService.saveSearchHistory(event.getKeyword(), event.getAvatarId());
 	}
 }

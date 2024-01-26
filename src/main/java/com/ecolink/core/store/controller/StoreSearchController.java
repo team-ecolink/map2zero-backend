@@ -1,7 +1,5 @@
 package com.ecolink.core.store.controller;
 
-import java.util.List;
-
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
+import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
@@ -32,11 +31,12 @@ public class StoreSearchController {
 		description = "검색어가 포함된 매장을 조회하는 API - 인증 선택",
 		security = {@SecurityRequirement(name = "session-token")})
 	@GetMapping("/search")
-	public ApiResponse<List<StoreSearchDto>> searchStores(
+	public ApiResponse<CursorPage<StoreSearchDto, Long>> searchStores(
 		@ParameterObject @Valid StoreSearchRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 
 		//TODO 인증 안한 로직 수행
+		// return ApiResponse.ok(storeSearchService.searchStores(request, null));
 		return ApiResponse.ok(storeSearchService.searchStores(request, principal.getAvatarId()));
 	}
 }
