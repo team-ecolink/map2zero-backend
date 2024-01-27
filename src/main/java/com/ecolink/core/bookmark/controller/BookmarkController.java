@@ -32,8 +32,8 @@ public class BookmarkController {
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
 	public ApiResponse<BookmarkResponse> addBookmark(
-		@RequestBody BookmarkRequest requestDto,
+		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), requestDto.storeId()));
+		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), request.storeId()));
 	}
 }
