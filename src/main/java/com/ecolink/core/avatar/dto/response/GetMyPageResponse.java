@@ -29,5 +29,4 @@ public record GetMyPageResponse(
 			.isManager(isManager)
 			.build();
 	}
-
 }
