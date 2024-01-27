@@ -1,5 +1,8 @@
 package com.ecolink.core.user.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import com.ecolink.core.user.constant.RoleType;
 
 import jakarta.persistence.Column;
@@ -28,8 +31,16 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	private RoleType type;
 
+	public Role(RoleType type) {
+		this.type = type;
+	}
+
 	public String getAuthority() {
 		return type.getAuthority();
+	}
+
+	public GrantedAuthority toGrantedAuthority() {
+		return new SimpleGrantedAuthority(getAuthority());
 	}
 
 }

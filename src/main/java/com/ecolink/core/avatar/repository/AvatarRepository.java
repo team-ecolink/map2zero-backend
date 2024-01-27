@@ -10,6 +10,10 @@ import com.ecolink.core.avatar.domain.Avatar;
 
 public interface AvatarRepository extends JpaRepository<Avatar, Long> {
 
+	@Query("select (count(a) > 0) from Avatar a "
+		+ "where a.nickname = :nickname")
+	boolean existsByNickname(@Param("nickname") String nickname);
+
 	@Query("select a from Avatar a "
 		+ "join fetch a.photo p "
 		+ "join fetch a.user u "
