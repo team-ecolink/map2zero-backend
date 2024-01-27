@@ -1,6 +1,7 @@
 package com.ecolink.core.store.domain;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +86,10 @@ public class Store extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "store")
 	private List<StoreTag> storeTags = new ArrayList<>();
+
+	public String calculateScore() {
+		if(totalScore == 0) return null;
+		return String.format("%.1f", totalScore/reviewCnt);
+	}
 
 }

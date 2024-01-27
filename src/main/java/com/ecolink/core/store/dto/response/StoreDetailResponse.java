@@ -30,7 +30,7 @@ public record StoreDetailResponse(
 	@Schema(description = "리뷰 수", example = "5")
 	Integer reviewCnt,
 	@Schema(description = "리뷰 점수", example = "4.5")
-	Double score,
+	String score,
 	@Schema(description = "매장 사진")
 	List<ImageFile> photos,
 	@Schema(description = "연락처", example = "02-111-1111")
@@ -52,6 +52,7 @@ public record StoreDetailResponse(
 			.homepageUrl(store.getHomepageUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
+			.score(store.calculateScore())
 			.photos(store.getStorePhotos().stream()
 				.map(StorePhoto::getFile).toList())
 			.contact(store.getContact())

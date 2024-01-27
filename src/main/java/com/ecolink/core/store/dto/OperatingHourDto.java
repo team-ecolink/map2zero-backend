@@ -15,8 +15,8 @@ import lombok.Builder;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record OperatingHourDto (
 
-	@Schema(description = "요일", example = "월")
-	DayOfWeek dayOfWeek,
+	@Schema(description = "요일", example = "MON")
+	String dayOfWeek,
 	@Schema(description = "영업 시작 시각", example = "11:00")
 	LocalTime startTime,
 	@Schema(description = "영업 종료 시각", example = "21:00")
@@ -27,7 +27,7 @@ public record OperatingHourDto (
 
 	public static OperatingHourDto of(StoreOperatingHours operatingHours) {
 		return OperatingHourDto.builder()
-					.dayOfWeek(operatingHours.getDayOfWeek())
+					.dayOfWeek(operatingHours.getDayOfWeek().toString())
 					.startTime(operatingHours.getStartTime())
 					.endTime(operatingHours.getEndTime())
 					.regularHoliday(operatingHours.isRegularHoliday())

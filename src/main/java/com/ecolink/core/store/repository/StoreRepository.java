@@ -14,10 +14,8 @@ import com.ecolink.core.store.domain.Store;
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
 	@Query("select s from Store s "
-		+ "join fetch s.storePhotos p "
-		+ "join fetch s.storeOperatingHour o "
-		+ "join fetch s.storeTags st "
-		+ "join fetch st.tag t "
+		+ "left join fetch s.storeTags st "
+		+ "left join fetch st.tag t "
 		+ "where s.id = :id")
 	Optional<Store> findStoreGraphById(@Param("id") Long id);
 }
