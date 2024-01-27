@@ -1,7 +1,6 @@
 package com.ecolink.core.store.domain;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.manager.domain.StoreRegistration;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -87,9 +85,9 @@ public class Store extends BaseTimeEntity {
 	@OneToMany(mappedBy = "store")
 	private List<StoreTag> storeTags = new ArrayList<>();
 
-	public String calculateScore() {
+	public Double calculateScore() {
 		if(totalScore == 0) return null;
-		return String.format("%.1f", totalScore/reviewCnt);
+		return totalScore/reviewCnt;
 	}
 
 }

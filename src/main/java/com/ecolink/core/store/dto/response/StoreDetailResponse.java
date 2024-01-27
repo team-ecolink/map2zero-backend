@@ -30,7 +30,7 @@ public record StoreDetailResponse(
 	@Schema(description = "리뷰 수", example = "5")
 	Integer reviewCnt,
 	@Schema(description = "리뷰 점수", example = "4.5")
-	String score,
+	Double score,
 	@Schema(description = "매장 사진")
 	List<ImageFile> photos,
 	@Schema(description = "연락처", example = "02-111-1111")
@@ -52,7 +52,7 @@ public record StoreDetailResponse(
 			.homepageUrl(store.getHomepageUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
-			.score(store.calculateScore())
+			.score(scoreFormat(store.calculateScore()))
 			.photos(store.getStorePhotos().stream()
 				.map(StorePhoto::getFile).toList())
 			.contact(store.getContact())
@@ -63,5 +63,9 @@ public record StoreDetailResponse(
 				.map(StoreTagDto::of).toList())
 			.isBookmarked(isBookmarked)
 			.build();
+	}
+
+	public static Double scoreFormat(Double score) {
+		return Math.round(score * 10.0) / 10.0;
 	}
 }
