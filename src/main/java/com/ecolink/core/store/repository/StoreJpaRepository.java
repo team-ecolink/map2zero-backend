@@ -74,12 +74,6 @@ public class StoreJpaRepository {
 	}
 
 	private Store getCursor(Long id) {
-		if (id == null) {
-			return queryFactory
-				.selectFrom(store)
-				.orderBy(store.bookmarkCnt.desc(), store.id.desc())
-				.fetchFirst();
-		}
 		return queryFactory.selectFrom(store).where(store.id.eq(id)).fetchFirst();
 	}
 

@@ -27,7 +27,7 @@ public class StoreSearchService {
 
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
-		storeProductService.getTop3StoreProducts(request, storeSearchDtos);
+		storeProductService.processAndLimitTop3Products(request, storeSearchDtos);
 
 		eventPublisher.publishEvent(new StoreSearchEvent(request.getKeyword(), avatarId));
 

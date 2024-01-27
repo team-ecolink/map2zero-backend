@@ -24,7 +24,7 @@ public class StoreProductService {
 
 	private final StoreProductRepository storeProductRepository;
 
-	public void getTop3StoreProducts(StoreSearchRequest request, List<StoreSearchDto> storeSearchDtos) {
+	public void processAndLimitTop3Products(StoreSearchRequest request, List<StoreSearchDto> storeSearchDtos) {
 		String keyword = request.getKeyword();
 		addStoreProductsToDto(storeSearchDtos);
 
