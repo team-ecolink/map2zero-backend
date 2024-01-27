@@ -25,20 +25,23 @@ public class StoreProductService {
 	private final StoreProductRepository storeProductRepository;
 
 	public void getTop3StoreProducts(StoreSearchRequest request, List<StoreSearchDto> storeSearchDtos) {
-
-		addStoreProductsToStoreSearchDto(storeSearchDtos);
+		String keyword = request.getKeyword();
+		addStoreProductsToDto(storeSearchDtos);
 
 		for (StoreSearchDto dto : storeSearchDtos) {
+
 			if (SearchType.PRODUCT.equals(request.getType())) {
-				processProductType(dto, request.getKeyword());
+				processProductType(dto, keyword);
 			}
 			if (SearchType.STORE.equals(request.getType())) {
 				processStoreType(dto);
 			}
+
+			addTop3StoreProductsToDto(dto);
 		}
 	}
 
-	private void addStoreProductsToStoreSearchDto(List<StoreSearchDto> storeSearchDtos) {
+	private void addStoreProductsToDto(List<StoreSearchDto> storeSearchDtos) {
 
 		Map<Long, StoreSearchDto> map = storeSearchDtos.stream()
 			.collect(Collectors.toMap(StoreSearchDto::getId, s -> s));
@@ -50,32 +53,29 @@ public class StoreProductService {
 	}
 
 	private void processProductType(StoreSearchDto dto, String keyword) {
-
-		List<StoreProductDto> sortedStoreProducts = dto.getProducts().stream()
-			.sorted((a, b) -> {
-				boolean aFirst = a.getName().contains(keyword);
-				boolean bFirst = b.getName().contains(keyword);
-				if (aFirst == bFirst) {
-					return a.getName().compareTo(b.getName());
-				}
-				return bFirst ? 1 : -1;
-			}).limit(3).toList();
-
-		addTop3SortedStoreProductsToDto(dto, sortedStoreProducts);
+		dto.getProducts().sort((a, b) -> {
+			boolean aFirst = a.getName().contains(keyword);
+			boolean bFirst = b.getName().contains(keyword);
+			if (aFirst == bFirst) {
+				return a.getName().compareTo(b.getName());
+			}
+			return bFirst ? 1 : -1;
+		});
 	}
 
 	private void processStoreType(StoreSearchDto dto) {
-		List<StoreProductDto> sortedStoreProducts = dto.getProducts().stream()
-			.sorted(Comparator.comparing(StoreProductDto::getName))
+		dto.getProducts().sort(Comparator.comparing(StoreProductDto::getName));
+	}
+
+	private void addTop3StoreProductsToDto(StoreSearchDto dto) {
+		List<StoreProductDto> storeProductDtos = dto.getProducts().stream()
 			.limit(3)
 			.toList();
 
-		addTop3SortedStoreProductsToDto(dto, sortedStoreProducts);
-	}
+		dto.clearStoreProducts();
 
-	private void addTop3SortedStoreProductsToDto(StoreSearchDto dto, List<StoreProductDto> sortedProducts) {
-		for (StoreProductDto productDto : sortedProducts) {
-			dto.addStoreProductDto(productDto);
+		for (StoreProductDto storeProductDto : storeProductDtos) {
+			dto.addStoreProductDto(storeProductDto);
 		}
 	}
 }

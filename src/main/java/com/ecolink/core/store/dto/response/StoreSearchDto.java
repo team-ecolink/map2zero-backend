@@ -62,4 +62,8 @@ public class StoreSearchDto {
 	public void addStoreProductDto(StoreProductDto dto) {
 		this.products.add(dto);
 	}
+
+	public void clearStoreProducts() {
+		this.products.clear();
+	}
 }
