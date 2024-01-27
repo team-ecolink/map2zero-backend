@@ -1,6 +1,8 @@
 package com.ecolink.core.store.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
@@ -14,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -66,7 +69,19 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+	private List<StoreProduct> storeProducts = new ArrayList<>();
+
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;
+	}
+
+	public double getAverageScore() {
+		if (reviewCnt == 0) {
+			return 0.0;
+		} else {
+			double averageScore = totalScore / reviewCnt;
+			return Math.round(averageScore * 10.0) / 10.0;
+		}
 	}
 }
