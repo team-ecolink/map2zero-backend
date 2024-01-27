@@ -71,4 +71,7 @@ public class Store extends BaseTimeEntity {
 	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
 	private List<StoreProduct> storeProducts;
 
+	public void addBookmarkCount() {
+		this.bookmarkCnt++;
+	}
 }

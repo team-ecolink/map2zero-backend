@@ -28,11 +28,12 @@ public class EventPhoto extends BaseTimeEntity {
 	@NotNull
 	private Integer givenOrder;
 
+	@Valid
 	@NotNull
+	@Embedded
 	private ImageFile file;
 
 	@ManyToOne
 	@JoinColumn(name = "event_id")
 	private Event event;
-
 }
