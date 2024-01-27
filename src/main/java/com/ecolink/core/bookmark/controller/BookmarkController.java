@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
+import com.ecolink.core.bookmark.dto.request.BookmarkRequest;
 import com.ecolink.core.bookmark.dto.response.BookmarkResponse;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.response.ApiResponse;
@@ -31,8 +32,8 @@ public class BookmarkController {
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
 	public ApiResponse<BookmarkResponse> addBookmark(
-		@RequestBody Long storeId,
+		@RequestBody BookmarkRequest requestDto,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), storeId));
+		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), requestDto.storeId()));
 	}
 }
