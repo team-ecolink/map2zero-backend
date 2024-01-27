@@ -1,6 +1,7 @@
 package com.ecolink.core.store.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ecolink.core.common.constant.Address;
@@ -69,9 +70,18 @@ public class Store extends BaseTimeEntity {
 	private StoreRegistration storeRegistration;
 
 	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
-	private List<StoreProduct> storeProducts;
+	private List<StoreProduct> storeProducts = new ArrayList<>();
 
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;
+	}
+
+	public double getAverageScore() {
+		if (reviewCnt == 0) {
+			return 0.0;
+		} else {
+			double averageScore = totalScore / reviewCnt;
+			return Math.round(averageScore * 10.0) / 10.0;
+		}
 	}
 }

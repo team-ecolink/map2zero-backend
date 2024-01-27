@@ -28,8 +28,8 @@ public class StoreSearchDto {
 	@Schema(description = "매장 주소")
 	private final Address address;
 
-	@Schema(description = "매장 총점", example = "4.8")
-	private final double totalScore;
+	@Schema(description = "매장 평점", example = "4.8")
+	private final double averageScore;
 
 	@Schema(description = "매장 리뷰 수", example = "50")
 	private final int reviewCnt;
@@ -51,7 +51,7 @@ public class StoreSearchDto {
 		this.id = store.getId();
 		this.name = store.getName();
 		this.address = store.getAddress();
-		this.totalScore = store.getTotalScore();
+		this.averageScore = store.getAverageScore();
 		this.reviewCnt = store.getReviewCnt();
 		this.bookmarkCnt = store.getBookmarkCnt();
 		this.photo = storePhoto != null ? storePhoto.getFile() : null;
