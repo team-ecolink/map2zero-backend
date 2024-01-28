@@ -1,7 +1,9 @@
 package com.ecolink.core.bookmark.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +34,21 @@ public class BookmarkController {
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
 	public ApiResponse<BookmarkResponse> addBookmark(
-		@RequestBody BookmarkRequest requestDto,
+		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), requestDto.storeId()));
+		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), request.storeId()));
+	}
+
+	@Tag(name = "${swagger.tag.bookmark}")
+	@Operation(summary = "매장 북마크 취소 API - 인증 필요",
+		description = "매장 북마크 취소 - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@DeleteMapping
+	public ResponseEntity<?> deleteBookmark(
+		@RequestBody BookmarkRequest request,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		bookmarkService.deleteBookmark(principal.getAvatarId(), request.storeId());
+		return ResponseEntity.noContent().build();
 	}
 }

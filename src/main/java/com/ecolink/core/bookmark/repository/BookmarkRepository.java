@@ -6,6 +6,5 @@ import com.ecolink.core.bookmark.domain.Bookmark;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 	boolean existsBookmarkByAvatarIdAndStoreId(Long avatarId, Long storeId);
+	void deleteBookmarkByAvatarIdAndStoreId(Long avatarId, Long storeId);
 }
-
-

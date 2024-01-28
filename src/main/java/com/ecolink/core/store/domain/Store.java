@@ -69,4 +69,11 @@ public class Store extends BaseTimeEntity {
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;
 	}
+
+	public void deleteBookmarkCount() {
+		if (this.bookmarkCnt > 0) {
+			this.bookmarkCnt--;
+		}
+	}
+
 }

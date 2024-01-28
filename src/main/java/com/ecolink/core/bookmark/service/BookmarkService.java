@@ -10,6 +10,7 @@ import com.ecolink.core.bookmark.dto.response.BookmarkResponse;
 import com.ecolink.core.bookmark.repository.BookmarkRepository;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.BookmarkAlreadyExistsException;
+import com.ecolink.core.common.error.exception.BookmarkNotFoundException;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.service.StoreService;
 
@@ -44,4 +45,18 @@ public class BookmarkService {
 
 		return BookmarkResponse.of(savedBookmark);
 	}
+
+	@Transactional
+	public void deleteBookmark(Long avatarId, Long storeId) {
+		Store store = storeService.getById(storeId);
+
+		if (!existsBookmark(avatarId, storeId)) {
+			throw new BookmarkNotFoundException(ErrorCode.BOOKMARK_NOT_FOUND);
+		}
+
+		bookmarkRepository.deleteBookmarkByAvatarIdAndStoreId(avatarId, storeId);
+
+		store.deleteBookmarkCount();
+	}
+
 }
