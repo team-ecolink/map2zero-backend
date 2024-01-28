@@ -19,7 +19,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	public Page<Review> getByStore(Store store, Pageable pageable) {
-		return reviewRepository.findAllByStore_Id(store.getId(), pageable);
+		return reviewRepository.findAllByStore(store.getId(), pageable);
 	}
 
 	public Boolean getByAvatar(Review review, Avatar avatar) {
