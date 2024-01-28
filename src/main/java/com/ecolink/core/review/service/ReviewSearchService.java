@@ -2,7 +2,6 @@ package com.ecolink.core.review.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,16 +32,16 @@ public class ReviewSearchService {
 	public List<ReviewResponse> getByStore(Long storeId, Long avatarId, ReviewSearchRequest request) {
 		Store store = storeService.getById(storeId);
 		Pageable pageable = PageRequest.of(request.getPageNo(), request.getSize(), Sort.by(Sort.Direction.DESC, request.getCriteria()));
-		Page<ReviewResponse> page;
+
 		if(avatarId != null) {
 			Avatar avatar = avatarService.getById(avatarId);
-			page = reviewService.getByStore(store, pageable)
-				.map(review -> ReviewResponse.of(review, reviewLikeService.isLiked(review, avatar), isWriter(review, avatar)));
-		} else {
-			page = reviewService.getByStore(store, pageable)
-				.map(review -> ReviewResponse.of(review, false, false));
+			return reviewService.getByStore(store, pageable)
+				.map(review -> ReviewResponse.of(review, reviewLikeService.isLiked(review, avatar), isWriter(review, avatar)))
+				.getContent();
 		}
-		return page.getContent();
+		return reviewService.getByStore(store, pageable)
+			.map(review -> ReviewResponse.of(review, false, false))
+			.getContent();
 	}
 
 	private Boolean isWriter(Review review, Avatar avatar) {

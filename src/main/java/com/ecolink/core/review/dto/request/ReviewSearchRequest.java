@@ -10,7 +10,7 @@ public class ReviewSearchRequest {
 	private final Integer pageNo;
 	@Parameter(description = "페이지 사이즈", example = "5")
 	private final Integer size;
-	@Parameter(description = "정렬 기준", example = "likeCnt")
+	@Parameter(description = "정렬 기준 - likeCnt, createdDate", example = "likeCnt")
 	private final String criteria;
 
 	public ReviewSearchRequest(Integer pageNo, Integer size, String criteria) {
