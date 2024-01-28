@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.manager.domain.StoreRegistration;
 
 import jakarta.annotation.Nullable;
@@ -43,7 +44,7 @@ public class Store extends BaseTimeEntity {
 
 	private String contact;
 
-	private String youtubeUrl;
+	private String homepageUrl;
 
 	private String instagramUrl;
 
@@ -69,8 +70,25 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
-	private List<StoreProduct> storeProducts = new ArrayList<>();
+	@OneToMany(mappedBy = "store")
+	private List<StorePhoto> storePhotos = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<StoreProduct> storeProduct = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<Event> events = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<StoreOperatingHours> storeOperatingHour = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<StoreTag> storeTags = new ArrayList<>();
+
+	public Double calculateScore() {
+		if(totalScore == 0) return null;
+		return totalScore/reviewCnt;
+	}
 
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;

@@ -35,6 +35,9 @@ public class StoreProduct extends BaseTimeEntity {
 	private boolean main;
 
 	@NotNull
+	private Integer price;
+
+	@NotNull
 	@JoinColumn(name = "store_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
