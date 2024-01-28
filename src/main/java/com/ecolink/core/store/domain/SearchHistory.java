@@ -1,8 +1,7 @@
-package com.ecolink.core.bookmark.domain;
+package com.ecolink.core.store.domain;
 
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.common.domain.BaseTimeEntity;
-import com.ecolink.core.store.domain.Store;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,24 +18,21 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Bookmark extends BaseTimeEntity {
+public class SearchHistory extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private String word;
 
 	@NotNull
 	@JoinColumn(name = "avatar_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Avatar avatar;
 
-	@NotNull
-	@JoinColumn(name = "store_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Store store;
-
-	public Bookmark(Avatar avatar, Store store) {
+	public SearchHistory(String word, Avatar avatar) {
+		this.word = word;
 		this.avatar = avatar;
-		this.store = store;
 	}
 }

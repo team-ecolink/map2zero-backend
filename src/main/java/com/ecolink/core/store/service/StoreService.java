@@ -26,5 +26,4 @@ public class StoreService {
 		return storeRepository.findStoreGraphById(id).orElseThrow(
 			() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
 	}
-
 }

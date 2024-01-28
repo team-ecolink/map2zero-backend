@@ -25,5 +25,4 @@ public class Product extends BaseTimeEntity {
 
 	@NotNull
 	private Integer count;
-
 }

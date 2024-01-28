@@ -90,4 +90,16 @@ public class Store extends BaseTimeEntity {
 		return totalScore/reviewCnt;
 	}
 
+	public void addBookmarkCount() {
+		this.bookmarkCnt++;
+	}
+
+	public double getAverageScore() {
+		if (reviewCnt == 0) {
+			return 0.0;
+		} else {
+			double averageScore = totalScore / reviewCnt;
+			return Math.round(averageScore * 10.0) / 10.0;
+		}
+	}
 }

@@ -5,5 +5,5 @@ swagger:
     search: '03. 검색페이지'
     my-page: '04. 마이페이지'
     store: '05. 매장 상세 페이지'
-
-# 화면 별로 작성
+    bookmark: '06. 북마크'
+    account: '08. 계정 관리페이지'
