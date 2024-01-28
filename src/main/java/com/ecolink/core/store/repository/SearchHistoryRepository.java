@@ -11,4 +11,6 @@ public interface SearchHistoryRepository extends JpaRepository<SearchHistory, Lo
 	List<SearchHistory> findByAvatarIdOrderByCreatedDateDesc(Long avatarId);
 
 	int countByAvatarId(Long avatarId);
+
+	SearchHistory findTopByAvatarIdOrderByCreatedDate(Long avatarId);
 }

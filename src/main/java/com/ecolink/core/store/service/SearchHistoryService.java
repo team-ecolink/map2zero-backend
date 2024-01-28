@@ -24,11 +24,8 @@ public class SearchHistoryService {
 	public void saveSearchHistory(String keyword, Long avatarId) {
 		if (avatarId == null)
 			return;
-		if (searchHistoryRepository.countByAvatarId(avatarId) == 10) {
-			SearchHistory lastSearchHistory = searchHistoryRepository.findByAvatarIdOrderByCreatedDateDesc(avatarId)
-				.get(9);
-			searchHistoryRepository.delete(lastSearchHistory);
-		}
+		if (searchHistoryRepository.countByAvatarId(avatarId) == 10)
+			searchHistoryRepository.delete(searchHistoryRepository.findTopByAvatarIdOrderByCreatedDate(avatarId));
 		searchHistoryRepository.save(new SearchHistory(keyword, avatarService.getById(avatarId)));
 	}
 
