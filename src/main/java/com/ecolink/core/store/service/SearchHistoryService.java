@@ -30,6 +30,7 @@ public class SearchHistoryService {
 	}
 
 	public List<SearchHistoryDto> getSearchHistoryList(Long avatarId) {
+		avatarService.getById(avatarId);
 		return SearchHistoryDto.of(searchHistoryRepository.findByAvatarIdOrderByCreatedDateDesc(avatarId));
 	}
 }
