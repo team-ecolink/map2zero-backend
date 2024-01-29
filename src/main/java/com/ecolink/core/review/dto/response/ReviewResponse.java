@@ -23,7 +23,7 @@ public record ReviewResponse(
 	@Schema(description = "작성자", example = "홍길동")
 	String nickname,
 	@Schema(description = "작성 시간", example = "2024-01-01")
-	LocalDate createdAt,
+	LocalDate createdDate,
 	@Schema(description = "점수", example = "4")
 	Integer score,
 	@Schema(description = "좋아요 갯수", example = "8")
@@ -45,7 +45,7 @@ public record ReviewResponse(
 			.text(review.getText())
 			.score(review.getScore())
 			.nickname(review.getWriter().getNickname())
-			.createdAt(review.getCreatedDate().toLocalDate())
+			.createdDate(review.getCreatedDate().toLocalDate())
 			.likeCnt(review.getLikeCnt())
 			.isLiked(isLiked)
 			.isWriter(isWriter)
