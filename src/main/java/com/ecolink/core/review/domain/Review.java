@@ -39,7 +39,7 @@ public class Review extends BaseTimeEntity {
 	private String text;
 
 	@NotNull
-	private double score;
+	private int score;
 
 	private int likeCnt;
 
