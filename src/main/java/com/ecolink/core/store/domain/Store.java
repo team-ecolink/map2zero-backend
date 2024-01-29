@@ -74,7 +74,7 @@ public class Store extends BaseTimeEntity {
 	private List<StorePhoto> storePhotos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "store")
-	private List<StoreProduct> storeProduct = new ArrayList<>();
+	private List<StoreProduct> storeProducts = new ArrayList<>();
 
 	@OneToMany(mappedBy = "store")
 	private List<Event> events = new ArrayList<>();
