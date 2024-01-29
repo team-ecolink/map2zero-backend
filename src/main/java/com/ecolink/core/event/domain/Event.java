@@ -56,6 +56,6 @@ public class Event extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "event")
 	private List<EventPhoto> eventPhotos = new ArrayList<>();
 }
