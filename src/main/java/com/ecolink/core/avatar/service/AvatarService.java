@@ -33,4 +33,8 @@ public class AvatarService {
 		return avatarRepository.save(Avatar.of(request));
 	}
 
+	public void checkAvatarExists(Long avatarId) {
+		if (avatarRepository.findById(avatarId).isEmpty())
+			throw new EntityNotFoundException(ErrorCode.AVATAR_NOT_FOUND);
+	}
 }

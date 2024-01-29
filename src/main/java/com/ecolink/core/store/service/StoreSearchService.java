@@ -41,7 +41,7 @@ public class StoreSearchService {
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {
 
 		if (avatarId != null)
-			avatarService.getById(avatarId);
+			avatarService.checkAvatarExists(avatarId);
 
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
