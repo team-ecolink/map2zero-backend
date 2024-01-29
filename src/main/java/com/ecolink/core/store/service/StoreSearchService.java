@@ -1,5 +1,7 @@
 package com.ecolink.core.store.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,8 +9,6 @@ import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.response.StoreDetailResponse;
 
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreSearchService {
 
 	private final StoreService storeService;
-  private final StoreJpaRepository storeJpaRepository;
+  	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductService storeProductService;
 	private final ApplicationEventPublisher eventPublisher;
 
