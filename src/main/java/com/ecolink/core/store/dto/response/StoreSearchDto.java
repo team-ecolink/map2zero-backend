@@ -52,7 +52,7 @@ public class StoreSearchDto {
 		this.name = store.getName();
 		this.bookmarkCnt = store.getBookmarkCnt();
 		this.reviewCnt = store.getReviewCnt();
-		this.averageScore = store.getAverageScore();
+		this.averageScore = store.roundedAverageScore();
 		this.address = store.getAddress();
 		this.photo = storePhoto != null ? storePhoto.getFile() : null;
 		this.products = new ArrayList<>();

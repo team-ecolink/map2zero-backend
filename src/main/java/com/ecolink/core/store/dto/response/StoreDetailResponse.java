@@ -60,7 +60,7 @@ public record StoreDetailResponse(
 			.instagramUrl(store.getInstagramUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
-			.averageScore(scoreFormat(store.calculateScore()))
+			.averageScore(store.roundedAverageScore())
 			.address(store.getAddress())
 			.photos(store.getStorePhotos().stream()
 				.map(StorePhoto::getFile).toList())
@@ -70,10 +70,6 @@ public record StoreDetailResponse(
 				.map(StoreTagDto::of).toList())
 			.isBookmarked(isBookmarked)
 			.build();
-	}
-
-	public static Double scoreFormat(Double score) {
-		return Math.round(score * 10.0) / 10.0;
 	}
 
 }
