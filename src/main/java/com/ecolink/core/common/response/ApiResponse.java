@@ -21,6 +21,10 @@ public class ApiResponse<T> {
 		this.data = data;
 	}
 
+	public static ApiResponse<Void> ok() {
+		return ok(null);
+	}
+
 	public static <T> ApiResponse<T> ok(T data) {
 		return new ApiResponse<>(data, 200, "OK");
 	}
@@ -28,4 +32,5 @@ public class ApiResponse<T> {
 	public static <T> ApiResponse<T> created(T data) {
 		return new ApiResponse<>(data, 201, "Created");
 	}
+
 }
