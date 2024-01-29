@@ -27,7 +27,7 @@ public class ApiCursorPageResponse<T, C> {
 	@Schema(description = "비어있는 지 여부", example = "false")
 	private final boolean empty;
 	@Schema(description = "페이지 사이즈", example = "16")
-	private final int size;
+	private final Integer size;
 	@Schema(description = "조회 기준 시각")
 	private final LocalDateTime referenceTime;
 	@Schema(description = "응답 코드", example = "200")
@@ -49,6 +49,6 @@ public class ApiCursorPageResponse<T, C> {
 	}
 
 	public static <T, C> ApiCursorPageResponse<T, C> ok(CursorPage<T, C> data) {
-		return new ApiCursorPageResponse<>(data, 200, "sucess");
+		return new ApiCursorPageResponse<>(data, 200, "OK");
 	}
 }
