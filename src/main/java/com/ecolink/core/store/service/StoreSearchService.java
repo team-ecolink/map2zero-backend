@@ -2,16 +2,15 @@ package com.ecolink.core.store.service;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecolink.core.store.domain.Store;
-import com.ecolink.core.store.dto.response.StoreDetailResponse;
-
-import org.springframework.context.ApplicationEventPublisher;
-
+import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.dto.CursorPage;
+import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
+import com.ecolink.core.store.dto.response.StoreDetailResponse;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
 import com.ecolink.core.store.event.StoreSearchEvent;
 import com.ecolink.core.store.repository.StoreJpaRepository;
@@ -24,21 +23,25 @@ import lombok.RequiredArgsConstructor;
 public class StoreSearchService {
 
 	private final StoreService storeService;
-  	private final StoreJpaRepository storeJpaRepository;
+	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductService storeProductService;
+	private final AvatarService avatarService;
 	private final ApplicationEventPublisher eventPublisher;
 
 	public StoreDetailResponse getStoreDetailPage(Long id, Long avatarId) {
 		Store store = storeService.getStoreGraphById(id);
 		// 북마크 부분은 나중에 처리
 		Boolean isBookmarked = null;
-		if(avatarId != null) {
+		if (avatarId != null) {
 			return StoreDetailResponse.of(store, isBookmarked);
 		}
 		return StoreDetailResponse.of(store, isBookmarked);
 	}
 
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {
+
+		if (avatarId != null)
+			avatarService.checkAvatarExists(avatarId);
 
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
