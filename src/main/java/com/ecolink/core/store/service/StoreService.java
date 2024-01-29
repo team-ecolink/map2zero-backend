@@ -19,6 +19,6 @@ public class StoreService {
 
 	public Store getById(Long storeId) {
 		return storeRepository.findById(storeId)
-			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND)).getStore();
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
 	}
 }
