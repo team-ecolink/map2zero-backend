@@ -40,7 +40,7 @@ public class Store extends BaseTimeEntity {
 	private String description;
 
 	@NotNull
-	private boolean refillable;
+	private boolean isRefillable;
 
 	private String contact;
 
