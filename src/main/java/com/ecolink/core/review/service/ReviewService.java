@@ -22,7 +22,7 @@ public class ReviewService {
 		return reviewRepository.findAllByStore(store.getId(), pageable);
 	}
 
-	public Boolean getByAvatar(Review review, Avatar avatar) {
-		return reviewRepository.existsByIdAndWriter_Id(review.getId(), avatar.getId());
+	public Page<Review> getByStoreAndAvatar(Store store, Avatar avatar, Pageable pageable) {
+		return reviewRepository.findAllByStoreAndAvatar(store.getId(), avatar.getId(), pageable);
 	}
 }

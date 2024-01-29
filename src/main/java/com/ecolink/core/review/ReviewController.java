@@ -2,7 +2,7 @@ package com.ecolink.core.review;
 
 import java.util.List;
 
-import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,6 @@ import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.review.dto.response.ReviewResponse;
-import com.ecolink.core.review.dto.request.ReviewSearchRequest;
 import com.ecolink.core.review.service.ReviewSearchService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,11 +34,11 @@ public class ReviewController {
 	@GetMapping("/stores/{storeId}/reviews")
 	public ApiResponse<List<ReviewResponse>> reviewList(
 		@PathVariable("storeId") Long storeId,
-		@ParameterObject @Valid ReviewSearchRequest request,
-		@AuthenticationPrincipal UserPrincipal principal) {
+		@AuthenticationPrincipal UserPrincipal principal,
+		Pageable pageable) {
 		if(AuthorityUtil.hasUserAuthority(principal)) {
-			return ApiResponse.ok(reviewSearchService.getByStore(storeId, principal.getAvatarId(), request));
+			return ApiResponse.ok(reviewSearchService.getByStore(storeId, principal.getAvatarId(), pageable));
 		}
-		return ApiResponse.ok(reviewSearchService.getByStore(storeId, null, request));
+		return ApiResponse.ok(reviewSearchService.getByStore(storeId, null, pageable));
 	}
 }

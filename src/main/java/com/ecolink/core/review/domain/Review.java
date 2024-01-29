@@ -53,7 +53,6 @@ public class Review extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "review")
 	private List<ReviewPhoto> reviewPhotos = new ArrayList<>();
 
