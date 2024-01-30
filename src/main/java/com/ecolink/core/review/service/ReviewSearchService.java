@@ -1,7 +1,7 @@
 package com.ecolink.core.review.service;
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,18 +26,16 @@ public class ReviewSearchService {
 	private final AvatarService avatarService;
 	private final ReviewLikeService reviewLikeService;
 
-	public List<ReviewResponse> getByStore(Long storeId, Long avatarId, Pageable pageable) {
+	public Page<ReviewResponse> getByStore(Long storeId, Long avatarId, Pageable pageable) {
 		Store store = storeService.getById(storeId);
 
 		if(avatarId != null) {
 			Avatar avatar = avatarService.getById(avatarId);
 			return reviewService.getByStoreAndAvatar(store, avatar, pageable)
-				.map(review -> ReviewResponse.of(review, reviewLikeService.isLiked(review, avatar), isWriter(review, avatar)))
-				.getContent();
+				.map(review -> ReviewResponse.of(review, reviewLikeService.isLiked(review, avatar), isWriter(review, avatar)));
 		}
 		return reviewService.getByStore(store, pageable)
-			.map(review -> ReviewResponse.of(review, false, false))
-			.getContent();
+			.map(review -> ReviewResponse.of(review, false, false));
 
 	}
 
