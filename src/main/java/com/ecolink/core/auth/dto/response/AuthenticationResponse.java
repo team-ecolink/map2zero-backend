@@ -17,16 +17,16 @@ public class AuthenticationResponse {
 
 	private final String email;
 	private final String nickname;
-	private final ImageFile profilePhoto;
+	private final ImageFile photo;
 	private final Boolean isNewUser;
 	private final UserType type;
 
-	private AuthenticationResponse(String email, UserType type, String nickname, ImageFile profilePhoto,
+	private AuthenticationResponse(String email, UserType type, String nickname, ImageFile photo,
 		boolean isNewUser) {
 		this.email = email;
 		this.type = type;
 		this.nickname = nickname;
-		this.profilePhoto = profilePhoto;
+		this.photo = photo;
 		this.isNewUser = isNewUser;
 	}
 

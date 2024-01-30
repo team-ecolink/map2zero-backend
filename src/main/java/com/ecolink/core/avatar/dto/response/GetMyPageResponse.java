@@ -1,6 +1,7 @@
 package com.ecolink.core.avatar.dto.response;
 
 import com.ecolink.core.avatar.domain.Avatar;
+import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.user.domain.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -15,8 +16,8 @@ public record GetMyPageResponse(
 	String email,
 	@Schema(description = "닉네임", example = "김철수")
 	String nickname,
-	@Schema(description = "프로필 사진 URL", example = "https://www.~~~.com")
-	String photoUrl,
+	@Schema(description = "프로필 사진 URL")
+	ImageFile photo,
 	@Schema(description = "매니저 회원 여부", example = "false")
 	boolean isManager
 ) {
@@ -25,7 +26,7 @@ public record GetMyPageResponse(
 		return GetMyPageResponse.builder()
 			.email(user.getEmail())
 			.nickname(avatar.getNickname())
-			.photoUrl(avatar.getPhoto().getFile().getUrl())
+			.photo(avatar.getPhoto().getFile())
 			.isManager(isManager)
 			.build();
 	}
