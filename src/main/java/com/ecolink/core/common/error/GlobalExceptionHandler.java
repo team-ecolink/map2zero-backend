@@ -5,18 +5,25 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ecolink.core.auth.service.SecurityContextService;
 import com.ecolink.core.common.error.exception.DuplicatedEmailException;
 import com.ecolink.core.common.response.ErrorResponse;
 import com.ecolink.core.user.constant.UserType;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+	private final SecurityContextService securityContextService;
 
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<ErrorResponse<Object>> handleException(Exception e) {
@@ -50,6 +57,18 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(ErrorResponse.error(errors, ErrorCode.INVALID_TYPE_VALUE.getCode(),
 				ErrorCode.INVALID_TYPE_VALUE.getMessage()));
+	}
+
+	/**
+	 * 인증 실패시 발생하는 오류
+	 */
+	@ExceptionHandler(value = AccessDeniedException.class)
+	public ResponseEntity<ErrorResponse<Object>> handleRuntimeException(AccessDeniedException e) {
+		if (securityContextService.isAnonymous())
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body(ErrorResponse.error("401", "인증되지 않았습니다. Authorization 헤더를 확인해 주세요."));
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+			.body(ErrorResponse.error("403", "해당 요청에 대한 권한이 없습니다."));
 	}
 
 	/**
