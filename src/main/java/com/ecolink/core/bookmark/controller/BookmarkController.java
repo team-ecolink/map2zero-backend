@@ -1,6 +1,5 @@
 package com.ecolink.core.bookmark.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.bookmark.dto.request.BookmarkRequest;
-import com.ecolink.core.bookmark.dto.response.BookmarkResponse;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.response.ApiResponse;
 
