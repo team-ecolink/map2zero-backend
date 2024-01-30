@@ -9,9 +9,6 @@ public class UpdateNicknameRequest {
 
 	@Schema(description = "변경할 닉네임, 2-8자 제한", example = "제로웨이스트1")
 	@Size(min = 2, max = 8)
-	private final String nickname;
+	private String nickname;
 
-	public UpdateNicknameRequest(String nickname) {
-		this.nickname = nickname;
-	}
 }
