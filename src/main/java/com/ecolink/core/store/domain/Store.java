@@ -40,7 +40,7 @@ public class Store extends BaseTimeEntity {
 	private String description;
 
 	@NotNull
-	private boolean refillable;
+	private boolean isRefillable;
 
 	private String contact;
 
@@ -85,21 +85,18 @@ public class Store extends BaseTimeEntity {
 	@OneToMany(mappedBy = "store")
 	private List<StoreTag> storeTags = new ArrayList<>();
 
-	public Double calculateScore() {
-		if(totalScore == 0) return null;
-		return totalScore/reviewCnt;
+	public double averageScore() {
+		if (reviewCnt == 0)
+			return 0;
+		return totalScore / reviewCnt;
+	}
+
+	public double roundedAverageScore() {
+		return Math.round(averageScore() * 10.0) / 10.0;
 	}
 
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;
 	}
 
-	public double getAverageScore() {
-		if (reviewCnt == 0) {
-			return 0.0;
-		} else {
-			double averageScore = totalScore / reviewCnt;
-			return Math.round(averageScore * 10.0) / 10.0;
-		}
-	}
 }
