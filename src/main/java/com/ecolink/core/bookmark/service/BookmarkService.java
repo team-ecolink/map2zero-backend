@@ -25,7 +25,7 @@ public class BookmarkService {
 	private final StoreService storeService;
 
 	public boolean existsBookmark(Long avatarId, Long storeId) {
-		return bookmarkRepository.existsBookmarkByAvatarIdAndStoreId(avatarId, storeId);
+		return bookmarkRepository.existsByAvatarAndStore(avatarId, storeId);
 	}
 
 	@Transactional
