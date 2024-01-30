@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.manager.domain.StoreRegistration;
 
 import jakarta.annotation.Nullable;
@@ -39,11 +40,11 @@ public class Store extends BaseTimeEntity {
 	private String description;
 
 	@NotNull
-	private boolean refillable;
+	private boolean isRefillable;
 
 	private String contact;
 
-	private String youtubeUrl;
+	private String homepageUrl;
 
 	private String instagramUrl;
 
@@ -69,19 +70,33 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "store")
+	private List<StorePhoto> storePhotos = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
 	private List<StoreProduct> storeProducts = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<Event> events = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<StoreOperatingHours> storeOperatingHour = new ArrayList<>();
+
+	@OneToMany(mappedBy = "store")
+	private List<StoreTag> storeTags = new ArrayList<>();
+
+	public double averageScore() {
+		if (reviewCnt == 0)
+			return 0;
+		return totalScore / reviewCnt;
+	}
+
+	public double roundedAverageScore() {
+		return Math.round(averageScore() * 10.0) / 10.0;
+	}
 
 	public void addBookmarkCount() {
 		this.bookmarkCnt++;
 	}
 
-	public double getAverageScore() {
-		if (reviewCnt == 0) {
-			return 0.0;
-		} else {
-			double averageScore = totalScore / reviewCnt;
-			return Math.round(averageScore * 10.0) / 10.0;
-		}
-	}
 }

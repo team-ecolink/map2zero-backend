@@ -1,5 +1,8 @@
 package com.ecolink.core.avatar.domain;
 
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.user.domain.User;
 
@@ -49,6 +52,10 @@ public class Avatar extends BaseTimeEntity {
 	}
 
 	public static Avatar of(AvatarCreateRequest request) {
+		Assert.notNull(request.user(), "User는 null일 수 없습니다.");
+		Assert.notNull(request.photo(),"Photo는 null일 수 없습니다.");
+		validateNickname(request.nickname());
+
 		Avatar avatar = Avatar.builder()
 			.nickname(request.nickname())
 			.user(request.user())
@@ -56,6 +63,19 @@ public class Avatar extends BaseTimeEntity {
 			.build();
 		request.user().addAvatar(avatar);
 		return avatar;
+	}
+
+	public void updateNickname(String requestedNickname) {
+		validateNickname(requestedNickname);
+		this.nickname = requestedNickname;
+	}
+
+	private static void validateNickname(String nickname) {
+		Assert.hasText(nickname, "닉네임이 입력되지 않았습니다.");
+		if(nickname.length() < 2 || nickname.length() > 8)
+			throw new IllegalArgumentException("닉네임의 길이는 최소 2자, 최대 8자입니다.");
+		if (!nickname.matches("^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$"))
+			throw new IllegalArgumentException("닉네임에는 영문자, 한글, 숫자만 입력 가능합니다.");
 	}
 
 }

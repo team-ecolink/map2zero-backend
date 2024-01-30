@@ -6,9 +6,12 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.dto.CursorPage;
+import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
+import com.ecolink.core.store.dto.response.StoreDetailResponse;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
 import com.ecolink.core.store.event.StoreSearchEvent;
 import com.ecolink.core.store.repository.StoreJpaRepository;
@@ -20,15 +23,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class StoreSearchService {
 
+	private final StoreService storeService;
+	private final BookmarkService bookmarkService;
 	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductService storeProductService;
 	private final AvatarService avatarService;
 	private final ApplicationEventPublisher eventPublisher;
 
+	public StoreDetailResponse getStoreDetailPage(Long storeId, Long avatarId) {
+		return StoreDetailResponse.of(storeService.getStoreGraphById(storeId),
+			bookmarkService.existsBookmark(avatarId, storeId));
+	}
+
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {
 
 		if (avatarId != null)
-			avatarService.getById(avatarId);
+			avatarService.checkAvatarExists(avatarId);
 
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
@@ -38,4 +48,5 @@ public class StoreSearchService {
 
 		return CursorPage.of(storeSearchDtos, request.getSize(), StoreSearchDto::getId);
 	}
+  
 }
