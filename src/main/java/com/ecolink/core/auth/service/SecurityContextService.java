@@ -1,6 +1,7 @@
 package com.ecolink.core.auth.service;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -51,6 +52,15 @@ public class SecurityContextService {
 			return attributes.getResponse();
 		}
 		return null;
+	}
+
+	public boolean isAnonymous() {
+		var authorities = securityContextHolderStrategy.getContext().getAuthentication().getAuthorities();
+		for (GrantedAuthority grantedAuthority : authorities) {
+			if (grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS"))
+				return true;
+		}
+		return false;
 	}
 
 }

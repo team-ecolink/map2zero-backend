@@ -49,8 +49,7 @@ public class SecurityConfig {
 					.successHandler(oauth2SuccessHandler))
 			.headers(headers ->
 				headers.addHeaderWriter(
-					new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-			.authorizeHttpRequests(r -> r.anyRequest().permitAll());
+					new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
 
 		return http.build();
 	}
