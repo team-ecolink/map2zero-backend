@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
@@ -25,7 +24,6 @@ public class StoreSearchService {
 	private final StoreService storeService;
 	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductService storeProductService;
-	private final AvatarService avatarService;
 	private final ApplicationEventPublisher eventPublisher;
 
 	public StoreDetailResponse getStoreDetailPage(Long id, Long avatarId) {
@@ -39,10 +37,6 @@ public class StoreSearchService {
 	}
 
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {
-
-		if (avatarId != null)
-			avatarService.checkAvatarExists(avatarId);
-
 		List<StoreSearchDto> storeSearchDtos = storeJpaRepository.findStoresByKeyword(request, avatarId);
 
 		storeProductService.processAndLimitTop3Products(request, storeSearchDtos);

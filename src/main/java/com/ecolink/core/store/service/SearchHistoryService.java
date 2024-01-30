@@ -24,13 +24,25 @@ public class SearchHistoryService {
 	public void saveSearchHistory(String keyword, Long avatarId) {
 		if (avatarId == null)
 			return;
-		if (searchHistoryRepository.countByAvatarId(avatarId) == 10)
-			searchHistoryRepository.delete(searchHistoryRepository.findTopByAvatarIdOrderByCreatedDate(avatarId));
+
+		int searchHistoryCount = searchHistoryRepository.countByAvatarId(avatarId);
+		if (searchHistoryCount >= 10) {
+			List<SearchHistory> searchHistories = getSearchHistoryListLimit(searchHistoryCount - 9, avatarId);
+			searchHistoryRepository.deleteAll(searchHistories);
+		}
 		searchHistoryRepository.save(new SearchHistory(keyword, avatarService.getById(avatarId)));
 	}
 
 	public List<SearchHistoryDto> getSearchHistoryList(Long avatarId) {
-		avatarService.getById(avatarId);
-		return SearchHistoryDto.of(searchHistoryRepository.findByAvatarIdOrderByCreatedDateDesc(avatarId));
+		return searchHistoryRepository.findByAvatarIdOrderByCreatedDateDesc(avatarId)
+			.stream()
+			.map(SearchHistoryDto::of)
+			.toList();
+	}
+
+	private List<SearchHistory> getSearchHistoryListLimit(int size, Long avatarId) {
+		return searchHistoryRepository.findAllByAvatarIdOrderByCreatedDate(avatarId).stream()
+			.limit(size)
+			.toList();
 	}
 }

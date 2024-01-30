@@ -1,7 +1,5 @@
 package com.ecolink.core.store.dto.response;
 
-import java.util.List;
-
 import com.ecolink.core.store.domain.SearchHistory;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -24,7 +22,7 @@ public class SearchHistoryDto {
 		this.keyword = searchHistory.getWord();
 	}
 
-	public static List<SearchHistoryDto> of(List<SearchHistory> searchHistories) {
-		return searchHistories.stream().map(SearchHistoryDto::new).toList();
+	public static SearchHistoryDto of(SearchHistory searchHistory) {
+		return new SearchHistoryDto(searchHistory);
 	}
 }
