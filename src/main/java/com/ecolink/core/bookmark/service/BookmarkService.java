@@ -46,15 +46,17 @@ public class BookmarkService {
 		return BookmarkResponse.of(savedBookmark);
 	}
 
+	public Bookmark getBookmark(Long avatarId, Long storeId) {
+		return bookmarkRepository.findBookmarkByAvatarIdAndStoreId(avatarId, storeId)
+			.orElseThrow(() -> new BookmarkNotFoundException(ErrorCode.BOOKMARK_NOT_FOUND));
+	}
+
 	@Transactional
 	public void deleteBookmark(Long avatarId, Long storeId) {
-		Store store = storeService.getById(storeId);
+		Bookmark bookmark = getBookmark(avatarId, storeId);
+		Store store = bookmark.getStore();
 
-		if (!existsBookmark(avatarId, storeId)) {
-			throw new BookmarkNotFoundException(ErrorCode.BOOKMARK_NOT_FOUND);
-		}
-
-		bookmarkRepository.deleteBookmarkByAvatarIdAndStoreId(avatarId, storeId);
+		bookmarkRepository.delete(bookmark);
 
 		store.deleteBookmarkCount();
 	}

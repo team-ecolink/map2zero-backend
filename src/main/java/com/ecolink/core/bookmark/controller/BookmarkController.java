@@ -45,7 +45,7 @@ public class BookmarkController {
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping
-	public ResponseEntity<?> deleteBookmark(
+	public ResponseEntity<Void> deleteBookmark(
 		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		bookmarkService.deleteBookmark(principal.getAvatarId(), request.storeId());
