@@ -33,10 +33,11 @@ public class BookmarkController {
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
-	public ApiResponse<BookmarkResponse> addBookmark(
+	public ApiResponse<Void> addBookmark(
 		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		return ApiResponse.ok(bookmarkService.addBookmark(principal.getAvatarId(), request.storeId()));
+		bookmarkService.addBookmark(principal.getAvatarId(), request.storeId());
+		return ApiResponse.ok();
 	}
 
 	@Tag(name = "${swagger.tag.bookmark}")
@@ -45,10 +46,10 @@ public class BookmarkController {
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping
-	public ResponseEntity<Void> deleteBookmark(
+	public ApiResponse<Void> deleteBookmark(
 		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		bookmarkService.deleteBookmark(principal.getAvatarId(), request.storeId());
-		return ResponseEntity.noContent().build();
+		return ApiResponse.ok();
 	}
 }
