@@ -12,11 +12,9 @@ import com.ecolink.core.like.domain.ReviewLike;
 @Repository
 public interface ReviewLikeRepository extends JpaRepository<ReviewLike, Long> {
 
-	@Query("select l from ReviewLike l "
-		+ "join fetch l.avatar a "
-		+ "join fetch l.review r "
-		+ "where r.id in :reviewIds "
-		+ "and a.id = :avatarId")
-	List<ReviewLike> findAllByReviewList(@Param("reviewIds") List<Long> reviewIds,
-										 @Param("avatarId") Long avatarId);
+    @Query("select l from ReviewLike l "
+            + "where l.review.id in :reviewIds "
+            + "and l.avatar.id = :avatarId")
+    List<ReviewLike> findAllByReviewList(@Param("reviewIds") List<Long> reviewIds,
+                                         @Param("avatarId") Long avatarId);
 }
