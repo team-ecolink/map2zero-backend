@@ -1,6 +1,7 @@
 package com.ecolink.core.like.service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,14 @@ public class ReviewLikeService {
 	private final ReviewLikeRepository reviewLikeRepository;
 
 	public Page<GetReviewResponse> findReviewLike(Page<GetReviewResponse> reviews, Long avatarId) {
-		List<ReviewLike> reviewLikes = reviewLikeRepository.findAllByReviewList(
-			reviews.map(GetReviewResponse::getId).toList(), avatarId);
+		Set<ReviewLike> reviewLikes = reviewLikeRepository.findAllByReviewList(
+			reviews.map(GetReviewResponse::getId).toList(), avatarId).stream().collect(Collectors.toSet());
 
-		List<Long> reviewIds = reviewLikes.stream().map(reviewLike ->
-				reviewLike.getReview().getId()).toList();
+		Set<Long> reviewIds = reviewLikes.stream().map(reviewLike ->
+				reviewLike.getReview().getId()).collect(Collectors.toSet());
 
-		reviews.forEach(getReviewResponse -> {
-					if(reviewIds.contains(getReviewResponse.getId()))
-						getReviewResponse.setLiked(true);});
+		reviews.stream().filter(response -> reviewIds.contains(response.getId()))
+						.forEach(response -> response.setLikedTrue(true));
 		return reviews;
 	}
 
