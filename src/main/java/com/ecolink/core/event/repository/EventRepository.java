@@ -13,7 +13,6 @@ import com.ecolink.core.event.domain.Event;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
 	@Query("select e from Event e "
-		+ "join fetch e.store "
 		+ "left join fetch e.eventPhotos "
 		+ "where e.store.id=:id and "
 		+ "e.status='ACTIVE' "
