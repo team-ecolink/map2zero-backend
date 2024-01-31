@@ -78,4 +78,8 @@ public class StoreProductService {
 			dto.addStoreProductDto(storeProductDto);
 		}
 	}
+
+	public List<StoreProduct> getByStore(Long storeId) {
+		return storeProductRepository.findTop6ByStore_IdOrderByProduct_Name(storeId);
+	}
 }

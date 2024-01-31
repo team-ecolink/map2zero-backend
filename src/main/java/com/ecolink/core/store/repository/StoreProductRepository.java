@@ -17,4 +17,6 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
 		+ "where s.id in :ids")
 	List<StoreProduct> findByStoreIdIn(@Param("ids") Collection<Long> ids);
 
+	List<StoreProduct> findTop6ByStore_IdOrderByProduct_Name(Long id);
+
 }
