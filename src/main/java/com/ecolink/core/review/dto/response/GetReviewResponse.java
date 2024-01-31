@@ -12,35 +12,40 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record ReviewResponse(
+public class GetReviewResponse{
 	@Schema(description = "리뷰 아이디", example = "1")
-	Long id,
+	private Long id;
 	@Schema(description = "리뷰 내용", example = "매장이 깔끔해요")
-	String text,
+	private String text;
 	@Schema(description = "작성자", example = "홍길동")
-	String nickname,
+	private String nickname;
 	@Schema(description = "작성 시간", example = "2024-01-01")
-	LocalDate createdDate,
+	private LocalDate createdDate;
 	@Schema(description = "점수", example = "4")
-	Integer score,
+	private int score;
 	@Schema(description = "좋아요 갯수", example = "8")
-	Integer likeCnt,
+	private int likeCnt;
 	@Schema(description = "좋아요 여부", example = "true")
-	Boolean isLiked,
+	private boolean isLiked;
 	@Schema(description = "작성 여부", example = "false")
-	Boolean isWriter,
+	private boolean isWriter;
 	@Schema(description = "리뷰 사진")
-	List<ImageFile> reviewPhotos,
+	private List<ImageFile> reviewPhotos;
 	@Schema(description = "리뷰 태그")
-	List<ReviewTagDto> reviewTags
+	private List<ReviewTagDto> reviewTags;
 
-) {
+	public GetReviewResponse setLiked(boolean isLikedParam) {
+		isLiked = isLikedParam;
+		return this;
+	}
 
-	public static ReviewResponse of(Review review, Boolean isLiked, Boolean isWriter) {
-		return ReviewResponse.builder()
+	public static GetReviewResponse of(Review review, boolean isLiked, boolean isWriter) {
+		return GetReviewResponse.builder()
 			.id(review.getId())
 			.text(review.getText())
 			.score(review.getScore())

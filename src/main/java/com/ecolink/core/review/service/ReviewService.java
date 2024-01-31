@@ -5,10 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.repository.ReviewRepository;
-import com.ecolink.core.store.domain.Store;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
-	public Page<Review> getByStore(Store store, Pageable pageable) {
-		return reviewRepository.findAllByStore(store.getId(), pageable);
+	public Page<Review> getByStore(Long storeId, Pageable pageable) {
+		return reviewRepository.findAllByStore(storeId, pageable);
 	}
 
-	public Page<Review> getByStoreAndAvatar(Store store, Avatar avatar, Pageable pageable) {
-		return reviewRepository.findAllByStoreAndAvatar(store.getId(), avatar.getId(), pageable);
+	public Page<Review> getByStoreAndAvatar(Long storeId, Long avatarId, Pageable pageable) {
+		return reviewRepository.findAllByStoreAndAvatar(storeId, avatarId, pageable);
 	}
 }
