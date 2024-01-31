@@ -47,7 +47,7 @@ public class StoreSearchService {
 	}
 
 	public List<StoreInfoDto> getTop10PopularStores() {
-		List<Store> stores = storeRepository.findAllByOrderByBookmarkCntDesc().stream().limit(10).toList();
+		List<Store> stores = storeRepository.findTop10ByOrderByBookmarkCntDesc();
 		return stores.stream().map(StoreInfoDto::of).toList();
 	}
 

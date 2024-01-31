@@ -19,5 +19,5 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 		+ "where s.id = :id")
 	Optional<Store> findStoreGraphById(@Param("id") Long id);
 
-	List<Store> findAllByOrderByBookmarkCntDesc();
+	List<Store> findTop10ByOrderByBookmarkCntDesc();
 }
