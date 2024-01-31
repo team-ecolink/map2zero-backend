@@ -45,4 +45,9 @@ public class SearchHistoryService {
 			.limit(size)
 			.toList();
 	}
+
+	@Transactional
+	public void deleteAll(Long avatarId) {
+		searchHistoryRepository.deleteAll(searchHistoryRepository.findAllByAvatarId(avatarId));
+	}
 }
