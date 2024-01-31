@@ -17,6 +17,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 		+ "left join fetch e.eventPhotos "
 		+ "where e.store.id=:id and "
 		+ "e.status='ACTIVE' "
-		+ "order by e.startDate")
+		+ "order by e.createdDate")
 	Page<Event> findAllByStore(@Param("id") Long id, Pageable pageable);
 }

@@ -1,9 +1,10 @@
 package com.ecolink.core.event.dto.response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.ecolink.core.common.domain.ImageFile;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.event.domain.EventPhoto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -14,7 +15,7 @@ import lombok.Builder;
 
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record EventResponse(
+public record GetEventResponse(
 	@Schema(description = "이벤트 ID", example = "1")
 	Long id,
 	@Schema(description = "이벤트 이름", example = "이벤트1")
@@ -24,17 +25,18 @@ public record EventResponse(
 	@Schema(description = "종료 시간", example = "2024-01-31")
 	LocalDate endDate,
 	@Schema(description = "대표 사진")
-	ImageFile photo
+	ImageFile eventPhoto
 ) {
-	public static EventResponse of(Event event) {
-		return EventResponse.builder()
+	public static GetEventResponse of(Event event) {
+		return GetEventResponse.builder()
 			.id(event.getId())
 			.title(event.getTitle())
 			.startDate(event.getStartDate().toLocalDate())
 			.endDate(event.getEndDate().toLocalDate())
-			.photo((ImageFile)event.getEventPhotos().stream()
+			.eventPhoto(event.getEventPhotos().stream()
 				.filter(eventPhoto -> eventPhoto.getGivenOrder() == 0)
-				.map(EventPhoto::getFile))
+				.map(EventPhoto::getFile).findFirst().orElseThrow(
+						() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND)))
 			.build();
 	}
 }
