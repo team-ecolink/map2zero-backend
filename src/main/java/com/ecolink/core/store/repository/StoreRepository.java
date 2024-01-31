@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ecolink.core.bookmark.domain.Bookmark;
 import com.ecolink.core.store.domain.Store;
 
 @Repository
