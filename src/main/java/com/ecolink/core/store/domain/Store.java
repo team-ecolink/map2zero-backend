@@ -99,4 +99,12 @@ public class Store extends BaseTimeEntity {
 		this.bookmarkCnt++;
 	}
 
+
+	public void deleteBookmarkCount() {
+		if (this.bookmarkCnt <= 0) {
+			throw new IllegalStateException("북마크 수는 음수가 될 수 없습니다.");
+		}
+		this.bookmarkCnt--;
+	}
+
 }

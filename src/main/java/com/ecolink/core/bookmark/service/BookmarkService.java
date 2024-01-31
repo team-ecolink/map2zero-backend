@@ -6,10 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.bookmark.domain.Bookmark;
-import com.ecolink.core.bookmark.dto.response.BookmarkResponse;
 import com.ecolink.core.bookmark.repository.BookmarkRepository;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.BookmarkAlreadyExistsException;
+import com.ecolink.core.common.error.exception.BookmarkNotFoundException;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.service.StoreService;
 
@@ -29,7 +29,7 @@ public class BookmarkService {
 	}
 
 	@Transactional
-	public BookmarkResponse addBookmark(Long avatarId, Long storeId) {
+	public Bookmark addBookmark(Long avatarId, Long storeId) {
 		Avatar avatar = avatarService.getById(avatarId);
 		Store store = storeService.getById(storeId);
 
@@ -42,6 +42,22 @@ public class BookmarkService {
 
 		store.addBookmarkCount();
 
-		return BookmarkResponse.of(savedBookmark);
+		return savedBookmark;
 	}
+
+	public Bookmark getBookmark(Long avatarId, Long storeId) {
+		return bookmarkRepository.findBookmarkByAvatarIdAndStoreId(avatarId, storeId)
+			.orElseThrow(() -> new BookmarkNotFoundException(ErrorCode.BOOKMARK_NOT_FOUND));
+	}
+
+	@Transactional
+	public void deleteBookmark(Long avatarId, Long storeId) {
+		Bookmark bookmark = getBookmark(avatarId, storeId);
+		Store store = bookmark.getStore();
+
+		bookmarkRepository.delete(bookmark);
+
+		store.deleteBookmarkCount();
+	}
+
 }
