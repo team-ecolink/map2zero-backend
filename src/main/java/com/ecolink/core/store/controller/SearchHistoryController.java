@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +36,30 @@ public class SearchHistoryController {
 	public ApiResponse<List<SearchHistoryDto>> getRecentKeywords(
 		@AuthenticationPrincipal UserPrincipal principal) {
 		return ApiResponse.ok(searchHistoryService.getSearchHistoryList(principal.getAvatarId()));
+	}
+
+	@Tag(name = "${swagger.tag.search}")
+	@Operation(summary = "최근 검색어 모두 삭제 API - 인증 필요",
+		description = "최근 검색어 모두 삭제 API - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@DeleteMapping("/recent")
+	public ApiResponse<Void> deleteAll(
+		@AuthenticationPrincipal UserPrincipal principal) {
+		searchHistoryService.deleteAll(principal.getAvatarId());
+		return ApiResponse.ok();
+	}
+
+	@Tag(name = "${swagger.tag.search}")
+	@Operation(summary = "최근 검색어 단일 삭제 API - 인증 필요",
+		description = "최근 검색어 단일 삭제 API - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@DeleteMapping("/recent/{id}")
+	public ApiResponse<Void> deleteSearchHistory(
+		@PathVariable("id") Long id,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		searchHistoryService.deleteSearchHistory(id, principal.getAvatarId());
+		return ApiResponse.ok();
 	}
 }

@@ -23,7 +23,7 @@ public enum ErrorCode {
 	 * 상점 관련 오류
 	 */
 	STORE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "S-001", "주어진 식별자로 스토어를 찾을 수 없습니다."),
-  
+
 	/**
 	 * 북마크 관련 오류
 	 */
@@ -41,7 +41,13 @@ public enum ErrorCode {
 	 * 닉네임 관련 오류
 	 */
 	FAIL_TO_FIND_UNIQUE_NICKNAME(HttpStatus.INTERNAL_SERVER_ERROR, "N-001", "유일한 닉네임을 찾는데 실패했습니다."),
-	DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "N-002", "이미 사용중인 닉네임 입니다.");
+	DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "N-002", "이미 사용중인 닉네임 입니다."),
+
+	/**
+	 * 검색 히스토리 관련 오류
+	 */
+	SEARCH_HISTORY_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "H-001", "주어진 식별자로 검색 히스토리를 찾을 수 없습니다."),
+	SEARCH_HISTORY_FORBIDDEN(HttpStatus.FORBIDDEN, "H-002", "해당 검색 히스토리에 접근할 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
