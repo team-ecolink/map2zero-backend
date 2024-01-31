@@ -1,5 +1,7 @@
 package com.ecolink.core.common.domain;
 
+import com.ecolink.core.file.dto.FileInfo;
+import com.ecolink.core.file.dto.ImageSize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -47,4 +49,7 @@ public class ImageFile {
 		return new ImageFile(url, null, null, null, null);
 	}
 
+	public static ImageFile of(FileInfo info, ImageSize size) {
+		return new ImageFile(info.url(), info.key(), size.byteSize(), size.width(), size.height());
+	}
 }
