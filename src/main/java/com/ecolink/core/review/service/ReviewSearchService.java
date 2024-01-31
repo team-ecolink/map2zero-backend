@@ -39,8 +39,7 @@ public class ReviewSearchService {
 
 	public Page<GetReviewResponse> getByStoreAndAvatar(Long storeId, Pageable pageable, Long avatarId) {
 		Store store = storeService.getById(storeId);
-		Avatar avatar = avatarService.getById(avatarId);
-		Page<GetReviewResponse> reviewDto = reviewService.getByStoreAndAvatar(store.getId(), avatar.getId(), pageable)
+		Page<GetReviewResponse> reviewDto = reviewService.getByStoreAndAvatar(store.getId(), avatarId, pageable)
 				.map(review -> GetReviewResponse.of(review,  true));
 		return reviewLikeService.findReviewLike(reviewDto, avatarId);
 	}
