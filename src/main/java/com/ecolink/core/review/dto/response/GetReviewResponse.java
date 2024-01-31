@@ -39,12 +39,11 @@ public class GetReviewResponse{
 	@Schema(description = "리뷰 태그")
 	private List<ReviewTagDto> reviewTags;
 
-	public GetReviewResponse setLiked(boolean isLikedParam) {
+	public void setLikedTrue(boolean isLikedParam) {
 		isLiked = isLikedParam;
-		return this;
 	}
 
-	public static GetReviewResponse of(Review review, boolean isLiked, boolean isWriter) {
+	public static GetReviewResponse of(Review review, boolean isWriter) {
 		return GetReviewResponse.builder()
 			.id(review.getId())
 			.text(review.getText())
@@ -52,7 +51,7 @@ public class GetReviewResponse{
 			.nickname(review.getWriter().getNickname())
 			.createdDate(review.getCreatedDate().toLocalDate())
 			.likeCnt(review.getLikeCnt())
-			.isLiked(isLiked)
+			.isLiked(false)
 			.isWriter(isWriter)
 			.reviewPhotos(review.getReviewPhotos().stream()
 				.map(ReviewPhoto::getFile).toList())

@@ -29,25 +29,24 @@ public class ReviewSearchService {
 		Store store = storeService.getById(storeId);
 
 		if(avatarId != null) {
-			Avatar avatar = avatarService.getById(avatarId);
 			Page<GetReviewResponse> reviewDto = reviewService.getByStore(store.getId(), pageable)
-					.map(review -> GetReviewResponse.of(review, false, isWriter(review, avatar)));
+					.map(review -> GetReviewResponse.of(review, isWriter(review, avatarId)));
 			return reviewLikeService.findReviewLike(reviewDto, avatarId);
 		}
 		return reviewService.getByStore(store.getId(), pageable)
-			.map(review -> GetReviewResponse.of(review, false, false));
+			.map(review -> GetReviewResponse.of(review,  false));
 	}
 
 	public Page<GetReviewResponse> getByStoreAndAvatar(Long storeId, Pageable pageable, Long avatarId) {
 		Store store = storeService.getById(storeId);
 		Avatar avatar = avatarService.getById(avatarId);
 		Page<GetReviewResponse> reviewDto = reviewService.getByStoreAndAvatar(store.getId(), avatar.getId(), pageable)
-				.map(review -> GetReviewResponse.of(review, false, true));
+				.map(review -> GetReviewResponse.of(review,  true));
 		return reviewLikeService.findReviewLike(reviewDto, avatarId);
 	}
 
-	private Boolean isWriter(Review review, Avatar avatar) {
-		return review.getWriter().getId().equals(avatar.getId());
+	private Boolean isWriter(Review review, Long avatarId) {
+		return review.getWriter().getId().equals(avatarId);
 	}
 
 }
