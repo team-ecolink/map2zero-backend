@@ -1,11 +1,15 @@
 package com.ecolink.core.store.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.avatar.service.AvatarService;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
+import com.ecolink.core.common.error.exception.ForbiddenException;
 import com.ecolink.core.store.domain.SearchHistory;
 import com.ecolink.core.store.dto.response.SearchHistoryDto;
 import com.ecolink.core.store.repository.SearchHistoryRepository;
@@ -49,5 +53,18 @@ public class SearchHistoryService {
 	@Transactional
 	public void deleteAll(Long avatarId) {
 		searchHistoryRepository.deleteAll(searchHistoryRepository.findAllByAvatarId(avatarId));
+	}
+
+	@Transactional
+	public void deleteSearchHistory(Long searchHistoryId, Long avatarId) {
+		SearchHistory searchHistory = getById(searchHistoryId);
+		if (!Objects.equals(searchHistory.getAvatar().getId(), avatarId))
+			throw new ForbiddenException(ErrorCode.SEARCH_HISTORY_FORBIDDEN);
+		searchHistoryRepository.delete(searchHistory);
+	}
+
+	public SearchHistory getById(Long searchHistoryId) {
+		return searchHistoryRepository.findById(searchHistoryId)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.SEARCH_HISTORY_NOT_FOUND));
 	}
 }
