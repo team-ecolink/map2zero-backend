@@ -6,12 +6,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.response.ApiResponse;
+import com.ecolink.core.store.dto.request.SearchHistoryRequest;
 import com.ecolink.core.store.dto.response.SearchHistoryDto;
 import com.ecolink.core.store.service.SearchHistoryService;
 
@@ -43,7 +44,7 @@ public class SearchHistoryController {
 		description = "최근 검색어 모두 삭제 API - 인증 필요",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
-	@DeleteMapping("/recent")
+	@DeleteMapping("/recent/all")
 	public ApiResponse<Void> deleteAll(
 		@AuthenticationPrincipal UserPrincipal principal) {
 		searchHistoryService.deleteAll(principal.getAvatarId());
@@ -55,11 +56,11 @@ public class SearchHistoryController {
 		description = "최근 검색어 단일 삭제 API - 인증 필요",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('USER')")
-	@DeleteMapping("/recent/{id}")
+	@DeleteMapping("/recent/single")
 	public ApiResponse<Void> deleteSearchHistory(
-		@PathVariable("id") Long id,
+		@RequestBody SearchHistoryRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		searchHistoryService.deleteSearchHistory(id, principal.getAvatarId());
+		searchHistoryService.deleteSearchHistory(request.getId(), principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 }
