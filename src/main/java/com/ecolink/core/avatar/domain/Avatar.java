@@ -1,11 +1,12 @@
 package com.ecolink.core.avatar.domain;
 
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.file.domain.SinglePhotoContainer;
 import com.ecolink.core.user.domain.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Avatar extends BaseTimeEntity {
+public class Avatar extends BaseTimeEntity implements SinglePhotoContainer<ProfilePhoto> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Avatar extends BaseTimeEntity {
 
 	@Column(unique = true)
 	@NotNull
-	@Size(min = 4, max = 12)
+	@Size(min = 2, max = 8)
 	private String nickname;
 
 	@NotNull
@@ -40,8 +42,9 @@ public class Avatar extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 
+	@NotNull
 	@JoinColumn(name = "photo_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private ProfilePhoto photo;
 
 	@Builder
@@ -53,7 +56,7 @@ public class Avatar extends BaseTimeEntity {
 
 	public static Avatar of(AvatarCreateRequest request) {
 		Assert.notNull(request.user(), "User는 null일 수 없습니다.");
-		Assert.notNull(request.photo(),"Photo는 null일 수 없습니다.");
+		Assert.notNull(request.photo(), "Photo는 null일 수 없습니다.");
 		validateNickname(request.nickname());
 
 		Avatar avatar = Avatar.builder()
@@ -72,10 +75,15 @@ public class Avatar extends BaseTimeEntity {
 
 	private static void validateNickname(String nickname) {
 		Assert.hasText(nickname, "닉네임이 입력되지 않았습니다.");
-		if(nickname.length() < 2 || nickname.length() > 8)
+		if (nickname.length() < 2 || nickname.length() > 8)
 			throw new IllegalArgumentException("닉네임의 길이는 최소 2자, 최대 8자입니다.");
 		if (!nickname.matches("^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$"))
 			throw new IllegalArgumentException("닉네임에는 영문자, 한글, 숫자만 입력 가능합니다.");
+	}
+
+	@Override
+	public void changePhoto(ProfilePhoto singlePhoto) {
+		this.photo = singlePhoto;
 	}
 
 }
