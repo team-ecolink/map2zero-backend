@@ -60,7 +60,7 @@ public class SearchHistoryController {
 	public ApiResponse<Void> deleteSearchHistory(
 		@RequestBody SearchHistoryRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		searchHistoryService.deleteSearchHistory(request.getSearchHistoryId(), principal.getAvatarId());
+		searchHistoryService.deleteSearchHistory(request.getId(), principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 }
