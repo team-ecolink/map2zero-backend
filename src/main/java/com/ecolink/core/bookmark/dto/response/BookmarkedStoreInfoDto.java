@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record StoreInfoDto(
+public record BookmarkedStoreInfoDto(
 	@Schema(description = "매장 ID", example = "1")
 	Long id,
 	@Schema(description = "매장 이름", example = "에코 상점")
@@ -23,8 +23,8 @@ public record StoreInfoDto(
 
 ) {
 
-	public static StoreInfoDto of(Store store) {
-		return new StoreInfoDto(
+	public static BookmarkedStoreInfoDto of(Store store) {
+		return new BookmarkedStoreInfoDto(
 			store.getId(),
 			store.getName(),
 			store.getStorePhotos(),
