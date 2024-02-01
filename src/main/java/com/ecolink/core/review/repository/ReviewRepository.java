@@ -12,16 +12,18 @@ import com.ecolink.core.review.domain.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("select r from Review r "
-            + "join fetch r.writer "
-            + "where r.store.id = :storeId")
-    Page<Review> findAllByStore(@Param("storeId") Long storeId, Pageable pageable);
+	@Query("select r from Review r "
+		+ "join fetch r.writer w "
+		+ "join fetch w.photo "
+		+ "where r.store.id = :storeId")
+	Page<Review> findByStore(@Param("storeId") Long storeId, Pageable pageable);
 
-    @Query("select r from Review r "
-            + "join fetch r.writer w "
-            + "where r.store.id = :storeId "
-            + "and w.id = :avatarId")
-    Page<Review> findAllByStoreAndAvatar(@Param("storeId") Long storeId,
-                                         @Param("avatarId") Long avatarId,
-                                         Pageable pageable);
+	@Query("select r from Review r "
+		+ "join fetch r.writer w "
+		+ "join fetch w.photo "
+		+ "where r.store.id = :storeId "
+		+ "and w.id = :avatarId")
+	Page<Review> findByStoreAndAvatar(@Param("storeId") Long storeId, @Param("avatarId") Long avatarId,
+		Pageable pageable);
+
 }

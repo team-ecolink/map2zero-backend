@@ -17,10 +17,10 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	public Page<Review> getByStore(Long storeId, Pageable pageable) {
-		return reviewRepository.findAllByStore(storeId, pageable);
+		return reviewRepository.findByStore(storeId, pageable);
 	}
 
 	public Page<Review> getByStoreAndAvatar(Long storeId, Long avatarId, Pageable pageable) {
-		return reviewRepository.findAllByStoreAndAvatar(storeId, avatarId, pageable);
+		return reviewRepository.findByStoreAndAvatar(storeId, avatarId, pageable);
 	}
 }

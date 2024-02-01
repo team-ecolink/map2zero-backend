@@ -1,5 +1,6 @@
 package com.ecolink.core.like.service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,14 +22,14 @@ public class ReviewLikeService {
 	private final ReviewLikeRepository reviewLikeRepository;
 
 	public Page<GetReviewResponse> findReviewLike(Page<GetReviewResponse> reviews, Long avatarId) {
-		Set<ReviewLike> reviewLikes = reviewLikeRepository.findAllByReviewList(
-			reviews.map(GetReviewResponse::getId).toList(), avatarId).stream().collect(Collectors.toSet());
+		Set<ReviewLike> reviewLikes = new HashSet<>(reviewLikeRepository.findAllByReviewList(
+			reviews.map(GetReviewResponse::getId).toList(), avatarId));
 
 		Set<Long> reviewIds = reviewLikes.stream().map(reviewLike ->
-				reviewLike.getReview().getId()).collect(Collectors.toSet());
+			reviewLike.getReview().getId()).collect(Collectors.toSet());
 
 		reviews.stream().filter(response -> reviewIds.contains(response.getId()))
-						.forEach(response -> response.setLikedTrue(true));
+			.forEach(GetReviewResponse::setLikedTrue);
 		return reviews;
 	}
 
