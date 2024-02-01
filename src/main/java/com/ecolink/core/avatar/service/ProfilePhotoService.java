@@ -28,4 +28,9 @@ public class ProfilePhotoService {
 			return ImageFile.externalImage(attributes.getProfileImage());
 		return ImageFile.externalImage(DEFAULT_PROFILE_PHOTO_URL);
 	}
+
+	public ProfilePhoto getDefaultPhoto() {
+		return new ProfilePhoto(ImageFile.externalImage(DEFAULT_PROFILE_PHOTO_URL));
+	}
+
 }
