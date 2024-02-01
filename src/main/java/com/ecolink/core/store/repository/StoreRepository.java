@@ -1,5 +1,6 @@
 package com.ecolink.core.store.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 		+ "left join fetch st.tag t "
 		+ "where s.id = :id")
 	Optional<Store> findStoreGraphById(@Param("id") Long id);
+
+	List<Store> findTop10ByOrderByBookmarkCntDesc();
 }
