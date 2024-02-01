@@ -19,10 +19,13 @@ import com.ecolink.core.avatar.dto.PutProfilePhotoRequest;
 import com.ecolink.core.avatar.dto.request.UpdateNicknameRequest;
 import com.ecolink.core.avatar.service.AvatarInfoService;
 import com.ecolink.core.avatar.service.NicknameService;
+import com.ecolink.core.common.config.swagger.annotation.SwaggerBody;
 import com.ecolink.core.common.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
@@ -70,13 +73,11 @@ public class AvatarController {
 		description = """
 			프로필 사진 변경 - 인증 필요
 						
-			스웨거에서 http body의 `content-type`이 `multipart/form-data`인 경우 각 part의 `content-type`을 지정하는 것은 지원하지 않습니다.
-						
-			따라서 스웨거에서는 테스트가 불가능합니다.
-						
-			request 부분의 `content-type`을 `application/json`으로 지정해서 요청한다면 정상적으로 작동합니다.
+			request 부분의 `content-type`을 반드시 `application/json`으로 지정해서 요청해야 합니다.
 			""",
 		security = {@SecurityRequirement(name = "session-token")})
+	@SwaggerBody(content = @Content(
+		encoding = @Encoding(name = "request", contentType = MediaType.APPLICATION_JSON_VALUE)))
 	@PreAuthorize("hasRole('USER')")
 	@PutMapping(value = "/photos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ApiResponse<Void> updatePhoto(
