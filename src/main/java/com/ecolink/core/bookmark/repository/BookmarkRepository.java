@@ -1,5 +1,6 @@
 package com.ecolink.core.bookmark.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 		+ "and b.store.id = :storeId")
 	boolean existsByAvatarAndStore(@Param("avatarId") Long avatarId, @Param("storeId") Long storeId);
 	Optional<Bookmark> findBookmarkByAvatarIdAndStoreId(Long avatarId, Long storeId);
+	List<Bookmark> findAllByAvatarId(Long avatarId);
 }
 
 

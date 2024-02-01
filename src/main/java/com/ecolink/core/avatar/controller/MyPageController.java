@@ -1,5 +1,7 @@
 package com.ecolink.core.avatar.controller;
 
+import java.util.List;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.avatar.dto.response.GetMyPageResponse;
 import com.ecolink.core.avatar.service.MyPageService;
+import com.ecolink.core.bookmark.dto.response.BookmarkedStoreInfoDto;
 import com.ecolink.core.common.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +35,17 @@ public class MyPageController {
 	public ApiResponse<GetMyPageResponse> myPageInfo(
 		@AuthenticationPrincipal UserPrincipal principal) {
 		return ApiResponse.ok(myPageService.getMyPageInfo(principal.getAvatarId()));
+	}
+
+	@Tag(name = "${swagger.tag.my-page}")
+	@Operation(summary = "마이페이지 북마크 리스트 조회 API - 인증 필요",
+		description = "마이페이지 북마크 리스트 조회 - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("/bookmarks")
+	public ApiResponse<List<BookmarkedStoreInfoDto>> getMyBookmarks(
+		@AuthenticationPrincipal UserPrincipal principal) {
+		return ApiResponse.ok(myPageService.getBookmarkedList(principal.getAvatarId()));
 	}
 
 }

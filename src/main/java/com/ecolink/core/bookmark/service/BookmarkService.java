@@ -1,5 +1,7 @@
 package com.ecolink.core.bookmark.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,7 @@ public class BookmarkService {
 	}
 
 	@Transactional
-	public Bookmark addBookmark(Long avatarId, Long storeId) {
+	public void addBookmark(Long avatarId, Long storeId) {
 		Avatar avatar = avatarService.getById(avatarId);
 		Store store = storeService.getById(storeId);
 
@@ -38,11 +40,9 @@ public class BookmarkService {
 		}
 
 		Bookmark bookmark = new Bookmark(avatar, store);
-		Bookmark savedBookmark = bookmarkRepository.save(bookmark);
+		bookmarkRepository.save(bookmark);
 
 		store.addBookmarkCount();
-
-		return savedBookmark;
 	}
 
 	public Bookmark getBookmark(Long avatarId, Long storeId) {
@@ -58,6 +58,10 @@ public class BookmarkService {
 		bookmarkRepository.delete(bookmark);
 
 		store.deleteBookmarkCount();
+	}
+
+	public List<Bookmark> getBookmarksByAvatarId(Long avatarId) {
+		return bookmarkRepository.findAllByAvatarId(avatarId);
 	}
 
 }
