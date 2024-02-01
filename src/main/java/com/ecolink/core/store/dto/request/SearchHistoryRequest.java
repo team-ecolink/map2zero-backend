@@ -11,6 +11,6 @@ import lombok.Getter;
 public class SearchHistoryRequest {
 
 	@Schema(description = "검색 히스토리 ID", example = "1")
-	private Long searchHistoryId;
+	private Long id;
 
 }
