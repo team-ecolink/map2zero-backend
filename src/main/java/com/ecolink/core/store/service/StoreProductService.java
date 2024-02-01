@@ -80,6 +80,6 @@ public class StoreProductService {
 	}
 
 	public List<StoreProduct> getByStore(Long storeId) {
-		return storeProductRepository.findTop6ByStore_IdOrderByProduct_Name(storeId);
+		return storeProductRepository.findTop6ByStore_IdAndOnSaleOrderByProduct_Name(storeId, true);
 	}
 }
