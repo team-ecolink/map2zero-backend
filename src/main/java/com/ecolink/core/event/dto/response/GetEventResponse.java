@@ -25,7 +25,7 @@ public record GetEventResponse(
 	@Schema(description = "종료 시간", example = "2024-01-31")
 	LocalDate endDate,
 	@Schema(description = "대표 사진")
-	ImageFile eventPhoto
+	ImageFile photo
 ) {
 	public static GetEventResponse of(Event event) {
 		return GetEventResponse.builder()
@@ -33,10 +33,10 @@ public record GetEventResponse(
 			.title(event.getTitle())
 			.startDate(event.getStartDate().toLocalDate())
 			.endDate(event.getEndDate().toLocalDate())
-			.eventPhoto(event.getEventPhotos().stream()
+			.photo(event.getEventPhotos().stream()
 				.filter(eventPhoto -> eventPhoto.getGivenOrder() == 0)
 				.map(EventPhoto::getFile).findFirst().orElseThrow(
-						() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND)))
+					() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND)))
 			.build();
 	}
 }

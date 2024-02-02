@@ -1,6 +1,5 @@
 package com.ecolink.core.event.service;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,6 @@ public class EventSearchService {
 	public Page<GetEventResponse> getByStore(Long storeId, Pageable pageable) {
 		Store store = storeService.getById(storeId);
 		return eventService.getByStore(store.getId(), pageable)
-				.map(GetEventResponse::of);
+			.map(GetEventResponse::of);
 	}
 }

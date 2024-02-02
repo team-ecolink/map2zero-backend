@@ -25,6 +25,6 @@ public class EventService {
 	}
 
 	public Page<Event> getByStore(Long storeId, Pageable pageable) {
-		return eventRepository.findAllByStore(storeId, pageable);
+		return eventRepository.findByStore(storeId, pageable);
 	}
 }
