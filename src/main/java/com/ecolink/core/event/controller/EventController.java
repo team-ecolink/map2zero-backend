@@ -1,5 +1,6 @@
 package com.ecolink.core.event.controller;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.common.response.ApiPageResponse;
+import com.ecolink.core.event.dto.request.EventListRequest;
 import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.event.service.EventSearchService;
 
@@ -30,8 +32,9 @@ public class EventController {
 	@GetMapping("/stores/{storeId}/events")
 	public ApiPageResponse<GetEventResponse> eventList(
 		@PathVariable("storeId") Long storeId,
+		@ParameterObject EventListRequest request,
 		@Parameter(hidden = true)
 		@PageableDefault(size = 10) Pageable pageable) {
-		return ApiPageResponse.ok(eventSearchService.getByStore(storeId, pageable));
+		return ApiPageResponse.ok(eventSearchService.getEvents(storeId, request, pageable));
 	}
 }
