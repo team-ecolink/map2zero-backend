@@ -127,7 +127,7 @@ public class User extends BaseTimeEntity {
 	 * 영속성 컨텍스트에 Role 이 없을 경우 FetchType.LAZY 옵션 때문에 SELECT 쿼리가 나가게됨
 	 */
 	public boolean isManager() {
-		return RoleType.MANAGER.equals(this.role.getType());
+		return RoleType.MANAGER.equals(role.getType()) || RoleType.ADMIN.equals(role.getType());
 	}
 
 	public boolean isUserOf(UserType providerType) {
