@@ -72,7 +72,12 @@ public enum ErrorCode {
 	FAIL_TO_ANALYZE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "F-002", "이미지 파일을 분석하는데 실패했습니다."),
 	FAIL_TO_GET_TYPE_OF_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "F-003", "이미지 파일의 타입을 가져오지 못했습니다."),
 	NOT_IMAGE_FILE(HttpStatus.BAD_REQUEST, "F-004", "요청된 파일이 이미지 타입이 아닙니다."),
-	IMAGE_FILE_IS_NULL(HttpStatus.BAD_REQUEST, "F-005", "요청된 파일이 null입니다.");
+	IMAGE_FILE_IS_NULL(HttpStatus.BAD_REQUEST, "F-005", "요청된 파일이 null입니다."),
+
+	/**
+	 * 이벤트 관련 오류
+	 */
+	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

@@ -36,7 +36,7 @@ public record GetEventResponse(
 			.photo(event.getEventPhotos().stream()
 				.filter(eventPhoto -> eventPhoto.getGivenOrder() == 0)
 				.map(EventPhoto::getFile).findFirst().orElseThrow(
-					() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND)))
+					() -> new EntityNotFoundException(ErrorCode.IMAGE_FILE_IS_NULL)))
 			.build();
 	}
 }
