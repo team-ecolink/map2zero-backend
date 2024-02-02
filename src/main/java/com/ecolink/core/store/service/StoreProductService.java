@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,7 +81,7 @@ public class StoreProductService {
 		}
 	}
 
-	public List<StoreProduct> getByStore(Long storeId) {
-		return storeProductRepository.findTop6ByStore_IdAndOnSaleOrderByProduct_Name(storeId, true);
+	public Page<StoreProduct> getByStore(Long storeId, Pageable pageable) {
+		return storeProductRepository.findByStore(storeId, pageable);
 	}
 }
