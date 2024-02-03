@@ -1,6 +1,5 @@
 package com.ecolink.core.review.dto.response;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,9 +36,9 @@ public class GetReviewResponse {
 	@Schema(description = "작성자 정보")
 	private final ReviewWriterDto writer;
 	@Schema(description = "리뷰 사진")
-	private final List<ImageFile> reviewPhotos;
+	private final List<ImageFile> photos;
 	@Schema(description = "리뷰 태그")
-	private final List<ReviewTagDto> reviewTags;
+	private final List<ReviewTagDto> tags;
 	@Schema(description = "좋아요 여부", example = "true")
 	private boolean isLiked;
 
@@ -52,9 +51,9 @@ public class GetReviewResponse {
 			.likeCnt(review.getLikeCnt())
 			.isWriter(isWriter)
 			.writer(ReviewWriterDto.of(review.getWriter()))
-			.reviewPhotos(review.getReviewPhotos().stream()
+			.photos(review.getReviewPhotos().stream()
 				.map(ReviewPhoto::getFile).toList())
-			.reviewTags(review.getReviewTags().stream()
+			.tags(review.getReviewTags().stream()
 				.map(ReviewTagDto::of).toList())
 			.isLiked(false)
 			.build();
