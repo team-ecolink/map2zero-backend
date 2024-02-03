@@ -7,3 +7,4 @@ swagger:
     store: '05. 매장 상세 페이지'
     bookmark: '06. 북마크'
     account: '08. 계정 관리페이지'
+    tag: '10.태그'

@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.ecolink.core.auth.handler.JsonLogoutSuccessHandler;
 import com.ecolink.core.auth.handler.OAuth2SuccessHandler;
 import com.ecolink.core.auth.service.OAuth2UserLoadingService;
 
@@ -28,12 +29,14 @@ public class SecurityConfig {
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private final OAuth2SuccessHandler oauth2SuccessHandler;
 	private final OAuth2UserLoadingService oauth2UserLoadingService;
+	private final JsonLogoutSuccessHandler logoutSuccessHandler;
 	private final String apiPrefix;
 
 	public SecurityConfig(OAuth2SuccessHandler oauth2SuccessHandler, OAuth2UserLoadingService oauth2UserLoadingService,
-		@Value("${api.prefix}") String apiPrefix) {
+		JsonLogoutSuccessHandler logoutSuccessHandler, @Value("${api.prefix}") String apiPrefix) {
 		this.oauth2SuccessHandler = oauth2SuccessHandler;
 		this.oauth2UserLoadingService = oauth2UserLoadingService;
+		this.logoutSuccessHandler = logoutSuccessHandler;
 		this.apiPrefix = apiPrefix;
 	}
 
@@ -47,6 +50,8 @@ public class SecurityConfig {
 					.redirectionEndpoint(redirection -> redirection.baseUri(apiPrefix + "/oauth2/code"))
 					.userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserLoadingService))
 					.successHandler(oauth2SuccessHandler))
+			.logout(logout -> logout.logoutUrl(apiPrefix + "/logout")
+				.logoutSuccessHandler(logoutSuccessHandler))
 			.headers(headers ->
 				headers.addHeaderWriter(
 					new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));

@@ -2,6 +2,7 @@ package com.ecolink.core.manager.domain;
 
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.manager.constant.RegistrationStatus;
+import com.ecolink.core.manager.dto.request.StoreRegistrationRequest;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -35,7 +36,7 @@ public class StoreRegistration {
 	private String businessNumber;
 
 	@NotNull
-	private String phoneNumber;
+	private String contact;
 
 	@NotNull
 	private String representative;
@@ -54,4 +55,13 @@ public class StoreRegistration {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Manager manager;
 
+	public StoreRegistration(StoreRegistrationRequest request, Manager manager) {
+		this.name = request.name();
+		this.businessNumber = request.businessNumber();
+		this.contact = request.contact();
+		this.representative = request.representative();
+		this.address = request.address();
+		this.manager = manager;
+		this.status = RegistrationStatus.PENDING;
+	}
 }

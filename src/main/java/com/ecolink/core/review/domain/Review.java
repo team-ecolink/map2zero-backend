@@ -3,11 +3,13 @@ package com.ecolink.core.review.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.BatchSize;
+
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.like.domain.ReviewLike;
 import com.ecolink.core.store.domain.Store;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -51,10 +53,13 @@ public class Review extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "review")
 	private List<ReviewPhoto> reviewPhotos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "review")
 	private List<ReviewTag> reviewTags = new ArrayList<>();
+
+	@OneToMany(mappedBy = "review")
+	private List<ReviewLike> reviewLikes = new ArrayList<>();
 
 }

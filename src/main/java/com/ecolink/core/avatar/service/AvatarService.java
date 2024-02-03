@@ -28,8 +28,14 @@ public class AvatarService {
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.AVATAR_NOT_FOUND));
 	}
 
-	@Transactional
-	public Avatar createAvatar(AvatarCreateRequest request) {
-		return avatarRepository.save(Avatar.of(request));
+	public Avatar getByIdWithPhoto(Long avatarId) {
+		return avatarRepository.findByIdWithPhoto(avatarId).orElseThrow(
+			() -> new EntityNotFoundException(ErrorCode.AVATAR_NOT_FOUND));
 	}
+
+	@Transactional
+	public Long createAvatar(AvatarCreateRequest request) {
+		return avatarRepository.save(Avatar.of(request)).getId();
+	}
+
 }

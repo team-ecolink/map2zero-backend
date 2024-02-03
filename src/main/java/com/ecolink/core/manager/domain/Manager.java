@@ -11,9 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,16 +27,17 @@ public class Manager {
 	private Long id;
 
 	@NotNull
-	@Size(min = 4, max = 12)
-	private String nickname;
-
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private ManagerStatus status;
 
 	@NotNull
 	@JoinColumn(name = "user_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private User user;
+
+	public Manager(User user) {
+		this.status = ManagerStatus.PENDING;
+		this.user = user;
+	}
 
 }

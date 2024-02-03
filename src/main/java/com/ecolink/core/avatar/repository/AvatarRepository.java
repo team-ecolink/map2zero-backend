@@ -21,4 +21,9 @@ public interface AvatarRepository extends JpaRepository<Avatar, Long> {
 		+ "where a.id = :id")
 	Optional<Avatar> findUserGraphById(@Param("id") Long id);
 
+	@Query("select a from Avatar a "
+		+ "left join fetch a.photo "
+		+ "where a.id = :id")
+	Optional<Avatar> findByIdWithPhoto(@Param("id") Long id);
+
 }

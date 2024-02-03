@@ -5,11 +5,11 @@ spring:
       "local": "oauth, s3, swagger"
       "dev": "oauth, s3, dev-db, swagger"
       "prod": "prod, oauth, s3, prod-db"
-
   jpa:
     properties:
-      # set default batch size
-      default_batch_fetch_size: 100
+      hibernate:
+        # set default batch size
+        default_batch_fetch_size: 100
     # turn OSIV off
     open-in-view: false
 

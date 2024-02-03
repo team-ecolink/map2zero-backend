@@ -2,6 +2,7 @@ package com.ecolink.core.avatar.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.common.domain.ImageFile;
+import com.ecolink.core.file.domain.SinglePhoto;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class ProfilePhoto extends BaseTimeEntity {
+public class ProfilePhoto extends BaseTimeEntity implements SinglePhoto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

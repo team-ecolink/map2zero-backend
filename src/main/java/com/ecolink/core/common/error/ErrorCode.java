@@ -20,6 +20,16 @@ public enum ErrorCode {
 	AVATAR_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "A-001", "주어진 식별자로 아바타를 찾을 수 없습니다."),
 
 	/**
+	 * 유저 관련 오류
+	 */
+	USER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "U-001", "주어진 식별자로 유저를 찾을 수 없습니다."),
+
+	/**
+	 * 매니저 관련 오류
+	 */
+	APPLICATION_IS_PENDING(HttpStatus.BAD_REQUEST, "M-001", "해당 유저는 대표 신청 후 승인 대기중 상태입니다."),
+
+	/**
 	 * 상점 관련 오류
 	 */
 	STORE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "S-001", "주어진 식별자로 스토어를 찾을 수 없습니다."),
