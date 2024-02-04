@@ -9,8 +9,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.ecolink.core.avatar.dto.request.MyPageReviewRequest;
-import com.ecolink.core.review.dto.QReviewInfoDto;
 import com.ecolink.core.avatar.dto.response.MyPageReviewResponse;
+import com.ecolink.core.avatar.dto.response.QMyPageReviewResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
@@ -29,7 +29,7 @@ public class ReviewJpaRepository {
 	}
 
 	public List<MyPageReviewResponse> findByWriter(MyPageReviewRequest request, Long writerId, Long viewerId) {
-		JPAQuery<MyPageReviewResponse> common = queryFactory.select(new QReviewInfoDto(
+		JPAQuery<MyPageReviewResponse> common = queryFactory.select(new QMyPageReviewResponse(
 				review,
 				reviewPhoto.file,
 				review.store,
