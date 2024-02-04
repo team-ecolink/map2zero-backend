@@ -1,4 +1,4 @@
-package com.ecolink.core.store.service;
+package com.ecolink.core.product.service;
 
 import java.util.Comparator;
 import java.util.List;
@@ -8,12 +8,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.product.domain.StoreProduct;
+import com.ecolink.core.product.dto.request.GetStoreProductRequest;
+import com.ecolink.core.product.dto.response.GetStoreProductResponse;
+import com.ecolink.core.product.repository.StoreProductJpaRepository;
+import com.ecolink.core.product.repository.StoreProductRepository;
 import com.ecolink.core.store.constant.SearchType;
-import com.ecolink.core.store.domain.StoreProduct;
 import com.ecolink.core.store.dto.StoreProductDto;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
-import com.ecolink.core.store.repository.StoreProductRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreProductService {
 
 	private final StoreProductRepository storeProductRepository;
+	private final StoreProductJpaRepository storeProductJpaRepository;
 
 	public void processAndLimitTop3Products(StoreSearchRequest request, List<StoreSearchDto> storeSearchDtos) {
 		String keyword = request.getKeyword();
@@ -78,4 +82,9 @@ public class StoreProductService {
 			dto.addStoreProductDto(storeProductDto);
 		}
 	}
+
+	public List<GetStoreProductResponse> getByNameAndTag(Long storeId, GetStoreProductRequest request) {
+		return storeProductJpaRepository.queryByNameAndTag(storeId, request);
+	}
+
 }

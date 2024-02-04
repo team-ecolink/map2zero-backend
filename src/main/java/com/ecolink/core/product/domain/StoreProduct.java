@@ -1,8 +1,8 @@
-package com.ecolink.core.store.domain;
+package com.ecolink.core.product.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.tag.domain.Product;
-import com.ecolink.core.tag.domain.Tag;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -47,9 +47,4 @@ public class StoreProduct extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Product product;
 
-	@NotNull
-	@JoinColumn(name = "tag_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Tag tag;
-	
 }
