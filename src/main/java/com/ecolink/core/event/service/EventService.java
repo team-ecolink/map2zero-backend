@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.event.domain.Event;
-import com.ecolink.core.event.dto.request.EventListRequest;
 import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.event.repository.EventJpaRepository;
 import com.ecolink.core.event.repository.EventRepository;
@@ -28,7 +27,7 @@ public class EventService {
 			() -> new EntityNotFoundException(ErrorCode.EVENT_NOT_FOUND));
 	}
 
-	public Page<GetEventResponse> getByStoreAndStatus(Long storeId, EventListRequest request, Pageable pageable) {
-		return eventJpaRepository.findEventByStoreAndStatus(storeId, request, pageable);
+	public Page<GetEventResponse> getByStoreAndStatus(Long storeId, Pageable pageable) {
+		return eventJpaRepository.findEventByStoreAndStatus(storeId, pageable);
 	}
 }

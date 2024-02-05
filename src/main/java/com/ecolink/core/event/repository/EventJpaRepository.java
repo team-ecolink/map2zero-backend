@@ -11,10 +11,8 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.ecolink.core.event.constant.EventStatus;
-import com.ecolink.core.event.dto.request.EventListRequest;
 import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.event.dto.response.QGetEventResponse;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -29,30 +27,26 @@ public class EventJpaRepository {
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 
-	public Page<GetEventResponse> findEventByStoreAndStatus(Long id, EventListRequest request, Pageable pageable) {
+	public Page<GetEventResponse> findEventByStoreAndStatus(Long id, Pageable pageable) {
 		List<GetEventResponse> content =
 			queryFactory.select(new QGetEventResponse(
-				event,
-				eventPhoto.file))
-			.from(event)
-			.leftJoin(eventPhoto)
-			.on(eventPhoto.event.eq(event), eventPhoto.givenOrder.eq(0))
-			.where(event.store.id.eq(id),
-				statusEq(request.getStatus()))
-			.orderBy(event.createdDate.asc())
-			.offset(pageable.getOffset())
-			.limit(pageable.getPageSize())
-			.fetch();
+					event,
+					eventPhoto.file))
+				.from(event)
+				.leftJoin(eventPhoto)
+				.on(eventPhoto.event.eq(event), eventPhoto.givenOrder.eq(0))
+				.where(event.store.id.eq(id),
+					event.status.eq(EventStatus.ACTIVE))
+				.orderBy(event.createdDate.asc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetch();
 
 		JPAQuery<Long> count = queryFactory.select(event.count())
 			.from(event)
 			.where(event.store.id.eq(id),
-				statusEq(request.getStatus()));
+				event.status.eq(EventStatus.ACTIVE));
 
 		return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
-	}
-
-	private BooleanExpression statusEq(EventStatus statusCond) {
-		return statusCond != null ? event.status.eq(statusCond) : null;
 	}
 }
