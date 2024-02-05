@@ -23,4 +23,9 @@ public class ReviewService {
 	public Page<Review> getByStoreAndAvatar(Long storeId, Long avatarId, Pageable pageable) {
 		return reviewRepository.findByStoreAndAvatar(storeId, avatarId, pageable);
 	}
+
+	@Transactional
+	public void saveReview(Review review) {
+		reviewRepository.save(review);
+	}
 }

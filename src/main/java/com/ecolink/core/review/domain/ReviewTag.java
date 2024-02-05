@@ -33,4 +33,9 @@ public class ReviewTag extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tag_id")
 	private Tag tag;
+
+	public ReviewTag(Review review, Tag tag) {
+		this.review = review;
+		this.tag = tag;
+	}
 }

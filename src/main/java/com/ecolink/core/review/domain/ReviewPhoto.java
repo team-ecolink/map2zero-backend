@@ -2,6 +2,7 @@ package com.ecolink.core.review.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.common.domain.ImageFile;
+import com.ecolink.core.file.domain.MultiPhoto;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class ReviewPhoto extends BaseTimeEntity {
+public class ReviewPhoto extends BaseTimeEntity implements MultiPhoto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +39,14 @@ public class ReviewPhoto extends BaseTimeEntity {
 	@JoinColumn(name = "review_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Review review;
+
+	private ReviewPhoto(ImageFile file, Integer givenOrder, Review review) {
+		this.file = file;
+		this.givenOrder = givenOrder;
+		this.review = review;
+	}
+
+	public static ReviewPhoto of(ImageFile file, int order, Review review) {
+		return new ReviewPhoto(file, order, review);
+	}
 }

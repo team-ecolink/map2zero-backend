@@ -1,6 +1,5 @@
 package com.ecolink.core.review.dto.response;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class GetReviewResponse {
 			.likeCnt(review.getLikeCnt())
 			.isWriter(isWriter)
 			.writer(ReviewWriterDto.of(review.getWriter()))
-			.reviewPhotos(review.getReviewPhotos().stream()
+			.reviewPhotos(review.getPhotos().stream()
 				.map(ReviewPhoto::getFile).toList())
 			.reviewTags(review.getReviewTags().stream()
 				.map(ReviewTagDto::of).toList())
