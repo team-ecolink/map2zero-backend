@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.dto.CursorPage;
+import com.ecolink.core.product.service.StoreProductService;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreDetailResponse;

@@ -8,6 +8,7 @@ import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.manager.domain.StoreRegistration;
+import com.ecolink.core.product.domain.StoreProduct;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Embedded;

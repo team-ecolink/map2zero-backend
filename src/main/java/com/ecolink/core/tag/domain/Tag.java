@@ -32,4 +32,8 @@ public class Tag extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private TagCategory category;
 
+	public boolean isCategoryOf(TagCategory category) {
+		return this.category.equals(category);
+	}
+
 }

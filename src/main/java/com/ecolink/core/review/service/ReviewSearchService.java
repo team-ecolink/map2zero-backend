@@ -5,6 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.avatar.dto.request.MyPageReviewRequest;
+import com.ecolink.core.avatar.dto.response.MyPageReviewResponse;
+import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.like.service.ReviewLikeService;
 import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
@@ -43,6 +46,10 @@ public class ReviewSearchService {
 
 	private Boolean isWriter(Review review, Long avatarId) {
 		return review.getWriter().getId().equals(avatarId);
+	}
+
+	public CursorPage<MyPageReviewResponse, Long> getReviewsByWriter(MyPageReviewRequest request, Long writerId, Long viewerId) {
+		return CursorPage.of(reviewService.getByWriter(request, writerId, viewerId), request.getSize(), MyPageReviewResponse::getId);
 	}
 
 }

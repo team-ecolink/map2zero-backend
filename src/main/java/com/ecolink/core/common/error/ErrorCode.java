@@ -60,6 +60,13 @@ public enum ErrorCode {
 	SEARCH_HISTORY_FORBIDDEN(HttpStatus.FORBIDDEN, "H-002", "해당 검색 히스토리에 접근할 수 없습니다."),
 
 	/**
+	 * 태그 관련 오류
+	 */
+	TAG_NOT_FOUND(HttpStatus.BAD_REQUEST, "T-001", "주어진 식별자로 태그를 찾을 수 없습니다."),
+	TAG_UNMATCHED_CATEGORY(HttpStatus.BAD_REQUEST, "T-002", "주어진 태그가 유효한 카테고리에 속하지 않습니다."),
+	NOT_REVIEW_CATEGORY(HttpStatus.BAD_REQUEST, "T-003", "입력으로 들어온 태그 카테고리가 'REVIEW'가 아닙니다."),
+	
+	/**
 	 * 파일 업로드 관련 오류
 	 */
 	FAIL_TO_UPLOAD_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "F-001", "파일 업로드에 실패했습니다."),
@@ -67,12 +74,6 @@ public enum ErrorCode {
 	FAIL_TO_GET_TYPE_OF_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "F-003", "이미지 파일의 타입을 가져오지 못했습니다."),
 	NOT_IMAGE_FILE(HttpStatus.BAD_REQUEST, "F-004", "요청된 파일이 이미지 타입이 아닙니다."),
 	IMAGE_FILE_IS_NULL(HttpStatus.BAD_REQUEST, "F-005", "요청된 파일이 null입니다."),
-
-	/**
-	 * 태그 관련 오류
-	 */
-	TAG_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "T-001", "주어진 식별자로 태그를 찾을 수 없습니다."),
-	NOT_REVIEW_CATEGORY(HttpStatus.BAD_REQUEST, "T-002", "입력으로 들어온 태그 카테고리가 'REVIEW'가 아닙니다."),
 
 	/**
 	 * 사진 관련 오류

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.EntityNotFoundException;
-import com.ecolink.core.common.error.exception.InvalidTagCategoryException;
+import com.ecolink.core.common.error.exception.TagCategoryUnmatchedException;
 import com.ecolink.core.tag.constant.TagCategory;
 import com.ecolink.core.tag.domain.Tag;
 import com.ecolink.core.tag.repository.TagRepository;
@@ -29,7 +29,7 @@ public class TagService {
 	public void checkTagsAreReviewCategories(List<Tag> tags) {
 		tags.forEach(tag -> {
 			if (!TagCategory.REVIEW.equals(tag.getCategory()))
-				throw new InvalidTagCategoryException(ErrorCode.NOT_REVIEW_CATEGORY);
+				throw new TagCategoryUnmatchedException(ErrorCode.NOT_REVIEW_CATEGORY);
 		});
 	}
 }

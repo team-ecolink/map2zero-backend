@@ -1,9 +1,9 @@
 package com.ecolink.core.store.repository;
 
 import static com.ecolink.core.bookmark.domain.QBookmark.*;
+import static com.ecolink.core.product.domain.QStoreProduct.*;
 import static com.ecolink.core.store.domain.QStore.*;
 import static com.ecolink.core.store.domain.QStorePhoto.*;
-import static com.ecolink.core.store.domain.QStoreProduct.*;
 import static com.ecolink.core.tag.domain.QProduct.*;
 
 import java.util.List;
