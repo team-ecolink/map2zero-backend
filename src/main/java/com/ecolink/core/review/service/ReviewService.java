@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @Service
 public class ReviewService {
+
 	private final ReviewRepository reviewRepository;
 
 	public Page<Review> getByStore(Long storeId, Pageable pageable) {

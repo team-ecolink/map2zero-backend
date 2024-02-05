@@ -20,8 +20,10 @@ public class StoreProductSearchService {
 	private final TagService tagService;
 
 	public CursorPage<GetStoreProductResponse, Long> searchStoreProducts(Long storeId, GetStoreProductRequest request) {
-		tagService.validateCategory(request.getTagId(), TagCategory.PRODUCT);
-		return CursorPage.of(storeProductService.getByNameAndTag(storeId, request), request.getSize(),
+		if(request.getTagId() != null)
+			tagService.validateCategory(request.getTagId(), TagCategory.PRODUCT);
+
+		return CursorPage.of(storeProductService.getByNameAndTag(storeId, request, true), request.getSize(),
 			GetStoreProductResponse::getId);
 	}
 

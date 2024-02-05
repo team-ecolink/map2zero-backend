@@ -83,8 +83,8 @@ public class StoreProductService {
 		}
 	}
 
-	public List<GetStoreProductResponse> getByNameAndTag(Long storeId, GetStoreProductRequest request) {
-		return storeProductJpaRepository.queryByNameAndTag(storeId, request);
+	public List<GetStoreProductResponse> getByNameAndTag(Long storeId, GetStoreProductRequest request, boolean onSale) {
+		return storeProductJpaRepository.queryByNameAndTag(storeId, request, onSale);
 	}
 
 }

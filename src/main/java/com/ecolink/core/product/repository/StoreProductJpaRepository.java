@@ -28,7 +28,7 @@ public class StoreProductJpaRepository {
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 
-	public List<GetStoreProductResponse> queryByNameAndTag(Long storeId, GetStoreProductRequest request) {
+	public List<GetStoreProductResponse> queryByNameAndTag(Long storeId, GetStoreProductRequest request, Boolean onSale) {
 
 		JPAQuery<GetStoreProductResponse> common = queryFactory.select(new QGetStoreProductResponse(
 				storeProduct,
@@ -42,11 +42,12 @@ public class StoreProductJpaRepository {
 			.where(storeProduct.store.id.eq(storeId))
 			.orderBy(storeProduct.id.desc())
 			.limit(request.getSize() + 1L);
-		return withCondition(common, request).fetch();
+
+		return withCondition(common, request, onSale).fetch();
 	}
 
 	private static JPAQuery<GetStoreProductResponse> withCondition(JPAQuery<GetStoreProductResponse> common,
-		GetStoreProductRequest request) {
+		GetStoreProductRequest request, Boolean onSale) {
 		BooleanBuilder builder = new BooleanBuilder();
 		if (request.getCursor() != null)
 			builder.and(storeProduct.id.loe(request.getCursor()));
@@ -61,6 +62,9 @@ public class StoreProductJpaRepository {
 				.on(tag.eq(storeProductTag.tag));
 			builder.and(tag.id.eq(request.getTagId()));
 		}
+
+		if(onSale != null)
+			builder.and(storeProduct.onSale.eq(onSale));
 
 		return common.where(builder);
 	}
