@@ -1,6 +1,6 @@
 package com.ecolink.core.store.dto;
 
-import com.ecolink.core.store.domain.StoreProduct;
+import com.ecolink.core.product.domain.StoreProduct;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 

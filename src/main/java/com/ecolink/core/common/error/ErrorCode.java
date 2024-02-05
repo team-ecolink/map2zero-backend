@@ -60,6 +60,12 @@ public enum ErrorCode {
 	SEARCH_HISTORY_FORBIDDEN(HttpStatus.FORBIDDEN, "H-002", "해당 검색 히스토리에 접근할 수 없습니다."),
 
 	/**
+	 * 태그 관련 오류
+	 */
+	TAG_NOT_FOUND(HttpStatus.BAD_REQUEST, "T-001", "주어진 식별자로 태그를 찾을 수 없습니다."),
+	TAG_UNMATCHED_CATEGORY(HttpStatus.BAD_REQUEST, "T-002", "주어진 태그가 유효한 카테고리에 속하지 않습니다."),
+
+	/**
 	 * 파일 업로드 관련 오류
 	 */
 	FAIL_TO_UPLOAD_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "F-001", "파일 업로드에 실패했습니다."),
