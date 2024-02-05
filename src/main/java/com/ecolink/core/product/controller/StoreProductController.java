@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Validated
 @RestController
-@RequestMapping("${api.prefix}/stores")
+@RequestMapping("${api.prefix}")
 public class StoreProductController {
 
 	private final StoreProductSearchService storeProductSearchService;
@@ -30,8 +30,8 @@ public class StoreProductController {
 	@Tag(name = "${swagger.tag.store}")
 	@Operation(summary = "매장 판매 제품 목록 조회 API",
 		description = "매장 판매 제품 목록 조회 API")
-	@GetMapping("/{id}/products")
-	public ApiCursorPageResponse<GetStoreProductResponse, Long> getRecentKeywords(
+	@GetMapping("/stores/{id}/products")
+	public ApiCursorPageResponse<GetStoreProductResponse, Long> searchStoreProducts(
 		@Valid @ParameterObject GetStoreProductRequest request,
 		@PathVariable("id") @NotNull @Positive Long storeId) {
 		return ApiCursorPageResponse.ok(storeProductSearchService.searchStoreProducts(storeId, request));
