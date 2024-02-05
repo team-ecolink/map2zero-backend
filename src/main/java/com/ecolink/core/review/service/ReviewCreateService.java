@@ -43,7 +43,7 @@ public class ReviewCreateService {
 		List<Tag> tags = null;
 
 		if (request.getTagIds() != null) {
-			tags = request.getTagIds().stream().map(tagService::getById).toList();
+			tags = request.getTagIds().stream().map(tagService::findById).toList();
 			tagService.checkTagsAreReviewCategories(tags);
 		}
 
@@ -58,7 +58,7 @@ public class ReviewCreateService {
 
 		store.addReviewCount();
 		store.addTotalScore(request.getScore());
-		
+
 		if (files != null && files.size() > 5)
 			throw new PhotoLimitExceededException(ErrorCode.PHOTO_LIMIT_EXCEEDED);
 		if (files != null)
