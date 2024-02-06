@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.tag.dto.request.GetTagRequest;
 import com.ecolink.core.tag.dto.response.GetTagResponse;
+import com.ecolink.core.tag.service.TagService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

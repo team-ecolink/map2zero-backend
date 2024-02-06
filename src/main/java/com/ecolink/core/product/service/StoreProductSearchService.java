@@ -7,7 +7,7 @@ import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.product.dto.request.GetStoreProductRequest;
 import com.ecolink.core.product.dto.response.GetStoreProductResponse;
 import com.ecolink.core.tag.constant.TagCategory;
-import com.ecolink.core.tag.controller.TagService;
+import com.ecolink.core.tag.service.TagService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ public class StoreProductSearchService {
 	private final TagService tagService;
 
 	public CursorPage<GetStoreProductResponse, Long> searchStoreProducts(Long storeId, GetStoreProductRequest request) {
-		if(request.getTagId() != null)
+		if (request.getTagId() != null)
 			tagService.validateCategory(request.getTagId(), TagCategory.PRODUCT);
 
 		return CursorPage.of(storeProductService.getByNameAndTag(storeId, request, true), request.getSize(),

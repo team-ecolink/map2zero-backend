@@ -107,4 +107,11 @@ public class Store extends BaseTimeEntity {
 		this.bookmarkCnt--;
 	}
 
+	public void addReviewCount() {
+		this.reviewCnt++;
+	}
+
+	public void addTotalScore(int score) {
+		this.totalScore += score;
+	}
 }

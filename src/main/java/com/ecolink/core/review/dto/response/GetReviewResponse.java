@@ -51,7 +51,7 @@ public class GetReviewResponse {
 			.likeCnt(review.getLikeCnt())
 			.isWriter(isWriter)
 			.writer(ReviewWriterDto.of(review.getWriter()))
-			.photos(review.getReviewPhotos().stream()
+			.photos(review.getPhotos().stream()
 				.map(ReviewPhoto::getFile).toList())
 			.tags(review.getReviewTags().stream()
 				.map(ReviewTagDto::of).toList())

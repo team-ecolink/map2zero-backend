@@ -37,7 +37,7 @@ public class ReviewJpaRepository {
 				reviewLike.isNotNull()
 			))
 			.from(review)
-			.leftJoin(review.reviewPhotos, reviewPhoto)
+			.leftJoin(review.photos, reviewPhoto)
 			.on(reviewPhoto.givenOrder.eq(0))
 			.leftJoin(review.reviewLikes, reviewLike)
 			.on(reviewLike.avatar.id.eq(viewerId))

@@ -1,4 +1,4 @@
-package com.ecolink.core.tag.controller;
+package com.ecolink.core.tag.service;
 
 import java.util.List;
 

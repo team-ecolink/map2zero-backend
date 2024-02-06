@@ -66,7 +66,8 @@ public enum ErrorCode {
 	 */
 	TAG_NOT_FOUND(HttpStatus.BAD_REQUEST, "T-001", "주어진 식별자로 태그를 찾을 수 없습니다."),
 	TAG_UNMATCHED_CATEGORY(HttpStatus.BAD_REQUEST, "T-002", "주어진 태그가 유효한 카테고리에 속하지 않습니다."),
-
+	NOT_REVIEW_CATEGORY(HttpStatus.BAD_REQUEST, "T-003", "입력으로 들어온 태그 카테고리가 'REVIEW'가 아닙니다."),
+	
 	/**
 	 * 파일 업로드 관련 오류
 	 */
@@ -77,9 +78,15 @@ public enum ErrorCode {
 	IMAGE_FILE_IS_NULL(HttpStatus.BAD_REQUEST, "F-005", "요청된 파일이 null입니다."),
 
 	/**
+	 * 사진 관련 오류
+	 */
+	PHOTO_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "P-001", "사진은 최대 5개까지 첨부 가능합니다."),
+
+  /**
 	 * 이벤트 관련 오류
 	 */
 	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다.");
+
 
 	private final HttpStatus httpStatus;
 	private final String code;

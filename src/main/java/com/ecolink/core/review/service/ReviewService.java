@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.avatar.dto.request.MyPageReviewRequest;
-import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.avatar.dto.response.MyPageReviewResponse;
+import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.repository.ReviewJpaRepository;
 import com.ecolink.core.review.repository.ReviewRepository;
 
@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @Service
 public class ReviewService {
-
 	private final ReviewRepository reviewRepository;
 	private final ReviewJpaRepository reviewJpaRepository;
 
@@ -35,4 +34,8 @@ public class ReviewService {
 		return reviewJpaRepository.findByWriter(request, writerId, viewerId);
 	}
 
+	@Transactional
+	public void saveReview(Review review) {
+		reviewRepository.save(review);
+	}
 }

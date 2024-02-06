@@ -3,13 +3,14 @@ package com.ecolink.core.review.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.BatchSize;
-
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.common.domain.BaseTimeEntity;
+import com.ecolink.core.file.domain.MultiPhotoContainer;
 import com.ecolink.core.like.domain.ReviewLike;
+import com.ecolink.core.review.dto.request.CreateReviewRequest;
 import com.ecolink.core.store.domain.Store;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,14 +27,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Review extends BaseTimeEntity {
+public class Review extends BaseTimeEntity implements MultiPhotoContainer<ReviewPhoto> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	private String title;
 
 	@NotNull
 	private String text;
@@ -53,8 +51,8 @@ public class Review extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	@OneToMany(mappedBy = "review")
-	private List<ReviewPhoto> reviewPhotos = new ArrayList<>();
+	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ReviewPhoto> photos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "review")
 	private List<ReviewTag> reviewTags = new ArrayList<>();
@@ -62,4 +60,10 @@ public class Review extends BaseTimeEntity {
 	@OneToMany(mappedBy = "review")
 	private List<ReviewLike> reviewLikes = new ArrayList<>();
 
+	public Review(CreateReviewRequest request, Store store, Avatar avatar) {
+		this.text = request.getText();
+		this.score = request.getScore();
+		this.writer = avatar;
+		this.store = store;
+	}
 }
