@@ -1,4 +1,4 @@
-package com.ecolink.core.bookmark.dto.response;
+package com.ecolink.core.bookmark.dto;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record BookmarkedStoreInfoDto(
+public record StoreInfoDto(
 	@Schema(description = "매장 ID", example = "1")
 	Long id,
 	@Schema(description = "매장 이름", example = "에코 상점")
@@ -24,8 +24,8 @@ public record BookmarkedStoreInfoDto(
 
 ) {
 
-	public static BookmarkedStoreInfoDto of(Store store) {
-		return new BookmarkedStoreInfoDto(
+	public static StoreInfoDto of(Store store) {
+		return new StoreInfoDto(
 			store.getId(),
 			store.getName(),
 			store.getStorePhotos().stream()

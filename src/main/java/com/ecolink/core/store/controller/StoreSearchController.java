@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
-import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
+import com.ecolink.core.bookmark.dto.StoreInfoDto;
 import com.ecolink.core.common.response.ApiCursorPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.common.util.AuthorityUtil;

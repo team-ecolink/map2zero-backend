@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
+import com.ecolink.core.bookmark.dto.StoreInfoDto;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.store.domain.Store;

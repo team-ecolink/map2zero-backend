@@ -35,7 +35,7 @@ public class Bookmark extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	public Bookmark(Avatar avatar, Store store) {
+	public Bookmark(Store store, Avatar avatar) {
 		this.avatar = avatar;
 		this.store = store;
 	}
