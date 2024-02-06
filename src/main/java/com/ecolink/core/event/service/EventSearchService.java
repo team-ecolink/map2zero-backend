@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.event.dto.request.GetEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
+import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.service.StoreService;
 
@@ -23,5 +24,9 @@ public class EventSearchService {
 		Store store = storeService.getById(storeId);
 		return CursorPage.of(eventService.getByStoreAndStatus(store.getId(), request), request.getSize(),
 			GetEventListResponse::getId);
+	}
+
+	public GetEventResponse getEvent(Long id, boolean isManager) {
+		return GetEventResponse.of(eventService.getGraphById(id), isManager);
 	}
 }

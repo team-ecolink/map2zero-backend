@@ -20,6 +20,10 @@ public final class AuthorityUtil {
 		return hasAuthority(principal, ADMIN);
 	}
 
+	public static boolean hasManagerAuthority(UserPrincipal principal) {
+		return principal != null && hasAuthority(principal, MANAGER);
+	}
+
 	private static boolean hasAuthority(UserPrincipal principal, RoleType... roleTypes) {
 		for (RoleType roleType : roleTypes) {
 			if (principal.getAuthorities().contains(new SimpleGrantedAuthority(roleType.getAuthority())))

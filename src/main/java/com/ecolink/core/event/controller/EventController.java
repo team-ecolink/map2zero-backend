@@ -18,9 +18,11 @@ import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.config.swagger.annotation.SwaggerBody;
 import com.ecolink.core.common.response.ApiCursorPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.event.dto.request.AddEventRequest;
 import com.ecolink.core.event.dto.request.GetEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
+import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.event.service.EventAddService;
 import com.ecolink.core.event.service.EventSearchService;
 
@@ -52,6 +54,18 @@ public class EventController {
 		@PathVariable("storeId") @NotNull @Positive Long storeId,
 		@Valid @ParameterObject GetEventRequest request) {
 		return ApiCursorPageResponse.ok(eventSearchService.getEvents(storeId, request));
+	}
+
+	@Tag(name = "${swagger.tag.store}")
+	@Operation(summary = "이벤트 상세 조회 API - 인증 선택", description = "이벤트 상세 조회 - 인증 선택")
+	@GetMapping("/events/{id}")
+	public ApiResponse<GetEventResponse> eventDetail(
+		@PathVariable("id") @NotNull @Positive Long id,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		if (AuthorityUtil.hasManagerAuthority(principal)) {
+			ApiResponse.ok(eventSearchService.getEvent(id, true));
+		}
+		return ApiResponse.ok(eventSearchService.getEvent(id, false));
 	}
 
 	@Tag(name = "${swagger.tag.manager}")
