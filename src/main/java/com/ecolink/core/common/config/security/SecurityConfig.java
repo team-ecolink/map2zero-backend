@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -74,6 +78,24 @@ public class SecurityConfig {
 	@Bean
 	static HttpSessionIdResolver httpSessionIdResolver() {
 		return new HeaderHttpSessionIdResolver(AUTHORIZATION_HEADER);
+	}
+
+	@Bean
+	static RoleHierarchy roleHierarchy() {
+		RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+		hierarchy.setHierarchy("""
+			ROLE_ADMIN > ROLE_MANAGER
+			ROLE_MANAGER > ROLE_USER
+			""");
+		return hierarchy;
+	}
+
+	// Method Security 에 권한 계층 적용시 필요한 핸들러
+	@Bean
+	static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+		expressionHandler.setRoleHierarchy(roleHierarchy);
+		return expressionHandler;
 	}
 
 }
