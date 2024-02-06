@@ -41,20 +41,19 @@ public class ReviewCreateService {
 
 		Store store = storeService.getById(request.getStoreId());
 		Avatar writer = avatarService.getById(avatarId);
-		List<Tag> tags = null;
-
-		if (request.getTagIds() != null) {
-			tags = request.getTagIds().stream().map(tagService::getById).toList();
-			tags.forEach(tag -> tagService.validateCategory(tag.getId(), TagCategory.REVIEW));
-		}
 
 		Review review = new Review(request, store, writer);
 		reviewService.saveReview(review);
 
-		if (tags != null) {
-			tags.stream()
-				.map(tag -> new ReviewTag(review, tag))
-				.forEach(reviewTagService::saveReviewTag);
+		if (request.getTagIds() != null) {
+			List<Tag> tags = request.getTagIds().stream()
+				.map(tagService::getById)
+				.toList();
+
+			tags.forEach(tag -> {
+				tagService.validateCategory(tag.getId(), TagCategory.REVIEW);
+				reviewTagService.saveReviewTag(new ReviewTag(review, tag));
+			});
 		}
 
 		store.addReviewCount();
