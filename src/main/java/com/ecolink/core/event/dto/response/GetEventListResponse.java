@@ -13,7 +13,7 @@ import lombok.Getter;
 
 @Getter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class GetEventResponse {
+public class GetEventListResponse {
 	@Schema(description = "이벤트 ID", example = "1")
 	private final Long id;
 	@Schema(description = "이벤트 이름", example = "이벤트1")
@@ -28,7 +28,7 @@ public class GetEventResponse {
 	private final ImageFile photo;
 
 	@QueryProjection
-	public GetEventResponse(Event event, ImageFile photo) {
+	public GetEventListResponse(Event event, ImageFile photo) {
 		this.id = event.getId();
 		this.title = event.getTitle();
 		this.startDate = event.getStartDate();

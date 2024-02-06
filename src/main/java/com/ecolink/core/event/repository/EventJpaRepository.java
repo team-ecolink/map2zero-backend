@@ -5,14 +5,13 @@ import static com.ecolink.core.event.domain.QEventPhoto.*;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.ecolink.core.event.constant.EventStatus;
-import com.ecolink.core.event.dto.response.GetEventResponse;
-import com.ecolink.core.event.dto.response.QGetEventResponse;
+import com.ecolink.core.event.dto.request.GetEventRequest;
+import com.ecolink.core.event.dto.response.GetEventListResponse;
+import com.ecolink.core.event.dto.response.QGetEventListResponse;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -27,26 +26,30 @@ public class EventJpaRepository {
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 
-	public Page<GetEventResponse> findEventByStoreAndStatus(Long id, Pageable pageable) {
-		List<GetEventResponse> content =
-			queryFactory.select(new QGetEventResponse(
-					event,
-					eventPhoto.file))
-				.from(event)
-				.leftJoin(eventPhoto)
-				.on(eventPhoto.event.eq(event), eventPhoto.givenOrder.eq(0))
-				.where(event.store.id.eq(id),
-					event.status.eq(EventStatus.ACTIVE))
-				.orderBy(event.createdDate.asc())
-				.offset(pageable.getOffset())
-				.limit(pageable.getPageSize())
-				.fetch();
-
-		JPAQuery<Long> count = queryFactory.select(event.count())
+	public List<GetEventListResponse> findEventByStoreAndStatus(Long id, GetEventRequest request, EventStatus status) {
+		JPAQuery<GetEventListResponse> common = queryFactory.select(new QGetEventListResponse(
+				event,
+				eventPhoto.file))
 			.from(event)
-			.where(event.store.id.eq(id),
-				event.status.eq(EventStatus.ACTIVE));
+			.leftJoin(eventPhoto)
+			.on(eventPhoto.event.eq(event), eventPhoto.givenOrder.eq(0))
+			.where(event.store.id.eq(id))
+			.orderBy(event.id.asc())
+			.limit(request.getSize() + 1L);
 
-		return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
+		return withCondition(common, request, status).fetch();
+	}
+
+	private static JPAQuery<GetEventListResponse> withCondition(JPAQuery<GetEventListResponse> common,
+		GetEventRequest request, EventStatus status) {
+		BooleanBuilder builder = new BooleanBuilder();
+		if (request.getCursor() != null) {
+			builder.and(event.id.goe(request.getCursor()));
+		}
+		if (status != null) {
+			builder.and(event.status.eq(status));
+		}
+
+		return common.where(builder);
 	}
 }

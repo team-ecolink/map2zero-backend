@@ -1,14 +1,16 @@
 package com.ecolink.core.event.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.EntityNotFoundException;
+import com.ecolink.core.event.constant.EventStatus;
 import com.ecolink.core.event.domain.Event;
-import com.ecolink.core.event.dto.response.GetEventResponse;
+import com.ecolink.core.event.dto.request.GetEventRequest;
+import com.ecolink.core.event.dto.response.GetEventListResponse;
 import com.ecolink.core.event.repository.EventJpaRepository;
 import com.ecolink.core.event.repository.EventRepository;
 
@@ -27,7 +29,7 @@ public class EventService {
 			() -> new EntityNotFoundException(ErrorCode.EVENT_NOT_FOUND));
 	}
 
-	public Page<GetEventResponse> getByStoreAndStatus(Long storeId, Pageable pageable) {
-		return eventJpaRepository.findEventByStoreAndStatus(storeId, pageable);
+	public List<GetEventListResponse> getByStoreAndStatus(Long storeId, GetEventRequest request) {
+		return eventJpaRepository.findEventByStoreAndStatus(storeId, request, EventStatus.ACTIVE);
 	}
 }
