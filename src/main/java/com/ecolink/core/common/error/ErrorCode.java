@@ -28,6 +28,8 @@ public enum ErrorCode {
 	 * 매니저 관련 오류
 	 */
 	APPLICATION_IS_PENDING(HttpStatus.BAD_REQUEST, "M-001", "해당 유저는 대표 신청 후 승인 대기중 상태입니다."),
+	MANAGER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "M-002", "주어진 유저로 매니저를 찾을 수 없습니다."),
+	NOT_MANAGER_OF_STORE(HttpStatus.FORBIDDEN, "M-003", "해당 매장을 관리할 수 있는 권한이 없습니다."),
 
 	/**
 	 * 상점 관련 오류
@@ -78,7 +80,13 @@ public enum ErrorCode {
 	/**
 	 * 사진 관련 오류
 	 */
-	PHOTO_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "P-001", "사진은 최대 5개까지 첨부 가능합니다.");
+	PHOTO_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "P-001", "사진은 최대 5개까지 첨부 가능합니다."),
+
+  /**
+	 * 이벤트 관련 오류
+	 */
+	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다.");
+
 
 	private final HttpStatus httpStatus;
 	private final String code;
