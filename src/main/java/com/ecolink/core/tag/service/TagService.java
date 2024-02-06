@@ -48,15 +48,4 @@ public class TagService {
 		return tagRepository.findAll();
 	}
 
-	public Tag findById(Long id) {
-		return tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.TAG_NOT_FOUND));
-	}
-
-	public void checkTagsAreReviewCategories(List<Tag> tags) {
-		tags.forEach(tag -> {
-			if (!TagCategory.REVIEW.equals(tag.getCategory()))
-				throw new TagCategoryUnmatchedException(ErrorCode.NOT_REVIEW_CATEGORY);
-		});
-	}
-
 }

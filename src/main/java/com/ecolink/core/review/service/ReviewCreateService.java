@@ -18,6 +18,7 @@ import com.ecolink.core.review.domain.ReviewTag;
 import com.ecolink.core.review.dto.request.CreateReviewRequest;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.service.StoreService;
+import com.ecolink.core.tag.constant.TagCategory;
 import com.ecolink.core.tag.domain.Tag;
 import com.ecolink.core.tag.service.TagService;
 
@@ -39,15 +40,15 @@ public class ReviewCreateService {
 	public void createReview(CreateReviewRequest request, List<MultipartFile> files, Long avatarId) {
 
 		Store store = storeService.getById(request.getStoreId());
-		Avatar avatar = avatarService.getById(avatarId);
+		Avatar writer = avatarService.getById(avatarId);
 		List<Tag> tags = null;
 
 		if (request.getTagIds() != null) {
-			tags = request.getTagIds().stream().map(tagService::findById).toList();
-			tagService.checkTagsAreReviewCategories(tags);
+			tags = request.getTagIds().stream().map(tagService::getById).toList();
+			tags.forEach(tag -> tagService.validateCategory(tag.getId(), TagCategory.REVIEW));
 		}
 
-		Review review = new Review(request, store, avatar);
+		Review review = new Review(request, store, writer);
 		reviewService.saveReview(review);
 
 		if (tags != null) {

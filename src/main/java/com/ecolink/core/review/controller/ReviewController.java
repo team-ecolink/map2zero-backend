@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +36,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 
+@Validated
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}")
@@ -91,7 +94,7 @@ public class ReviewController {
 	@PostMapping(value = "/reviews", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ApiResponse<Void> createReview(
 		@Parameter(description = "추가할 리뷰 사진")
-		@RequestPart(name = "images", required = false) @Nullable List<MultipartFile> files,
+		@RequestPart(name = "images", required = false) @Size(max = 5) @Nullable List<MultipartFile> files,
 		@Parameter(description = "추가할 리뷰 정보")
 		@RequestPart("request") @Valid CreateReviewRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
