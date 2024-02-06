@@ -29,6 +29,11 @@ public class SearchHistoryService {
 		if (avatarId == null)
 			return;
 
+		List<SearchHistory> duplicatedSearchHistories = searchHistoryRepository.findAllByWordAndAvatarId(keyword,
+			avatarId);
+		if (!duplicatedSearchHistories.isEmpty())
+			searchHistoryRepository.deleteAll(duplicatedSearchHistories);
+
 		int searchHistoryCount = searchHistoryRepository.countByAvatarId(avatarId);
 		if (searchHistoryCount >= 10) {
 			List<SearchHistory> searchHistories = getSearchHistoryListLimit(searchHistoryCount - 9, avatarId);
