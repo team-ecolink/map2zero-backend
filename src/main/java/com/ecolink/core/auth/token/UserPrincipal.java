@@ -2,11 +2,13 @@ package com.ecolink.core.auth.token;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 
 import com.ecolink.core.avatar.domain.Avatar;
+import com.ecolink.core.manager.domain.Manager;
 import com.ecolink.core.user.constant.UserType;
 import com.ecolink.core.user.domain.User;
 
@@ -38,7 +40,11 @@ public class UserPrincipal implements Serializable {
 	// Role
 	private final Set<? extends GrantedAuthority> authorities;
 
-	public static UserPrincipal of(User user, Avatar avatar, Set<? extends GrantedAuthority> authoritySet) {
+	// Manager
+	private final List<Long> managingStores;
+
+	public static UserPrincipal of(User user, Avatar avatar, Set<? extends GrantedAuthority> authoritySet,
+		Manager manager) {
 		return UserPrincipal.builder()
 			.userId(user.getId())
 			.email(user.getEmail())
@@ -54,7 +60,12 @@ public class UserPrincipal implements Serializable {
 			.avatarId(avatar.getId())
 			.nickname(avatar.getNickname())
 			.authorities(authoritySet)
+			.managingStores(manager != null ? manager.getManagingStores() : List.of())
 			.build();
+	}
+
+	public boolean isManagerOf(Long storeId) {
+		return getManagingStores().contains(storeId);
 	}
 
 }

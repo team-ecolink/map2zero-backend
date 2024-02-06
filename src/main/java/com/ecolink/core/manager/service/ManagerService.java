@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.common.error.exception.ManagerApplicationException;
 import com.ecolink.core.manager.constant.ManagerStatus;
 import com.ecolink.core.manager.domain.Manager;
@@ -39,6 +40,11 @@ public class ManagerService {
 	 */
 	public boolean checkIfPending(Long userId) {
 		return managerRepository.existsByUserAndStatus(userId, ManagerStatus.PENDING);
+	}
+
+	public Manager getByUser(User user) {
+		return managerRepository.findByUser(user)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MANAGER_NOT_FOUND));
 	}
 
 }

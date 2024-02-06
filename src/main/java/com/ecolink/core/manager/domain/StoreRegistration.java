@@ -3,7 +3,9 @@ package com.ecolink.core.manager.domain;
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.manager.constant.RegistrationStatus;
 import com.ecolink.core.manager.dto.request.StoreRegistrationRequest;
+import com.ecolink.core.store.domain.Store;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -54,6 +57,10 @@ public class StoreRegistration {
 	@JoinColumn(name = "manager_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Manager manager;
+
+	@Nullable
+	@OneToOne(mappedBy = "storeRegistration")
+	private Store store;
 
 	public StoreRegistration(StoreRegistrationRequest request, Manager manager) {
 		this.name = request.name();
