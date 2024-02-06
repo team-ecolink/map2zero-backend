@@ -1,5 +1,7 @@
 package com.ecolink.core.common.util;
 
+import static com.ecolink.core.user.constant.RoleType.*;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.ecolink.core.auth.token.UserPrincipal;
@@ -11,7 +13,11 @@ public final class AuthorityUtil {
 	}
 
 	public static boolean hasUserAuthority(UserPrincipal principal) {
-		return principal != null && hasAuthority(principal, RoleType.USER, RoleType.MANAGER, RoleType.ADMIN);
+		return principal != null && hasAuthority(principal, USER, MANAGER, ADMIN);
+	}
+
+	public static boolean hasAdminAuthority(UserPrincipal principal) {
+		return hasAuthority(principal, ADMIN);
 	}
 
 	private static boolean hasAuthority(UserPrincipal principal, RoleType... roleTypes) {

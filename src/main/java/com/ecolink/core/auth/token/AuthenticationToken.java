@@ -5,9 +5,9 @@ import java.util.Set;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.ecolink.core.avatar.domain.Avatar;
+import com.ecolink.core.manager.domain.Manager;
 import com.ecolink.core.user.domain.User;
 
 public class AuthenticationToken extends AbstractAuthenticationToken {
@@ -20,7 +20,12 @@ public class AuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	public static AuthenticationToken of(User user, Avatar avatar, Set<? extends GrantedAuthority> authorities) {
-		return new AuthenticationToken(UserPrincipal.of(user, avatar, authorities), authorities);
+		return of(user, avatar, authorities, null);
+	}
+
+	public static AuthenticationToken of(User user, Avatar avatar, Set<? extends GrantedAuthority> authorities,
+		Manager manager) {
+		return new AuthenticationToken(UserPrincipal.of(user, avatar, authorities, manager), authorities);
 	}
 
 	@Override
