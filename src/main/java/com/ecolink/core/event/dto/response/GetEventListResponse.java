@@ -1,6 +1,6 @@
 package com.ecolink.core.event.dto.response;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.event.domain.Event;
@@ -19,9 +19,9 @@ public class GetEventListResponse {
 	@Schema(description = "이벤트 이름", example = "이벤트1")
 	private final String title;
 	@Schema(description = "시작 시간", example = "2024-01-01")
-	private final LocalDateTime startDate;
+	private final Date startDate;
 	@Schema(description = "종료 시간", example = "2024-01-31")
-	private final LocalDateTime endDate;
+	private final Date endDate;
 	@Schema(description = "진행중 여부", example = "ACTIVE")
 	private final String status;
 	@Schema(description = "대표 사진")

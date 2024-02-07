@@ -25,12 +25,20 @@ public class ApiResponse<T> {
 		return ok(null);
 	}
 
+	public static ApiResponse<Void> permissionDenied() {
+		return permissionDenied(null);
+	}
+
 	public static <T> ApiResponse<T> ok(T data) {
 		return new ApiResponse<>(data, 200, "OK");
 	}
 
 	public static <T> ApiResponse<T> created(T data) {
 		return new ApiResponse<>(data, 201, "Created");
+	}
+
+	public static <T> ApiResponse<T> permissionDenied(T data) {
+		return new ApiResponse<>(data, 403, "Permission Denied");
 	}
 
 }

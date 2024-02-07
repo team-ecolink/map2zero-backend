@@ -31,7 +31,7 @@ public class CreateReviewRequest {
 
 	@Schema(description = "리뷰 내용", example = "사장님이 친절하시고 매장이 깔끔해요!!")
 	@NotNull
-	@Size(min = 10, max = 100, message = "텍스트는 최소 10자에서 최대 100자까지 입력 가능합니다.")
+	@Size(min = 10, max = 100, message = "텍스트는 공백 포함 최소 10자에서 최대 100자까지 입력 가능합니다.")
 	private String text;
 
 }

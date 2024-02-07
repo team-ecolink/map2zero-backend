@@ -1,11 +1,13 @@
 package com.ecolink.core.event.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.event.constant.EventStatus;
+import com.ecolink.core.event.dto.request.AddEventRequest;
+import com.ecolink.core.file.domain.MultiPhotoContainer;
 import com.ecolink.core.store.domain.Store;
 
 import jakarta.persistence.CascadeType;
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Event extends BaseTimeEntity {
+public class Event extends BaseTimeEntity implements MultiPhotoContainer<EventPhoto> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +40,9 @@ public class Event extends BaseTimeEntity {
 	@NotNull
 	private String title;
 
-	private LocalDateTime startDate;
+	private Date startDate;
 
-	private LocalDateTime endDate;
+	private Date endDate;
 
 	private String applicationUrl;
 
@@ -56,6 +58,21 @@ public class Event extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
 
-	@OneToMany(mappedBy = "event")
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EventPhoto> eventPhotos = new ArrayList<>();
+
+	public Event(AddEventRequest request, Store store) {
+		this.title = request.getTitle();
+		this.startDate = request.getStartDate();
+		this.endDate = request.getEndDate();
+		this.applicationUrl = request.getApplyUrl();
+		this.description = request.getText();
+		this.status = EventStatus.ACTIVE;
+		this.store = store;
+	}
+
+	@Override
+	public List<EventPhoto> getPhotos() {
+		return eventPhotos;
+	}
 }

@@ -8,3 +8,4 @@ swagger:
     bookmark: '06. 북마크'
     account: '08. 계정 관리페이지'
     tag: '10.태그'
+    manager: '11. 점주 관련 기능 페이지'
