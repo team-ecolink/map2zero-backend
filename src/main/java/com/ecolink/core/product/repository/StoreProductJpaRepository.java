@@ -2,7 +2,6 @@ package com.ecolink.core.product.repository;
 
 import static com.ecolink.core.product.domain.QStoreProduct.*;
 import static com.ecolink.core.product.domain.QStoreProductPhoto.*;
-import static com.ecolink.core.product.domain.QStoreProductTag.*;
 import static com.ecolink.core.tag.domain.QProduct.*;
 import static com.ecolink.core.tag.domain.QTag.*;
 
@@ -28,7 +27,8 @@ public class StoreProductJpaRepository {
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 
-	public List<GetStoreProductResponse> queryByNameAndTag(Long storeId, GetStoreProductRequest request, Boolean onSale) {
+	public List<GetStoreProductResponse> queryByNameAndTag(Long storeId, GetStoreProductRequest request,
+		Boolean onSale) {
 
 		JPAQuery<GetStoreProductResponse> common = queryFactory.select(new QGetStoreProductResponse(
 				storeProduct,
@@ -56,14 +56,11 @@ public class StoreProductJpaRepository {
 			builder.and(product.name.contains(request.getKeyword()));
 
 		if (request.getTagId() != null) {
-			common.leftJoin(storeProductTag)
-				.on(storeProductTag.storeProduct.eq(storeProduct))
-				.join(tag)
-				.on(tag.eq(storeProductTag.tag));
+			common.join(storeProduct.tag, tag);
 			builder.and(tag.id.eq(request.getTagId()));
 		}
 
-		if(onSale != null)
+		if (onSale != null)
 			builder.and(storeProduct.onSale.eq(onSale));
 
 		return common.where(builder);
