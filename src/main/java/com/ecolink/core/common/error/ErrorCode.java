@@ -67,7 +67,7 @@ public enum ErrorCode {
 	TAG_NOT_FOUND(HttpStatus.BAD_REQUEST, "T-001", "주어진 식별자로 태그를 찾을 수 없습니다."),
 	TAG_UNMATCHED_CATEGORY(HttpStatus.BAD_REQUEST, "T-002", "주어진 태그가 유효한 카테고리에 속하지 않습니다."),
 	NOT_REVIEW_CATEGORY(HttpStatus.BAD_REQUEST, "T-003", "입력으로 들어온 태그 카테고리가 'REVIEW'가 아닙니다."),
-	
+
 	/**
 	 * 파일 업로드 관련 오류
 	 */
@@ -82,11 +82,18 @@ public enum ErrorCode {
 	 */
 	PHOTO_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "P-001", "사진은 최대 5개까지 첨부 가능합니다."),
 
-  /**
+	/**
 	 * 이벤트 관련 오류
 	 */
-	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다.");
+	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다."),
 
+	/**
+	 * 제품 관련 오류
+	 */
+	PRODUCT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "P-001", "주어진 이름으로 제품을 찾을 수 없습니다."),
+	INVALID_PRICE_UNIT(HttpStatus.BAD_REQUEST, "P-002", "올바르지 않은 가격 단위입니다. 10원 단위로 입력해주세요"),
+	INVALID_PRODUCT_NAME_FORMAT(HttpStatus.BAD_REQUEST, "P-003", "제품명은 영문(대소문자), 숫자, 한글로만 구성되어야합니다."),
+	INVALID_PRODUCT_NAME_LENGTH(HttpStatus.BAD_REQUEST, "P-004", "제품명의 길이가 유효하지 않습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
