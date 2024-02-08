@@ -10,6 +10,7 @@ import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.ManagerForbiddenException;
 import com.ecolink.core.common.error.exception.PhotoLimitExceededException;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.event.domain.EventPhoto;
 import com.ecolink.core.event.dto.request.AddEventRequest;
@@ -32,8 +33,8 @@ public class EventAddService {
 
 	@Transactional
 	public void addEvent(AddEventRequest request, List<MultipartFile> files, Long storeId,
-		UserPrincipal userPrincipal) {
-		if (!userPrincipal.isAdmin() && !userPrincipal.isManagerOf(storeId))
+		UserPrincipal principal) {
+		if (!AuthorityUtil.hasAdminAuthority(principal) && !principal.isManagerOf(storeId))
 			throw new ManagerForbiddenException(ErrorCode.NOT_MANAGER_OF_STORE);
 
 		Store store = storeService.getById(storeId);
