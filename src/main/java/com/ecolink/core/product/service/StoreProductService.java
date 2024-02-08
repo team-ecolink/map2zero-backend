@@ -14,9 +14,12 @@ import com.ecolink.core.product.dto.response.GetStoreProductResponse;
 import com.ecolink.core.product.repository.StoreProductJpaRepository;
 import com.ecolink.core.product.repository.StoreProductRepository;
 import com.ecolink.core.store.constant.SearchType;
+import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.dto.StoreProductDto;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
+import com.ecolink.core.tag.domain.Product;
+import com.ecolink.core.tag.domain.Tag;
 
 import lombok.RequiredArgsConstructor;
 
@@ -85,6 +88,10 @@ public class StoreProductService {
 
 	public List<GetStoreProductResponse> getByNameAndTag(Long storeId, GetStoreProductRequest request, Boolean onSale) {
 		return storeProductJpaRepository.queryByNameAndTag(storeId, request, onSale);
+	}
+
+	public StoreProduct createStoreProduct(int price, Store store, Product product, Tag tag) {
+		return storeProductRepository.save(new StoreProduct(price, store, product, tag));
 	}
 
 }
