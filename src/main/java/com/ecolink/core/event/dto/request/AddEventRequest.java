@@ -1,6 +1,6 @@
 package com.ecolink.core.event.dto.request;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -21,11 +21,11 @@ public class AddEventRequest {
 
 	@Schema(description = "이벤트 시작 날짜", example = "2024-02-07")
 	@NotNull
-	private Date startDate;
+	private LocalDate startDate;
 
 	@Schema(description = "이벤트 종료 날짜", example = "2024-03-07")
 	@NotNull
-	private Date endDate;
+	private LocalDate endDate;
 
 	@Schema(description = "이벤트 신청 링크", example = "http://~")
 	private String applyUrl;

@@ -1,7 +1,7 @@
 package com.ecolink.core.event.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
@@ -40,9 +40,9 @@ public class Event extends BaseTimeEntity implements MultiPhotoContainer<EventPh
 	@NotNull
 	private String title;
 
-	private Date startDate;
+	private LocalDate startDate;
 
-	private Date endDate;
+	private LocalDate endDate;
 
 	private String applicationUrl;
 
