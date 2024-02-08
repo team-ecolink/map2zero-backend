@@ -56,6 +56,8 @@ public class Store extends BaseTimeEntity {
 
 	private int reviewCnt;
 
+	private int productCnt;
+
 	private double totalScore;
 
 	@Valid

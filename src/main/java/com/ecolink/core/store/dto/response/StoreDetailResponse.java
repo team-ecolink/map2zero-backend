@@ -32,11 +32,13 @@ public record StoreDetailResponse(
 	@Schema(description = "인스타그램 URL", example = "https://www.instagram.~~~.com")
 	String instagramUrl,
 	@Schema(description = "매장 북마크 수", example = "100")
-	Integer bookmarkCnt,
+	int bookmarkCnt,
 	@Schema(description = "매장 리뷰 수", example = "5")
-	Integer reviewCnt,
+	int reviewCnt,
 	@Schema(description = "매장 평점", example = "4.8")
 	double averageScore,
+	@Schema(description = "매장 상품 수", example = "30")
+	int storeProductCnt,
 	@Schema(description = "매장 주소")
 	Address address,
 	@Schema(description = "매장 사진")
@@ -46,10 +48,10 @@ public record StoreDetailResponse(
 	@Schema(description = "시설물 태그(아이콘)")
 	List<StoreTagDto> storeTags,
 	@Schema(description = "북마크 여부", example = "true")
-	Boolean isBookmarked
+	boolean isBookmarked
 ) {
 
-	public static StoreDetailResponse of(Store store, Boolean isBookmarked) {
+	public static StoreDetailResponse of(Store store, boolean isBookmarked) {
 		return StoreDetailResponse.builder()
 			.id(store.getId())
 			.name(store.getName())
@@ -60,6 +62,7 @@ public record StoreDetailResponse(
 			.instagramUrl(store.getInstagramUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
+			.storeProductCnt(store.getProductCnt())
 			.averageScore(store.roundedAverageScore())
 			.address(store.getAddress())
 			.photos(store.getStorePhotos().stream()
