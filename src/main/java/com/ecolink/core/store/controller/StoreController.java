@@ -31,7 +31,7 @@ public class StoreController {
 	public ApiResponse<StoreDetailResponse> storeInfo(
 		@PathVariable("id") Long id,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		if(AuthorityUtil.hasUserAuthority(principal)){
+		if (AuthorityUtil.hasUserAuthority(principal)) {
 			return ApiResponse.ok(storeSearchService.getStoreDetailPage(id, principal.getAvatarId()));
 		}
 		return ApiResponse.ok(storeSearchService.getStoreDetailPage(id, null));
