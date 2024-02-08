@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.ManagerForbiddenException;
 import com.ecolink.core.common.error.exception.PhotoLimitExceededException;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.event.domain.EventPhoto;
@@ -29,7 +31,11 @@ public class EventAddService {
 	private final MultiPhotoService multiPhotoService;
 
 	@Transactional
-	public void addEvent(AddEventRequest request, List<MultipartFile> files, Long storeId) {
+	public void addEvent(AddEventRequest request, List<MultipartFile> files, Long storeId,
+		UserPrincipal userPrincipal) {
+		if (!userPrincipal.isAdmin() && !userPrincipal.isManagerOf(storeId))
+			throw new ManagerForbiddenException(ErrorCode.NOT_MANAGER_OF_STORE);
+
 		Store store = storeService.getById(storeId);
 		Event event = new Event(request, store);
 		eventRepository.save(event);

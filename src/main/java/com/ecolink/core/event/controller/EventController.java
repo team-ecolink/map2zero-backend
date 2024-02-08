@@ -73,10 +73,7 @@ public class EventController {
 		@RequestPart("request") @Valid AddEventRequest request,
 		@Parameter(description = "이벤트를 등록할 상점 ID") @PathVariable("id") @NotNull @Positive Long id,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		if (principal.isManagerOf(id)) {
-			eventAddService.addEvent(request, files, id);
-			return ApiResponse.ok();
-		}
-		return ApiResponse.permissionDenied();
+		eventAddService.addEvent(request, files, id, principal);
+		return ApiResponse.ok();
 	}
 }

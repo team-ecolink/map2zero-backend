@@ -68,4 +68,9 @@ public class UserPrincipal implements Serializable {
 		return getManagingStores().contains(storeId);
 	}
 
+	public boolean isAdmin() {
+		return authorities.stream()
+			.anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+	}
+
 }
