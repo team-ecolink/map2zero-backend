@@ -56,7 +56,8 @@ public class EventController {
 	}
 
 	@Tag(name = "${swagger.tag.store}")
-	@Operation(summary = "이벤트 상세 조회 API - 인증 선택", description = "이벤트 상세 조회 - 인증 선택")
+	@Operation(summary = "이벤트 상세 조회 API - 인증 선택", description = "이벤트 상세 조회 - 인증 선택",
+		security = {@SecurityRequirement(name = "session-token")})
 	@GetMapping("/events/{id}")
 	public ApiResponse<GetEventResponse> eventDetail(
 		@PathVariable("id") @NotNull @Positive Long id,
