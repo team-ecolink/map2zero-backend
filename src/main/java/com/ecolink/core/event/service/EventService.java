@@ -32,4 +32,9 @@ public class EventService {
 	public List<GetEventListResponse> getByStoreAndStatus(Long storeId, GetEventRequest request) {
 		return eventJpaRepository.findEventByStoreAndStatus(storeId, request, EventStatus.ACTIVE);
 	}
+
+	public Event getGraphById(Long id) {
+		return eventRepository.findGraphById(id).orElseThrow(
+			() -> new EntityNotFoundException(ErrorCode.EVENT_NOT_FOUND));
+	}
 }

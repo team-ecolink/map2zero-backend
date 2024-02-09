@@ -86,6 +86,7 @@ public enum ErrorCode {
 	 * 이벤트 관련 오류
 	 */
 	EVENT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "EV-001", "주어진 식별자로 이벤트를 찾을 수 없습니다."),
+	INACTIVE_EVENT_FORBIDDEN(HttpStatus.FORBIDDEN, "EV-002", "종료된 이벤트에 접근할 수 없습니다."),
 
 	/**
 	 * 제품 관련 오류
