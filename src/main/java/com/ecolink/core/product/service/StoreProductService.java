@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.product.domain.StoreProduct;
+import com.ecolink.core.product.domain.StoreProductPhoto;
 import com.ecolink.core.product.dto.request.GetStoreProductRequest;
 import com.ecolink.core.product.dto.response.GetStoreProductResponse;
 import com.ecolink.core.product.repository.StoreProductJpaRepository;
@@ -94,6 +95,15 @@ public class StoreProductService {
 	public StoreProduct createStoreProduct(int price, Store store, Product product, Tag tag) {
 		store.addProductCnt();
 		return storeProductRepository.save(new StoreProduct(price, store, product, tag));
+	}
+
+	public StoreProductPhoto getMainPhoto(StoreProduct storeProduct) {
+		List<StoreProductPhoto> photos = storeProduct.getPhotos();
+
+		return photos.stream()
+			.filter(photo -> photo.getGivenOrder() == 0)
+			.findFirst()
+			.orElse(null);
 	}
 
 }
