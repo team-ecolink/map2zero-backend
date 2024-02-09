@@ -20,6 +20,7 @@ import com.ecolink.core.common.response.ApiCursorPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.event.dto.request.AddEventRequest;
 import com.ecolink.core.event.dto.request.GetEventRequest;
+import com.ecolink.core.event.dto.request.GetManagerEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
 import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.event.service.EventAddService;
@@ -48,11 +49,11 @@ public class EventController {
 
 	@Tag(name = "${swagger.tag.store}")
 	@Operation(summary = "이벤트 리스트 조회 API", description = "이벤트 리스트 조회")
-	@GetMapping("/stores/{storeId}/events")
+	@GetMapping("/stores/{id}/events")
 	public ApiCursorPageResponse<GetEventListResponse, Long> eventList(
-		@PathVariable("storeId") @NotNull @Positive Long storeId,
+		@PathVariable("id") @NotNull @Positive Long id,
 		@Valid @ParameterObject GetEventRequest request) {
-		return ApiCursorPageResponse.ok(eventSearchService.getEvents(storeId, request));
+		return ApiCursorPageResponse.ok(eventSearchService.getEvents(id, request));
 	}
 
 	@Tag(name = "${swagger.tag.store}")
@@ -86,5 +87,17 @@ public class EventController {
 		@AuthenticationPrincipal UserPrincipal principal) {
 		eventAddService.addEvent(request, files, id, principal);
 		return ApiResponse.ok();
+	}
+
+	@Tag(name = "${swagger.tag.manager}")
+	@Operation(summary = "점주 이벤트 리스트 조회 API - 인증 필요", description = "점주 이벤트 리스트 조회 - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('MANAGER')")
+	@GetMapping("/m/stores/{id}/events")
+	public ApiCursorPageResponse<GetEventListResponse, Long> eventListForManager(
+		@PathVariable("id") @NotNull @Positive Long id,
+		@Valid @ParameterObject GetManagerEventRequest request,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		return ApiCursorPageResponse.ok(eventSearchService.getEventsForManager(id, request, principal));
 	}
 }

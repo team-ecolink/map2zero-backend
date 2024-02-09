@@ -10,6 +10,7 @@ import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.event.constant.EventStatus;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.event.dto.request.GetEventRequest;
+import com.ecolink.core.event.dto.request.GetManagerEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
 import com.ecolink.core.event.repository.EventJpaRepository;
 import com.ecolink.core.event.repository.EventRepository;
@@ -36,5 +37,9 @@ public class EventService {
 	public Event getGraphById(Long id) {
 		return eventRepository.findGraphById(id).orElseThrow(
 			() -> new EntityNotFoundException(ErrorCode.EVENT_NOT_FOUND));
+	}
+
+	public List<GetEventListResponse> getByStoreAndStatusForManager(Long storeId, GetManagerEventRequest request) {
+		return eventJpaRepository.findEventByStoreAndStatus(storeId, request, request.getStatus());
 	}
 }
