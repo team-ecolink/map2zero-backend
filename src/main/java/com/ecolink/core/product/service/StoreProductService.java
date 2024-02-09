@@ -90,7 +90,9 @@ public class StoreProductService {
 		return storeProductJpaRepository.queryByNameAndTag(storeId, request, onSale);
 	}
 
+	@Transactional
 	public StoreProduct createStoreProduct(int price, Store store, Product product, Tag tag) {
+		store.addProductCnt();
 		return storeProductRepository.save(new StoreProduct(price, store, product, tag));
 	}
 

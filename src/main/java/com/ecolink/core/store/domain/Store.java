@@ -119,4 +119,9 @@ public class Store extends BaseTimeEntity {
 	public void addTotalScore(int score) {
 		this.totalScore += score;
 	}
+
+	public void addProductCnt() {
+		this.productCnt++;
+	}
+
 }
