@@ -29,4 +29,13 @@ public class ProductRecommendService {
 				storeProductService.getMainPhoto(storeProduct)))
 			.toList();
 	}
+
+	public List<ProductInfoDto> getMyProducts() {
+		List<StoreProduct> storeProducts = productRecommendRepository.findStoreProductsWithPhotosByRecommendType(
+			RecommendType.MY_PRODUCT);
+		return storeProducts.stream()
+			.map(storeProduct -> ProductInfoDto.of(storeProduct,
+				storeProductService.getMainPhoto(storeProduct)))
+			.toList();
+	}
 }

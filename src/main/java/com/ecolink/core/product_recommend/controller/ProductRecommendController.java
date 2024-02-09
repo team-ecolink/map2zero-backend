@@ -28,4 +28,12 @@ public class ProductRecommendController {
 	public ApiResponse<List<ProductInfoDto>> getTodayProducts() {
 		return ApiResponse.ok(productRecommendService.getTodayProducts());
 	}
+
+	@Tag(name = "${swagger.tag.store}")
+	@Operation(summary = "나만의 제품을 만나보세요 조회 API",
+		description = "나만의 제품을 만나보세요 조회")
+	@GetMapping("/my")
+	public ApiResponse<List<ProductInfoDto>> getMyProducts() {
+		return ApiResponse.ok(productRecommendService.getMyProducts());
+	}
 }
