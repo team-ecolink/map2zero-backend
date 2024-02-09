@@ -15,6 +15,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
 	@Query("select e from Event e "
 		+ "left join fetch e.eventPhotos "
+		+ "join fetch e.store "
 		+ "where e.id = :id")
 	Optional<Event> findGraphById(@Param("id") Long id);
 }

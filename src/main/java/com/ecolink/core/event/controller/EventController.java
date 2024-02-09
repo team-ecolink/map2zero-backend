@@ -18,7 +18,6 @@ import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.config.swagger.annotation.SwaggerBody;
 import com.ecolink.core.common.response.ApiCursorPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
-import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.event.dto.request.AddEventRequest;
 import com.ecolink.core.event.dto.request.GetEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
@@ -62,10 +61,7 @@ public class EventController {
 	public ApiResponse<GetEventResponse> eventDetail(
 		@PathVariable("id") @NotNull @Positive Long id,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		if (AuthorityUtil.hasManagerAuthority(principal)) {
-			ApiResponse.ok(eventSearchService.getEvent(id, true));
-		}
-		return ApiResponse.ok(eventSearchService.getEvent(id, false));
+		return ApiResponse.ok(eventSearchService.getEvent(id, principal));
 	}
 
 	@Tag(name = "${swagger.tag.manager}")
