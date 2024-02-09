@@ -90,7 +90,7 @@ public class EventController {
 	}
 
 	@Tag(name = "${swagger.tag.manager}")
-	@Operation(summary = "점주 이벤트 리스트 조회 API - 인증 필요", description = "점주 이벤트 리스트 조회 - 인증 필요",
+	@Operation(summary = "점주 이벤트 목록 조회 API - 인증 필요", description = "점주 이벤트 목록 조회 API - 인증 필요",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PreAuthorize("hasRole('MANAGER')")
 	@GetMapping("/m/stores/{id}/events")
