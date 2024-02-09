@@ -60,7 +60,7 @@ public class Store extends BaseTimeEntity {
 
 	private int productCnt;
 
-	private double totalScore;
+	private int totalScore;
 
 	@Valid
 	@NotNull
@@ -96,7 +96,7 @@ public class Store extends BaseTimeEntity {
 	public double averageScore() {
 		if (reviewCnt == 0)
 			return 0;
-		return totalScore / reviewCnt;
+		return (double)totalScore / reviewCnt;
 	}
 
 	public double roundedAverageScore() {
