@@ -67,5 +67,4 @@ public class UserPrincipal implements Serializable {
 	public boolean isManagerOf(Long storeId) {
 		return getManagingStores().contains(storeId);
 	}
-
 }

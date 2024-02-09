@@ -1,7 +1,7 @@
 package com.ecolink.core.file.constant;
 
 public enum FilePath {
-	PROFILE_PHOTO("/avatar"), REVIEW_PHOTO("/review"), PRODUCT_PHOTO("/product");
+	PROFILE_PHOTO("/avatar"), REVIEW_PHOTO("/review"), PRODUCT_PHOTO("/product"), EVENT_PHOTO("/event");
 
 	public static final String PREFIX = "public";
 	private final String path;
