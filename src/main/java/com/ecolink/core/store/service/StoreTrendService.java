@@ -2,7 +2,6 @@ package com.ecolink.core.store.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,7 @@ public class StoreTrendService {
 	private final StorePhotoService storePhotoService;
 
 	public List<StoreTrendResponse> getTrendyStores() {
-		List<Store> stores = storeRepository.findTop10WithPhotos(PageRequest.of(0, 10));
+		List<Store> stores = storeRepository.findTop10ByOrderByBookmarkCntDesc();
 
 		return stores.stream()
 			.map(store -> StoreTrendResponse.of(store, storePhotoService.getMainPhoto(store)))
