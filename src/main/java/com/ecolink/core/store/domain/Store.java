@@ -1,8 +1,9 @@
 package com.ecolink.core.store.domain;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.locationtech.jts.geom.Point;
 
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
@@ -60,18 +61,14 @@ public class Store extends BaseTimeEntity {
 
 	private int productCnt;
 
-	private double totalScore;
+	private int totalScore;
 
 	@Valid
 	@NotNull
 	@Embedded
 	private Address address;
 
-	@NotNull
-	private BigDecimal x;
-
-	@NotNull
-	private BigDecimal y;
+	private Point coordinates;
 
 	@Nullable
 	@OneToOne(fetch = FetchType.LAZY)
@@ -96,7 +93,7 @@ public class Store extends BaseTimeEntity {
 	public double averageScore() {
 		if (reviewCnt == 0)
 			return 0;
-		return totalScore / reviewCnt;
+		return (double)totalScore / reviewCnt;
 	}
 
 	public double roundedAverageScore() {

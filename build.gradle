@@ -61,6 +61,9 @@ dependencies {
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
     implementation 'com.amazonaws:aws-java-sdk-s3'
 
+    //hibernate-spatial
+    implementation 'org.hibernate:hibernate-spatial:6.4.2.Final'
+
 }
 
 dependencyManagement {
