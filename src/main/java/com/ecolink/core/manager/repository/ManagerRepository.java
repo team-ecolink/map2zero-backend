@@ -15,9 +15,9 @@ import com.ecolink.core.user.domain.User;
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
 	@Query("select m from Manager m "
-		+ "join fetch m.storeRegistrations sr "
-		+ "join fetch sr.store "
-		+ "where m.user = :user")
+		   + "left join fetch m.storeRegistrations sr "
+		   + "left join fetch sr.store "
+		   + "where m.user = :user")
 	Optional<Manager> findByUser(@Param("user") User user);
 
 	@Query("select (count(m) > 0) from Manager m "
