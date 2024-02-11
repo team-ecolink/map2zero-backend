@@ -8,5 +8,6 @@ swagger:
     bookmark: '06. 북마크'
     manager: '07. 매장 관리페이지'
     account: '08. 계정 관리페이지'
-    home: '09. 홈 화면 페이지'
-    tag: '10.태그'
+    map: '09. 맵 페이지'
+    tag: '10. 태그'
+    home: '11. 홈 화면 페이지'

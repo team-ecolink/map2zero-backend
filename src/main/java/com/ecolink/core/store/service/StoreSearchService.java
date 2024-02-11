@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
 import com.ecolink.core.bookmark.service.BookmarkService;
 import com.ecolink.core.common.dto.CursorPage;
+import com.ecolink.core.geo.service.GeometryService;
 import com.ecolink.core.product.service.StoreProductService;
 import com.ecolink.core.store.domain.Store;
+import com.ecolink.core.store.dto.MapStoreInfoDto;
+import com.ecolink.core.store.dto.request.MapQueryRequest;
 import com.ecolink.core.store.dto.request.StoreSearchRequest;
 import com.ecolink.core.store.dto.response.StoreDetailResponse;
 import com.ecolink.core.store.dto.response.StoreSearchDto;
@@ -31,6 +34,7 @@ public class StoreSearchService {
 	private final StoreJpaRepository storeJpaRepository;
 	private final StoreProductService storeProductService;
 	private final ApplicationEventPublisher eventPublisher;
+	private final GeometryService geometryService;
 
 	public StoreDetailResponse getStoreDetailPage(Long storeId, Long avatarId) {
 		return StoreDetailResponse.of(storeService.getStoreGraphById(storeId),
@@ -50,6 +54,14 @@ public class StoreSearchService {
 	public List<StoreInfoDto> getTop10PopularStores() {
 		List<Store> stores = storeRepository.findTop10ByOrderByBookmarkCntDesc();
 		return stores.stream().map(StoreInfoDto::of).toList();
+	}
+
+	public List<MapStoreInfoDto> getMapStoreInfoList(MapQueryRequest mapQueryRequest, Long avatarId) {
+		return storeJpaRepository.findByPoint(geometryService.getPoint(mapQueryRequest), null, avatarId);
+	}
+
+	public MapStoreInfoDto getNearestStore(MapQueryRequest mapQueryRequest, Long avatarId) {
+		return storeJpaRepository.findByPoint(geometryService.getPoint(mapQueryRequest), 1L, avatarId).get(0);
 	}
 
 }
