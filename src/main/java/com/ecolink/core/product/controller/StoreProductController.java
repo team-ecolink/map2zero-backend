@@ -8,8 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import com.ecolink.core.common.config.swagger.annotation.SwaggerBody;
 import com.ecolink.core.common.response.ApiCursorPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.product.dto.request.GetStoreProductRequest;
+import com.ecolink.core.product.dto.request.PatchSaleStatusRequest;
 import com.ecolink.core.product.dto.request.PostStoreProductRequest;
 import com.ecolink.core.product.dto.response.GetStoreProductResponse;
 import com.ecolink.core.product.service.StoreProductCudService;
@@ -87,6 +90,19 @@ public class StoreProductController {
 		@RequestPart("request") @Valid PostStoreProductRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		return ApiResponse.ok(storeProductCudService.registerStoreProduct(storeId, request, images, principal));
+	}
+
+	@Tag(name = "${swagger.tag.manager}")
+	@Operation(summary = "매장제품 판매 상태 변경 API- 인증 필요",
+		description = "매장제품 판매 상태 변경 API - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('MANAGER')")
+	@PatchMapping(value = "/m/products/sale")
+	public ApiResponse<Void> changeSaleStatus(
+		@RequestBody @Valid PatchSaleStatusRequest request,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		storeProductCudService.changeSaleStatus(request, principal);
+		return ApiResponse.ok();
 	}
 
 }

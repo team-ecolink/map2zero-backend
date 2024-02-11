@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.product.domain.StoreProduct;
 import com.ecolink.core.product.dto.request.GetStoreProductRequest;
 import com.ecolink.core.product.dto.response.GetStoreProductResponse;
@@ -94,6 +96,11 @@ public class StoreProductService {
 	public StoreProduct createStoreProduct(int price, Store store, Product product, Tag tag) {
 		store.addProductCnt();
 		return storeProductRepository.save(new StoreProduct(price, store, product, tag));
+	}
+
+	public StoreProduct getByIdWithStore(Long storeProductId) {
+		return storeProductRepository.findByIdWithStore(storeProductId).
+			orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_PRODUCT_NOT_FOUND));
 	}
 
 }
