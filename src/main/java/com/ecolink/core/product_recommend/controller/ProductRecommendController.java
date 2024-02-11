@@ -21,7 +21,7 @@ public class ProductRecommendController {
 
 	private final ProductRecommendService productRecommendService;
 
-	@Tag(name = "${swagger.tag.store}")
+	@Tag(name = "${swagger.tag.home}")
 	@Operation(summary = "오늘의 제로웨이스트 상품 조회 API",
 		description = "오늘의 제로웨이스트 상품 조회")
 	@GetMapping("/today")
@@ -29,7 +29,7 @@ public class ProductRecommendController {
 		return ApiResponse.ok(productRecommendService.getTodayProducts());
 	}
 
-	@Tag(name = "${swagger.tag.store}")
+	@Tag(name = "${swagger.tag.home}")
 	@Operation(summary = "나만의 제품을 만나보세요 조회 API",
 		description = "나만의 제품을 만나보세요 조회")
 	@GetMapping("/my")
