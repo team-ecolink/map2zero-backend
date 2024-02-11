@@ -1,13 +1,17 @@
 package com.ecolink.core.manager.controller;
 
+import java.util.List;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
+import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.manager.dto.request.ManagerApplicationRequest;
 import com.ecolink.core.manager.service.ManagerService;
@@ -35,6 +39,17 @@ public class ManagerController {
 		@AuthenticationPrincipal UserPrincipal principal) {
 		managerService.applyManager(request, principal);
 		return ApiResponse.ok();
+	}
+
+	@Tag(name = "${swagger.tag.my-page}")
+	@Operation(summary = "관리 매장 조회 API - 인증 필요",
+		description = "관리 매장 조회 API - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('MANAGER')")
+	@GetMapping("/stores")
+	public ApiResponse<List<StoreInfoDto>> getManagingStores(
+		@AuthenticationPrincipal UserPrincipal principal) {
+		return ApiResponse.ok(managerService.getManagingStores(principal.getManagerId()));
 	}
 
 }
