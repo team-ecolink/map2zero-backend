@@ -14,6 +14,7 @@ import com.ecolink.core.file.constant.FilePath;
 import com.ecolink.core.file.service.MultiPhotoService;
 import com.ecolink.core.product.domain.StoreProduct;
 import com.ecolink.core.product.domain.StoreProductPhoto;
+import com.ecolink.core.product.dto.request.PatchSaleStatusRequest;
 import com.ecolink.core.product.dto.request.PostStoreProductRequest;
 import com.ecolink.core.store.service.StoreService;
 import com.ecolink.core.tag.constant.TagCategory;
@@ -48,6 +49,14 @@ public class StoreProductCudService {
 		multiPhotoService.addPhotos(images, storeProduct, StoreProductPhoto::new, FilePath.PRODUCT_PHOTO);
 
 		return storeProduct.getId();
+	}
+
+	@Transactional
+	public void changeSaleStatus(PatchSaleStatusRequest request, UserPrincipal principal) {
+		StoreProduct product = storeProductService.getByIdWithStore(request.getStoreProductId());
+		if (!AuthorityUtil.hasAdminAuthority(principal) && !principal.isManagerOf(product.getStore().getId()))
+			throw new ManagerForbiddenException(ErrorCode.NOT_MANAGER_OF_STORE);
+		product.updateSaleStatus(request.isOnSale());
 	}
 
 }

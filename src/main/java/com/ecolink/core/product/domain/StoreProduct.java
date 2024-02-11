@@ -72,4 +72,8 @@ public class StoreProduct extends BaseTimeEntity implements MultiPhotoContainer<
 		this.main = false;
 	}
 
+	public void updateSaleStatus(boolean onSale) {
+		this.onSale = onSale;
+	}
+
 }
