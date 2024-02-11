@@ -7,9 +7,11 @@ import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.dto.CursorPage;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.ManagerForbiddenException;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.event.constant.EventStatus;
 import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.event.dto.request.GetEventRequest;
+import com.ecolink.core.event.dto.request.GetManagerEventRequest;
 import com.ecolink.core.event.dto.response.GetEventListResponse;
 import com.ecolink.core.event.dto.response.GetEventResponse;
 import com.ecolink.core.store.domain.Store;
@@ -38,5 +40,15 @@ public class EventSearchService {
 			throw new ManagerForbiddenException(ErrorCode.INACTIVE_EVENT_FORBIDDEN);
 		}
 		return GetEventResponse.of(event, managerOf);
+	}
+
+	public CursorPage<GetEventListResponse, Long> getEventsForManager(Long storeId, GetManagerEventRequest request,
+		UserPrincipal principal) {
+		Store store = storeService.getById(storeId);
+		if (!AuthorityUtil.hasAdminAuthority(principal) && !principal.isManagerOf(store.getId())) {
+			throw new ManagerForbiddenException(ErrorCode.NOT_MANAGER_OF_STORE);
+		}
+		return CursorPage.of(eventService.getByStoreAndStatusForManager(store.getId(), request), request.getSize(),
+			GetEventListResponse::getId);
 	}
 }
