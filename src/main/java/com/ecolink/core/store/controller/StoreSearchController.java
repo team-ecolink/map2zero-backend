@@ -57,7 +57,7 @@ public class StoreSearchController {
 
 	@Tag(name = "${swagger.tag.map}")
 	@Operation(summary = "맵 매장 검색 API - 인증 선택",
-		description = "맵 매장 검색 API - 인증이 되면 북마크 여부가 포함됩니다",
+		description = "맵 매장 검색 API - 인증이 되면 북마크 여부가 포함됩니다, 현재 위치로부터의 거리순으로 정렬되어 있습니다.",
 		security = {@SecurityRequirement(name = "session-token")})
 	@GetMapping("/map")
 	public ApiResponse<List<MapStoreInfoDto>> storeInfoList(
@@ -67,6 +67,20 @@ public class StoreSearchController {
 			return ApiResponse.ok(storeSearchService.getMapStoreInfoList(mapQueryRequest, principal.getAvatarId()));
 		}
 		return ApiResponse.ok(storeSearchService.getMapStoreInfoList(mapQueryRequest, null));
+	}
+
+	@Tag(name = "${swagger.tag.map}")
+	@Operation(summary = "가장 가까운 매장 조회 API - 인증 선택",
+		description = "가장 가까운 매장 조회 API - 인증이 되면 북마크 여부가 포함됩니다",
+		security = {@SecurityRequirement(name = "session-token")})
+	@GetMapping("/map/nearest")
+	public ApiResponse<MapStoreInfoDto> getNearestStore(
+		@Valid @ParameterObject MapQueryRequest mapQueryRequest,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		if (AuthorityUtil.hasUserAuthority(principal)) {
+			return ApiResponse.ok(storeSearchService.getNearestStore(mapQueryRequest, principal.getAvatarId()));
+		}
+		return ApiResponse.ok(storeSearchService.getNearestStore(mapQueryRequest, null));
 	}
 
 }

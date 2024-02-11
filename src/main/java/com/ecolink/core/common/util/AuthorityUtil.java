@@ -17,7 +17,7 @@ public final class AuthorityUtil {
 	}
 
 	public static boolean hasAdminAuthority(UserPrincipal principal) {
-		return hasAuthority(principal, ADMIN);
+		return principal != null && hasAuthority(principal, ADMIN);
 	}
 
 	private static boolean hasAuthority(UserPrincipal principal, RoleType... roleTypes) {
