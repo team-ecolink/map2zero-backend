@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.product.domain.StoreProduct;
+import com.ecolink.core.product.domain.StoreProductPhoto;
 import com.ecolink.core.product.dto.request.GetStoreProductRequest;
 import com.ecolink.core.product.dto.response.GetStoreProductResponse;
 import com.ecolink.core.product.repository.StoreProductJpaRepository;
@@ -101,6 +102,15 @@ public class StoreProductService {
 	public StoreProduct getByIdWithStore(Long storeProductId) {
 		return storeProductRepository.findByIdWithStore(storeProductId).
 			orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_PRODUCT_NOT_FOUND));
+	}
+
+	public StoreProductPhoto getMainPhoto(StoreProduct storeProduct) {
+		List<StoreProductPhoto> photos = storeProduct.getPhotos();
+
+		return photos.stream()
+			.filter(photo -> photo.getGivenOrder() == 0)
+			.findFirst()
+			.orElse(null);
 	}
 
 }

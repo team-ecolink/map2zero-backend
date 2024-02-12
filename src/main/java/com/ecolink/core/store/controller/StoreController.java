@@ -42,7 +42,7 @@ public class StoreController {
 		return ApiResponse.ok(storeSearchService.getStoreDetailPage(id, null));
 	}
 
-	@Tag(name = "${swagger.tag.store}")
+	@Tag(name = "${swagger.tag.home}")
 	@Operation(summary = "요즘 뜨는 매장 카드 조회 API",
 		description = "요즘 뜨는 매장 카드 (북마크 순, 상위 10개)")
 	@GetMapping("/trend")
