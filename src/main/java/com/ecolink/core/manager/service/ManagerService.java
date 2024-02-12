@@ -1,9 +1,12 @@
 package com.ecolink.core.manager.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.auth.token.UserPrincipal;
+import com.ecolink.core.bookmark.dto.response.StoreInfoDto;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.common.error.exception.ManagerApplicationException;
@@ -36,7 +39,7 @@ public class ManagerService {
 	}
 
 	/**
-	 * 대표 등록 신청 진행중인 지 여부 확인하는 메서드
+	 * 대표 등록 신청 진행중인지 여부 확인하는 메서드
 	 */
 	public boolean checkIfPending(Long userId) {
 		return managerRepository.existsByUserAndStatus(userId, ManagerStatus.PENDING);
@@ -45,6 +48,11 @@ public class ManagerService {
 	public Manager getByUser(User user) {
 		return managerRepository.findByUser(user)
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MANAGER_NOT_FOUND));
+	}
+
+	@Transactional
+	public List<StoreInfoDto> getManagingStores(Long managerId) {
+		return managerRepository.findStoresByManager(managerId).stream().map(StoreInfoDto::of).toList();
 	}
 
 }

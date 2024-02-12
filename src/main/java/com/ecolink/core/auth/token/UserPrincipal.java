@@ -41,6 +41,7 @@ public class UserPrincipal implements Serializable {
 	private final Set<? extends GrantedAuthority> authorities;
 
 	// Manager
+	private final Long managerId;
 	private final List<Long> managingStores;
 
 	public static UserPrincipal of(User user, Avatar avatar, Set<? extends GrantedAuthority> authoritySet,
@@ -60,6 +61,7 @@ public class UserPrincipal implements Serializable {
 			.avatarId(avatar.getId())
 			.nickname(avatar.getNickname())
 			.authorities(authoritySet)
+			.managerId(manager != null ? manager.getId() : null)
 			.managingStores(manager != null ? manager.getManagingStores() : List.of())
 			.build();
 	}
