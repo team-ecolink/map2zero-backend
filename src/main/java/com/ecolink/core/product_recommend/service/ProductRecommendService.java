@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.product.domain.StoreProduct;
 import com.ecolink.core.product.service.StoreProductService;
 import com.ecolink.core.product_recommend.constant.RecommendType;
-import com.ecolink.core.product_recommend.domain.ProductRecommend;
 import com.ecolink.core.product_recommend.dto.ProductInfoDto;
 import com.ecolink.core.product_recommend.repository.ProductRecommendRepository;
 
@@ -22,18 +22,16 @@ public class ProductRecommendService {
 	private final StoreProductService storeProductService;
 
 	public List<ProductInfoDto> getTodayProducts() {
-		List<ProductRecommend> productRecommends = productRecommendRepository.findAllByType(
-			RecommendType.TODAY);
-		return productRecommends.stream()
-			.map(productRecommend -> ProductInfoDto.of(productRecommend.getStoreProduct(),
-				storeProductService.getMainPhoto(productRecommend.getStoreProduct()))).toList();
+		List<StoreProduct> storeProducts = productRecommendRepository.findStoreProductsByType(RecommendType.TODAY);
+		return storeProducts.stream()
+			.map(storeProduct -> ProductInfoDto.of(storeProduct,
+				storeProductService.getMainPhoto(storeProduct))).toList();
 	}
 
 	public List<ProductInfoDto> getMyProducts() {
-		List<ProductRecommend> productRecommends = productRecommendRepository.findAllByType(
-			RecommendType.MY_PRODUCT);
-		return productRecommends.stream()
-			.map(productRecommend -> ProductInfoDto.of(productRecommend.getStoreProduct(),
-				storeProductService.getMainPhoto(productRecommend.getStoreProduct()))).toList();
+		List<StoreProduct> storeProducts = productRecommendRepository.findStoreProductsByType(RecommendType.MY_PRODUCT);
+		return storeProducts.stream()
+			.map(storeProduct -> ProductInfoDto.of(storeProduct,
+				storeProductService.getMainPhoto(storeProduct))).toList();
 	}
 }
