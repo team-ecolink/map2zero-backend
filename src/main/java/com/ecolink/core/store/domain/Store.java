@@ -12,6 +12,7 @@ import com.ecolink.core.manager.domain.StoreRegistration;
 import com.ecolink.core.product.domain.StoreProduct;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,18 +43,18 @@ public class Store extends BaseTimeEntity {
 	@NotNull
 	private String name;
 
+	@Column(length = 1000)
 	private String description;
 
 	private String summary;
-
-	@NotNull
-	private boolean isRefillable;
 
 	private String contact;
 
 	private String homepageUrl;
 
 	private String instagramUrl;
+
+	private String naverMapUrl;
 
 	private int bookmarkCnt;
 

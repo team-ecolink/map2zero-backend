@@ -18,13 +18,13 @@ public class PostStoreProductRequest {
 	@Size(min = 2, max = 20)
 	private String name;
 
-	@Schema(description = "카테고리(태그)의 ID 최소, 최대 1개", example = "6")
+	@Schema(description = "카테고리(태그)의 ID 최소, 최대 1개", example = "10")
 	@NotNull
 	private Long tagId;
 
 	@Schema(description = "제품 가격 (10원 단위) 최소 10원, 최대 100,000원", example = "1000")
 	@NotNull
-	@Min(10)
+	@Min(0)
 	@Max(100_000)
 	private int price;
 

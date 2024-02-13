@@ -23,14 +23,14 @@ public record StoreDetailResponse(
 	String name,
 	@Schema(description = "매장 설명", example = "지구를 위한 첫걸음, 지구샵입니다.")
 	String description,
-	@Schema(description = "리필 스테이션 보유 여부", example = "false")
-	boolean isRefillable,
 	@Schema(description = "연락처", example = "02-111-1111")
 	String contact,
 	@Schema(description = "홈페이지 URL", example = "https://www.~~~.com")
 	String homepageUrl,
 	@Schema(description = "인스타그램 URL", example = "https://www.instagram.~~~.com")
 	String instagramUrl,
+	@Schema(description = "네이버 지도 URL", example = "https://www.map.naver.~~~.com")
+	String naverMapUrl,
 	@Schema(description = "매장 북마크 수", example = "100")
 	int bookmarkCnt,
 	@Schema(description = "매장 리뷰 수", example = "5")
@@ -56,10 +56,10 @@ public record StoreDetailResponse(
 			.id(store.getId())
 			.name(store.getName())
 			.description(store.getDescription())
-			.isRefillable(store.isRefillable())
 			.contact(store.getContact())
 			.homepageUrl(store.getHomepageUrl())
 			.instagramUrl(store.getInstagramUrl())
+			.naverMapUrl(store.getNaverMapUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
 			.storeProductCnt(store.getProductCnt())

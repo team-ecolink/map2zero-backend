@@ -95,11 +95,12 @@ public enum ErrorCode {
 	INVALID_PRICE_UNIT(HttpStatus.BAD_REQUEST, "P-002", "올바르지 않은 가격 단위입니다. 10원 단위로 입력해주세요"),
 	INVALID_PRODUCT_NAME_FORMAT(HttpStatus.BAD_REQUEST, "P-003", "제품명은 영문(대소문자), 숫자, 한글로만 구성되어야합니다."),
 	INVALID_PRODUCT_NAME_LENGTH(HttpStatus.BAD_REQUEST, "P-004", "제품명의 길이가 유효하지 않습니다."),
+	NEGATIVE_PRICE_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "P-005", "가격은 0보다 작을 수 없습니다."),
 
 	/**
 	 *
 	 */
-	STORE_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "SP-001","주어진 식별자로 매장 제품을 찾을 수 없습니다.");
+	STORE_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "SP-001", "주어진 식별자로 매장 제품을 찾을 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

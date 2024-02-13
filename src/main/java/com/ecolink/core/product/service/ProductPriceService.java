@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductPriceService {
 
 	public void verifyPrice(int price) {
-		if (price % 10 != 0)
-			throw new InvalidProductPriceException(ErrorCode.INVALID_PRICE_UNIT);
+		if (price < 0)
+			throw new InvalidProductPriceException(ErrorCode.NEGATIVE_PRICE_NOT_ALLOWED);
 	}
 
 }
