@@ -1,11 +1,16 @@
 package com.ecolink.core.bookmark.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.avatar.domain.Avatar;
+import com.ecolink.core.avatar.dto.request.MyPageBookmarkRequest;
+import com.ecolink.core.avatar.dto.response.MyPageBookmarkResponse;
 import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.bookmark.domain.Bookmark;
+import com.ecolink.core.bookmark.repository.BookmarkJpaRepository;
 import com.ecolink.core.bookmark.repository.BookmarkRepository;
 import com.ecolink.core.common.error.ErrorCode;
 import com.ecolink.core.common.error.exception.BookmarkAlreadyExistsException;
@@ -21,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class BookmarkService {
 
 	private final BookmarkRepository bookmarkRepository;
+	private final BookmarkJpaRepository bookmarkJpaRepository;
 	private final AvatarService avatarService;
 	private final StoreService storeService;
 
@@ -58,6 +64,10 @@ public class BookmarkService {
 		bookmarkRepository.delete(bookmark);
 
 		store.deleteBookmarkCount();
+	}
+
+	public List<MyPageBookmarkResponse> findBookmarkedStores(MyPageBookmarkRequest request, Long lastBookmarkId, int pageSize, Long avatarId) {
+		return bookmarkJpaRepository.findBookmarkedStores(request, lastBookmarkId, pageSize, avatarId);
 	}
 
 }
