@@ -138,4 +138,9 @@ public class User extends BaseTimeEntity {
 		this.avatars.add(avatar);
 	}
 
+	public void withdraw(Role role) {
+		this.withdrawn = true;
+		this.withdrawnDate = LocalDateTime.now();
+		this.role = role;
+	}
 }

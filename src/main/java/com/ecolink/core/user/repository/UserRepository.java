@@ -1,5 +1,6 @@
 package com.ecolink.core.user.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +23,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 		+ "join fetch u.avatars "
 		+ "where u.id = :id")
 	Optional<User> findUserGraphById(@Param("id") Long id);
+
+	@Query("select u from User u "
+		+ "where u.withdrawn = true")
+	List<User> findAllByWithdrawn();
 
 }
