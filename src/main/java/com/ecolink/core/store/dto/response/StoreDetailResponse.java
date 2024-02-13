@@ -29,6 +29,8 @@ public record StoreDetailResponse(
 	String homepageUrl,
 	@Schema(description = "인스타그램 URL", example = "https://www.instagram.~~~.com")
 	String instagramUrl,
+	@Schema(description = "네이버 지도 URL", example = "https://www.map.naver.~~~.com")
+	String naverMapUrl,
 	@Schema(description = "매장 북마크 수", example = "100")
 	int bookmarkCnt,
 	@Schema(description = "매장 리뷰 수", example = "5")
@@ -57,6 +59,7 @@ public record StoreDetailResponse(
 			.contact(store.getContact())
 			.homepageUrl(store.getHomepageUrl())
 			.instagramUrl(store.getInstagramUrl())
+			.naverMapUrl(store.getNaverMapUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
 			.storeProductCnt(store.getProductCnt())

@@ -54,6 +54,8 @@ public class Store extends BaseTimeEntity {
 
 	private String instagramUrl;
 
+	private String naverMapUrl;
+
 	private int bookmarkCnt;
 
 	private int reviewCnt;
