@@ -67,7 +67,7 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://eco-link.netlify.app"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "PATCH"));
-		configuration.setAllowedHeaders(List.of(AUTHORIZATION_HEADER));
+		configuration.setAllowedHeaders(List.of(AUTHORIZATION_HEADER, "Content-Type"));
 		configuration.setExposedHeaders(List.of(AUTHORIZATION_HEADER));
 		configuration.setMaxAge(3600L);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
