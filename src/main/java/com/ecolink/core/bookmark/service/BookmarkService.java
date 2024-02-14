@@ -30,8 +30,8 @@ public class BookmarkService {
 	private final AvatarService avatarService;
 	private final StoreService storeService;
 
-	public boolean existsBookmark(Long storeId, Long avatarId) {
-		return bookmarkRepository.existsByAvatarAndStore(storeId, avatarId);
+	public boolean existsBookmark(Long avatarId, Long storeId) {
+		return bookmarkRepository.existsByAvatarAndStore(avatarId, storeId);
 	}
 
 	@Transactional
@@ -39,7 +39,7 @@ public class BookmarkService {
 		Avatar avatar = avatarService.getById(avatarId);
 		Store store = storeService.getById(storeId);
 
-		if (existsBookmark(storeId, avatarId)) {
+		if (existsBookmark(avatarId, storeId)) {
 			throw new BookmarkAlreadyExistsException(ErrorCode.BOOKMARK_ALREADY_EXISTS);
 		}
 
