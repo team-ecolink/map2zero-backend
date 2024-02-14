@@ -1,5 +1,6 @@
 package com.ecolink.core.avatar.dto.response;
 
+import com.ecolink.core.bookmark.domain.Bookmark;
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.store.domain.Store;
@@ -10,6 +11,8 @@ import lombok.Getter;
 
 @Getter
 public class MyPageBookmarkResponse {
+	@Schema(description = "북마크 ID", example = "1")
+	private final Long bookmarkId;
 	@Schema(description = "매장 ID", example = "1")
 	private final Long id;
 	@Schema(description = "매장 이름", example = "에코 상점")
@@ -22,7 +25,8 @@ public class MyPageBookmarkResponse {
 	private final ImageFile photo;
 
 	@QueryProjection
-	public MyPageBookmarkResponse(Store store, ImageFile photo) {
+	public MyPageBookmarkResponse(Bookmark bookmark, Store store, ImageFile photo) {
+		this.bookmarkId = bookmark.getId();
 		this.id = store.getId();
 		this.name = store.getName();
 		this.address = store.getAddress();

@@ -22,7 +22,7 @@ public class BookmarkListService {
 
 		List<MyPageBookmarkResponse> bookmarkResponses = bookmarkService.findBookmarkedStores(request, avatarId);
 
-		return CursorPage.of(bookmarkResponses, request.getSize(), MyPageBookmarkResponse::getId);
+		return CursorPage.of(bookmarkResponses, request.getSize(), MyPageBookmarkResponse::getBookmarkId);
 	}
 
 }

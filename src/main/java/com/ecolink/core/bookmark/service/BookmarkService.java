@@ -30,20 +30,20 @@ public class BookmarkService {
 	private final AvatarService avatarService;
 	private final StoreService storeService;
 
-	public boolean existsBookmark(Long avatarId, Long storeId) {
-		return bookmarkRepository.existsByAvatarAndStore(avatarId, storeId);
+	public boolean existsBookmark(Long storeId, Long avatarId) {
+		return bookmarkRepository.existsByAvatarAndStore(storeId, avatarId);
 	}
 
 	@Transactional
-	public Bookmark addBookmark(Long avatarId, Long storeId) {
+	public Bookmark addBookmark(Long storeId, Long avatarId) {
 		Avatar avatar = avatarService.getById(avatarId);
 		Store store = storeService.getById(storeId);
 
-		if (existsBookmark(avatarId, storeId)) {
+		if (existsBookmark(storeId, avatarId)) {
 			throw new BookmarkAlreadyExistsException(ErrorCode.BOOKMARK_ALREADY_EXISTS);
 		}
 
-		Bookmark bookmark = new Bookmark(avatar, store);
+		Bookmark bookmark = new Bookmark(store, avatar);
 		Bookmark savedBookmark = bookmarkRepository.save(bookmark);
 
 		store.addBookmarkCount();
@@ -51,14 +51,14 @@ public class BookmarkService {
 		return savedBookmark;
 	}
 
-	public Bookmark getBookmark(Long avatarId, Long storeId) {
+	public Bookmark getBookmark(Long storeId, Long avatarId) {
 		return bookmarkRepository.findBookmarkByAvatarIdAndStoreId(avatarId, storeId)
 			.orElseThrow(() -> new BookmarkNotFoundException(ErrorCode.BOOKMARK_NOT_FOUND));
 	}
 
 	@Transactional
-	public void deleteBookmark(Long avatarId, Long storeId) {
-		Bookmark bookmark = getBookmark(avatarId, storeId);
+	public void deleteBookmark(Long storeId, Long avatarId) {
+		Bookmark bookmark = getBookmark(storeId, avatarId);
 		Store store = bookmark.getStore();
 
 		bookmarkRepository.delete(bookmark);

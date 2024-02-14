@@ -29,16 +29,15 @@ public class BookmarkJpaRepository {
 	public List<MyPageBookmarkResponse> findBookmarkedStores(MyPageBookmarkRequest request, Long avatarId) {
 
 		JPAQuery<MyPageBookmarkResponse> query = queryFactory.select(new QMyPageBookmarkResponse(
+				bookmark,
 				store,
 				storePhoto.file
 			))
 			.from(store)
 			.leftJoin(store.storePhotos, storePhoto)
-			.on(storePhoto.store.eq(store), storePhoto.givenOrder.eq(0))
+			.on(storePhoto.givenOrder.eq(0))
 			.orderBy(bookmark.id.desc())
 			.limit(request.getSize() + 1L);
-
-		query.where(bookmark.id.lt(request.getCursor()));
 
 		query.innerJoin(bookmark)
 			.on(bookmark.avatar.id.eq(avatarId), bookmark.store.eq(store));
