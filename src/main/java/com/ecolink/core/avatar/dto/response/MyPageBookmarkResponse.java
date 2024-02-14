@@ -22,11 +22,12 @@ public class MyPageBookmarkResponse {
 	private final ImageFile photo;
 
 	@QueryProjection
-	public MyPageBookmarkResponse(ImageFile photo, Store store) {
+	public MyPageBookmarkResponse(Store store, ImageFile photo) {
 		this.id = store.getId();
 		this.name = store.getName();
 		this.address = store.getAddress();
 		this.summary = store.getSummary();
 		this.photo = photo;
 	}
+
 }

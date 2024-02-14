@@ -1,7 +1,6 @@
 package com.ecolink.core.avatar.controller;
 
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,9 +66,8 @@ public class MyPageController {
 	@GetMapping("/bookmarks")
 	public ApiCursorPageResponse<MyPageBookmarkResponse, Long> myPageBookmarks(
 		@ParameterObject @Valid MyPageBookmarkRequest request,
-		@AuthenticationPrincipal UserPrincipal principal,
-		Pageable pageable) {
-		return ApiCursorPageResponse.ok(bookmarkListService.getByStoreAndAvatar(request, pageable, principal.getAvatarId()));
+		@AuthenticationPrincipal UserPrincipal principal) {
+		return ApiCursorPageResponse.ok(bookmarkListService.getByStoreAndAvatar(request, principal.getAvatarId()));
 	}
 
 }

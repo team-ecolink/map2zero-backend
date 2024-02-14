@@ -66,8 +66,8 @@ public class BookmarkService {
 		store.deleteBookmarkCount();
 	}
 
-	public List<MyPageBookmarkResponse> findBookmarkedStores(MyPageBookmarkRequest request, Long lastBookmarkId, int pageSize, Long avatarId) {
-		return bookmarkJpaRepository.findBookmarkedStores(request, lastBookmarkId, pageSize, avatarId);
+	public List<MyPageBookmarkResponse> findBookmarkedStores(MyPageBookmarkRequest request, Long avatarId) {
+		return bookmarkJpaRepository.findBookmarkedStores(request, avatarId);
 	}
 
 }
