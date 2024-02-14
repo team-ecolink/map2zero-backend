@@ -53,9 +53,9 @@ public class ReviewController {
 		description = "리뷰 리스트 조회 - 인증 선택",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PageableAsQueryParam
-	@GetMapping("/stores/{storeId}/reviews")
+	@GetMapping("/stores/{id}/reviews")
 	public ApiPageResponse<GetReviewResponse> reviewList(
-		@PathVariable("storeId") Long storeId,
+		@PathVariable("id") Long storeId,
 		@AuthenticationPrincipal UserPrincipal principal,
 		@Parameter(hidden = true)
 		@PageableDefault(size = 4, sort = "likeCnt", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -70,10 +70,10 @@ public class ReviewController {
 		description = "내가 쓴 리뷰 리스트 조회 - 인증 필수",
 		security = {@SecurityRequirement(name = "session-token")})
 	@PageableAsQueryParam
-	@GetMapping("/stores/{storeId}/my-reviews")
+	@GetMapping("/stores/{id}/my-reviews")
 	@PreAuthorize("hasRole('USER')")
 	public ApiPageResponse<GetReviewResponse> myReviewList(
-		@PathVariable("storeId") Long storeId,
+		@PathVariable("id") Long storeId,
 		@AuthenticationPrincipal UserPrincipal principal,
 		@Parameter(hidden = true)
 		@PageableDefault(size = 4, sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable) {
