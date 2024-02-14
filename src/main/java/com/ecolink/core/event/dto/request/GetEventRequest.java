@@ -22,7 +22,7 @@ public class GetEventRequest {
 
 	@Parameter(description = "검색 사이즈")
 	@NotNull
-	@Range(min = 1, max = 30)
+	@Range(min = 1, max = 100)
 	private final Integer size;
 
 	public GetEventRequest(@Nullable Long cursor, Integer size) {
