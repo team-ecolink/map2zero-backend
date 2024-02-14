@@ -39,6 +39,8 @@ public class BookmarkJpaRepository {
 			.orderBy(bookmark.id.desc())
 			.limit(request.getSize() + 1L);
 
+		query.where(bookmark.id.loe(request.getCursor()));
+
 		query.innerJoin(bookmark)
 			.on(bookmark.avatar.id.eq(avatarId), bookmark.store.eq(store));
 
