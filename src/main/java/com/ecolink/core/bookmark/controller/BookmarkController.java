@@ -34,7 +34,7 @@ public class BookmarkController {
 	public ApiResponse<Void> addBookmark(
 		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		bookmarkService.addBookmark(principal.getAvatarId(), request.storeId());
+		bookmarkService.addBookmark(request.storeId(), principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 
@@ -47,7 +47,7 @@ public class BookmarkController {
 	public ApiResponse<Void> deleteBookmark(
 		@RequestBody BookmarkRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		bookmarkService.deleteBookmark(principal.getAvatarId(), request.storeId());
+		bookmarkService.deleteBookmark(request.storeId(), principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 }
