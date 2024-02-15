@@ -36,7 +36,7 @@ public class Bookmark extends BaseTimeEntity {
 	private Store store;
 
 	public Bookmark(Store store, Avatar avatar) {
-		this.avatar = avatar;
 		this.store = store;
+		this.avatar = avatar;
 	}
 }

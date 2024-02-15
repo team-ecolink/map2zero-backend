@@ -4,18 +4,17 @@ import static com.ecolink.core.bookmark.domain.QBookmark.*;
 import static com.ecolink.core.store.domain.QStore.*;
 import static com.ecolink.core.store.domain.QStorePhoto.*;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import com.ecolink.core.avatar.dto.response.MyPageBookmarkResponse;
 import com.ecolink.core.avatar.dto.request.MyPageBookmarkRequest;
+import com.ecolink.core.avatar.dto.response.MyPageBookmarkResponse;
 import com.ecolink.core.avatar.dto.response.QMyPageBookmarkResponse;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
-
-import com.querydsl.jpa.impl.JPAQuery;
-
-import java.util.List;
 
 @Repository
 public class BookmarkJpaRepository {
@@ -34,15 +33,15 @@ public class BookmarkJpaRepository {
 				storePhoto.file
 			))
 			.from(store)
+			.join(bookmark)
+			.on(bookmark.avatar.id.eq(avatarId), bookmark.store.eq(store))
 			.leftJoin(store.storePhotos, storePhoto)
 			.on(storePhoto.givenOrder.eq(0))
 			.orderBy(bookmark.id.desc())
 			.limit(request.getSize() + 1L);
 
-		query.where(bookmark.id.loe(request.getCursor()));
-
-		query.innerJoin(bookmark)
-			.on(bookmark.avatar.id.eq(avatarId), bookmark.store.eq(store));
+		if(request.getCursor() != null)
+			query.where(bookmark.id.loe(request.getCursor()));
 
 		return query.fetch();
 	}
