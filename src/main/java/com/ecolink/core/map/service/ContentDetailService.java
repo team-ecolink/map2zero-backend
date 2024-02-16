@@ -6,8 +6,6 @@ import com.ecolink.core.map.domain.MapContent;
 import com.ecolink.core.map.dto.ContentDetailDto;
 import com.ecolink.core.map.dto.ContentListDetailDto;
 import com.ecolink.core.map.repository.ContentDetailRepository;
-import com.ecolink.core.geo.service.GeometryService;
-import com.ecolink.core.store.dto.request.MapQueryRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +16,10 @@ public class ContentDetailService {
 
 	private final ContentDetailRepository contentDetailRepository;
 	private final ObjectMapper objectMapper;
-	private final GeometryService geometryService;
 
-	public ContentDetailService(ContentDetailRepository contentDetailRepository, ObjectMapper objectMapper, GeometryService geometryService) {
+	public ContentDetailService(ContentDetailRepository contentDetailRepository, ObjectMapper objectMapper) {
 		this.contentDetailRepository = contentDetailRepository;
 		this.objectMapper = objectMapper;
-		this.geometryService = geometryService;
 	}
 
 	public void saveContentDetail(String responseData) {
