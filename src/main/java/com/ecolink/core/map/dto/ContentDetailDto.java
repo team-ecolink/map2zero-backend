@@ -1,15 +1,19 @@
 package com.ecolink.core.map.dto;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
+@ToString
 @Getter
 @Setter
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContentDetailDto {
 
 	@Schema(description = "운영시간", example = "매일 11:00-21:30/ 비건 베이커리만 화 휴무")
@@ -73,7 +77,7 @@ public class ContentDetailDto {
 	private String cotNationPointNumber;
 
 	@Schema(description = "좌표 정보 (GeoJson)")
-	private String cotCoordData;
+	private List<BigDecimal> cotCoordData;
 
 	@Schema(description = "콘텐츠 좌표 타입", example = "1")
 	private String cotCoordType;

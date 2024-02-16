@@ -1,34 +1,46 @@
 package com.ecolink.core.map.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import com.ecolink.core.map.domain.MapContent;
-import com.ecolink.core.map.dto.ContentDetailDto;
-import com.ecolink.core.map.dto.ContentListDetailDto;
-import com.ecolink.core.map.repository.ContentDetailRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.geo.service.GeometryService;
+import com.ecolink.core.map.domain.MapContent;
+import com.ecolink.core.map.dto.ContentDetailDto;
+import com.ecolink.core.map.repository.ContentDetailRepository;
+import com.ecolink.core.store.dto.request.MapQueryRequest;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class ContentDetailService {
 
 	private final ContentDetailRepository contentDetailRepository;
-	private final ObjectMapper objectMapper;
+	private final ObjectMapper mapper;
+	private final GeometryService geometryService;
 
-	public ContentDetailService(ContentDetailRepository contentDetailRepository, ObjectMapper objectMapper) {
+	public ContentDetailService(ContentDetailRepository contentDetailRepository, GeometryService geometryService) {
 		this.contentDetailRepository = contentDetailRepository;
-		this.objectMapper = objectMapper;
+		this.geometryService = geometryService;
+		this.mapper = new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_SNAKE_CASE);
 	}
 
 	public void saveContentDetail(String responseData) {
 		try {
-			ContentListDetailDto responseDTO = objectMapper.readValue(responseData, ContentListDetailDto.class);
-			List<ContentDetailDto> contentDetailList = responseDTO.getBody();
+			JsonNode jsonNode = mapper.readValue(responseData, JsonNode.class);
+			JsonNode body = jsonNode.get("body");
 
-			for (ContentDetailDto contentDetail : contentDetailList) {
-				MapContent mapContent = mapDetailToMapEntity(contentDetail);
+			for (JsonNode contents : body) {
+				log.info("data: {}", contents);
+				ContentDetailDto dto = mapper.treeToValue(contents, ContentDetailDto.class);
+				MapContent mapContent = mapDetailToMapEntity(dto);
 				contentDetailRepository.save(mapContent);
 			}
 		} catch (Exception e) {
@@ -36,49 +48,51 @@ public class ContentDetailService {
 		}
 	}
 
-	private MapContent mapDetailToMapEntity(ContentDetailDto contentDetailDto) {
+	private MapContent mapDetailToMapEntity(ContentDetailDto dto) {
 		MapContent mapContent = new MapContent();
-		mapContent.setCotValue03(contentDetailDto.getCotValue03());
-		mapContent.setCotValue04(contentDetailDto.getCotValue04());
-		mapContent.setCotValue05(contentDetailDto.getCotValue05());
-		mapContent.setCotValue06(contentDetailDto.getCotValue06());
-		mapContent.setCotValue07(contentDetailDto.getCotValue07());
-		mapContent.setCotAddrFullNew(contentDetailDto.getCotAddrFullNew());
-		mapContent.setCotAddrFullOld(contentDetailDto.getCotAddrFullOld());
-		mapContent.setCotTelNo(contentDetailDto.getCotTelNo());
-		mapContent.setCotRegDate(contentDetailDto.getCotRegDate());
-		mapContent.setCotUpdateDate(contentDetailDto.getCotUpdateDate());
-		mapContent.setCotThemeId(contentDetailDto.getCotThemeId());
-		mapContent.setCotContsId(contentDetailDto.getCotContsId());
-		mapContent.setCotGuName(contentDetailDto.getCotGuName());
-		mapContent.setCotDongName(contentDetailDto.getCotDongName());
-		mapContent.setCotSanName(contentDetailDto.getCotSanName());
-		mapContent.setCotMasterNo(contentDetailDto.getCotMasterNo());
-		mapContent.setCotSlaveNo(contentDetailDto.getCotSlaveNo());
-		mapContent.setCotExtraName(contentDetailDto.getCotExtraName());
-		mapContent.setCotNationBaseArea(contentDetailDto.getCotNationBaseArea());
-		mapContent.setCotNationPointNumber(contentDetailDto.getCotNationPointNumber());
-		mapContent.setCotCoordData(contentDetailDto.getCotCoordData());
-		mapContent.setCotCoordType(contentDetailDto.getCotCoordType());
-		mapContent.setCotCoordX(contentDetailDto.getCotCoordX());
-		mapContent.setCotCoordY(contentDetailDto.getCotCoordY());
-		mapContent.setCotContsStat(contentDetailDto.getCotContsStat());
-		mapContent.setCotWriter(contentDetailDto.getCotWriter());
-		mapContent.setCotThemeSubId(contentDetailDto.getCotThemeSubId());
-		mapContent.setCotExtraData01(contentDetailDto.getCotExtraData01());
-		mapContent.setCotExtraData02(contentDetailDto.getCotExtraData02());
-		mapContent.setCotMovieUrl(contentDetailDto.getCotMovieUrl());
-		mapContent.setCotVoiceUrl(contentDetailDto.getCotVoiceUrl());
-		mapContent.setCotContsDetail(contentDetailDto.getCotContsDetail());
-		mapContent.setCotImgMainUrl(contentDetailDto.getCotImgMainUrl());
-		mapContent.setCotImgMainUrl2(contentDetailDto.getCotImgMainUrl2());
-		mapContent.setCotImgMainUrl3(contentDetailDto.getCotImgMainUrl3());
-		mapContent.setCotImgMainUrl4(contentDetailDto.getCotImgMainUrl4());
-		mapContent.setCotImgMainUrl5(contentDetailDto.getCotImgMainUrl5());
-		mapContent.setCotCoordStyle(contentDetailDto.getCotCoordStyle());
-		mapContent.setCotLinePattern(contentDetailDto.getCotLinePattern());
-		mapContent.setCotLineWeight(contentDetailDto.getCotLineWeight());
-		mapContent.setCotLineColor(contentDetailDto.getCotLineColor());
+		mapContent.setCotValue03(dto.getCotValue03());
+		mapContent.setCotValue04(dto.getCotValue04());
+		mapContent.setCotValue05(dto.getCotValue05());
+		mapContent.setCotValue06(dto.getCotValue06());
+		mapContent.setCotValue07(dto.getCotValue07());
+		mapContent.setCotAddrFullNew(dto.getCotAddrFullNew());
+		mapContent.setCotAddrFullOld(dto.getCotAddrFullOld());
+		mapContent.setCotTelNo(dto.getCotTelNo());
+		mapContent.setCotRegDate(dto.getCotRegDate());
+		mapContent.setCotUpdateDate(dto.getCotUpdateDate());
+		mapContent.setCotThemeId(dto.getCotThemeId());
+		mapContent.setCotContsId(dto.getCotContsId());
+		mapContent.setCotGuName(dto.getCotGuName());
+		mapContent.setCotDongName(dto.getCotDongName());
+		mapContent.setCotSanName(dto.getCotSanName());
+		mapContent.setCotMasterNo(dto.getCotMasterNo());
+		mapContent.setCotSlaveNo(dto.getCotSlaveNo());
+		mapContent.setCotExtraName(dto.getCotExtraName());
+		mapContent.setCotNationBaseArea(dto.getCotNationBaseArea());
+		mapContent.setCotNationPointNumber(dto.getCotNationPointNumber());
+		List<BigDecimal> data = dto.getCotCoordData();
+		mapContent.setCotCoordData(
+			geometryService.getPoint(new MapQueryRequest(data.get(0).doubleValue(), data.get(1).doubleValue())));
+		mapContent.setCotCoordType(dto.getCotCoordType());
+		mapContent.setCotCoordX(dto.getCotCoordX());
+		mapContent.setCotCoordY(dto.getCotCoordY());
+		mapContent.setCotContsStat(dto.getCotContsStat());
+		mapContent.setCotWriter(dto.getCotWriter());
+		mapContent.setCotThemeSubId(dto.getCotThemeSubId());
+		mapContent.setCotExtraData01(dto.getCotExtraData01());
+		mapContent.setCotExtraData02(dto.getCotExtraData02());
+		mapContent.setCotMovieUrl(dto.getCotMovieUrl());
+		mapContent.setCotVoiceUrl(dto.getCotVoiceUrl());
+		mapContent.setCotContsDetail(dto.getCotContsDetail());
+		mapContent.setCotImgMainUrl(dto.getCotImgMainUrl());
+		mapContent.setCotImgMainUrl2(dto.getCotImgMainUrl2());
+		mapContent.setCotImgMainUrl3(dto.getCotImgMainUrl3());
+		mapContent.setCotImgMainUrl4(dto.getCotImgMainUrl4());
+		mapContent.setCotImgMainUrl5(dto.getCotImgMainUrl5());
+		mapContent.setCotCoordStyle(dto.getCotCoordStyle());
+		mapContent.setCotLinePattern(dto.getCotLinePattern());
+		mapContent.setCotLineWeight(dto.getCotLineWeight());
+		mapContent.setCotLineColor(dto.getCotLineColor());
 
 		return mapContent;
 	}

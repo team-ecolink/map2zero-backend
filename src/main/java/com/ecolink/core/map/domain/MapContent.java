@@ -1,10 +1,17 @@
 package com.ecolink.core.map.domain;
 
+import org.locationtech.jts.geom.Point;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,7 +42,7 @@ public class MapContent {
 	private String cotExtraName;
 	private String cotNationBaseArea;
 	private String cotNationPointNumber;
-	private String cotCoordData;
+	private Point cotCoordData;
 	private String cotCoordType;
 	private String cotCoordX;
 	private String cotCoordY;
@@ -61,7 +68,7 @@ public class MapContent {
 		String cotAddrFullNew, String cotAddrFullOld, String cotTelNo, String cotRegDate, String cotUpdateDate,
 		String cotThemeId, String cotContsId, String cotGuName, String cotDongName, String cotSanName,
 		String cotMasterNo, String cotSlaveNo, String cotExtraName, String cotNationBaseArea,
-		String cotNationPointNumber, String cotCoordData, String cotCoordType, String cotCoordX,
+		String cotNationPointNumber, String cotCoordType, String cotCoordX,
 		String cotCoordY, String cotContsStat, String cotWriter, String cotThemeSubId, String cotExtraData01,
 		String cotExtraData02, String cotMovieUrl, String cotVoiceUrl, String cotContsDetail,
 		String cotImgMainUrl, String cotImgMainUrl2, String cotImgMainUrl3, String cotImgMainUrl4,
@@ -87,7 +94,6 @@ public class MapContent {
 		this.cotExtraName = cotExtraName;
 		this.cotNationBaseArea = cotNationBaseArea;
 		this.cotNationPointNumber = cotNationPointNumber;
-		this.cotCoordData = cotCoordData;
 		this.cotCoordType = cotCoordType;
 		this.cotCoordX = cotCoordX;
 		this.cotCoordY = cotCoordY;
