@@ -1,8 +1,5 @@
 package com.ecolink.core.map.service;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 @Transactional
 public class ContentDetailService {
@@ -38,7 +32,6 @@ public class ContentDetailService {
 			JsonNode body = jsonNode.get("body");
 
 			for (JsonNode contents : body) {
-				log.info("data: {}", contents);
 				ContentDetailDto dto = mapper.treeToValue(contents, ContentDetailDto.class);
 				MapContent mapContent = mapDetailToMapEntity(dto);
 				contentDetailRepository.save(mapContent);
@@ -70,9 +63,10 @@ public class ContentDetailService {
 		mapContent.setCotExtraName(dto.getCotExtraName());
 		mapContent.setCotNationBaseArea(dto.getCotNationBaseArea());
 		mapContent.setCotNationPointNumber(dto.getCotNationPointNumber());
-		List<BigDecimal> data = dto.getCotCoordData();
-		mapContent.setCotCoordData(
-			geometryService.getPoint(new MapQueryRequest(data.get(0).doubleValue(), data.get(1).doubleValue())));
+		if (!dto.getCotCoordX().isEmpty() && !dto.getCotCoordY().isEmpty())
+			mapContent.setCotCoordData(
+				geometryService.getPoint(
+					new MapQueryRequest(Double.valueOf(dto.getCotCoordX()), Double.valueOf(dto.getCotCoordY()))));
 		mapContent.setCotCoordType(dto.getCotCoordType());
 		mapContent.setCotCoordX(dto.getCotCoordX());
 		mapContent.setCotCoordY(dto.getCotCoordY());
