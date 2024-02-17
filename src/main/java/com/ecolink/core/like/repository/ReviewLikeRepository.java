@@ -18,4 +18,7 @@ public interface ReviewLikeRepository extends JpaRepository<ReviewLike, Long> {
 	List<ReviewLike> findAllByReviewList(@Param("reviewIds") List<Long> reviewIds,
 		@Param("avatarId") Long avatarId);
 
+	@Query("select l from ReviewLike l "
+		+ "where l.avatar.id = :avatarId")
+	List<ReviewLike> findAllByAvatarId(@Param("avatarId") Long avatarId);
 }

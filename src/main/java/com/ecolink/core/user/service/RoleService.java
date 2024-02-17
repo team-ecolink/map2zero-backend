@@ -21,4 +21,10 @@ public class RoleService {
 		return roleRepository.findByType(RoleType.USER)
 			.orElseGet(() -> roleRepository.save(new Role(RoleType.USER)));
 	}
+
+	@Transactional
+	public Role getWithdrawnUserRole() {
+		return roleRepository.findByType(RoleType.WITHDRAWN_USER)
+			.orElseGet(() -> roleRepository.save(new Role(RoleType.WITHDRAWN_USER)));
+	}
 }

@@ -30,6 +30,7 @@ public enum ErrorCode {
 	APPLICATION_IS_PENDING(HttpStatus.BAD_REQUEST, "M-001", "해당 유저는 대표 신청 후 승인 대기중 상태입니다."),
 	MANAGER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "M-002", "주어진 유저로 매니저를 찾을 수 없습니다."),
 	NOT_MANAGER_OF_STORE(HttpStatus.FORBIDDEN, "M-003", "해당 매장을 관리할 수 있는 권한이 없습니다."),
+	MANAGER_WITHDRAWAL_DENIED(HttpStatus.FORBIDDEN, "M-004", "매니저는 회원 탈퇴 기능을 쓸 수 없습니다."),
 
 	/**
 	 * 상점 관련 오류
