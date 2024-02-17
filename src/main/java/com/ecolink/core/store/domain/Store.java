@@ -28,12 +28,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "store", indexes = @Index(name = "idx_store_name", columnList = "name"))
 public class Store extends BaseTimeEntity implements MultiPhotoContainer<StorePhoto> {
@@ -124,6 +125,16 @@ public class Store extends BaseTimeEntity implements MultiPhotoContainer<StorePh
 
 	public void addProductCnt() {
 		this.productCnt++;
+	}
+
+	public Store(String name, Address address, String contact, String homepageUrl, String description,
+		String instagramUrl) {
+		this.name = name;
+		this.address = address;
+		this.contact = contact;
+		this.homepageUrl = homepageUrl;
+		this.description = description;
+		this.instagramUrl = instagramUrl;
 	}
 
 }
