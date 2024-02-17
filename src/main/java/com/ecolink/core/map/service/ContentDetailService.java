@@ -43,6 +43,7 @@ public class ContentDetailService {
 
 	private MapContent mapDetailToMapEntity(ContentDetailDto dto) {
 		MapContent mapContent = new MapContent();
+		mapContent.setCotContsName(dto.getCotContsName());
 		mapContent.setCotValue03(dto.getCotValue03());
 		mapContent.setCotValue04(dto.getCotValue04());
 		mapContent.setCotValue05(dto.getCotValue05());

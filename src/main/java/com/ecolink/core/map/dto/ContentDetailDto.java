@@ -16,6 +16,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ContentDetailDto {
 
+	@Schema(description = "상점이름", example = "호랑이상점")
+	private String cotContsName;
+
 	@Schema(description = "운영시간", example = "매일 11:00-21:30/ 비건 베이커리만 화 휴무")
 	private String cotValue03;
 

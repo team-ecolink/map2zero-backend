@@ -22,6 +22,7 @@ public class MapContent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String cotContsName;
 	private String cotValue03;
 	private String cotValue04;
 	private String cotValue05;
@@ -64,7 +65,7 @@ public class MapContent {
 	private String cotLineWeight;
 	private String cotLineColor;
 
-	public MapContent(String cotValue03, String cotValue04, String cotValue05, String cotValue06, String cotValue07,
+	public MapContent(String cotContsName, String cotValue03, String cotValue04, String cotValue05, String cotValue06, String cotValue07,
 		String cotAddrFullNew, String cotAddrFullOld, String cotTelNo, String cotRegDate, String cotUpdateDate,
 		String cotThemeId, String cotContsId, String cotGuName, String cotDongName, String cotSanName,
 		String cotMasterNo, String cotSlaveNo, String cotExtraName, String cotNationBaseArea,
@@ -74,6 +75,7 @@ public class MapContent {
 		String cotImgMainUrl, String cotImgMainUrl2, String cotImgMainUrl3, String cotImgMainUrl4,
 		String cotImgMainUrl5, String cotCoordStyle, String cotLinePattern, String cotLineWeight,
 		String cotLineColor) {
+		this.cotContsName = cotContsName;
 		this.cotValue03 = cotValue03;
 		this.cotValue04 = cotValue04;
 		this.cotValue05 = cotValue05;
