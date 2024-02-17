@@ -14,10 +14,15 @@ import com.ecolink.core.store.domain.Store;
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
 	@Query("select s from Store s "
-		+ "left join fetch s.storeTags st "
-		+ "left join fetch st.tag t "
-		+ "where s.id = :id")
+		   + "left join fetch s.storeTags st "
+		   + "left join fetch st.tag t "
+		   + "where s.id = :id")
 	Optional<Store> findStoreGraphById(@Param("id") Long id);
+
+	@Query("select s from Store s "
+		   + "left join fetch s.photos p "
+		   + "where s.id = :id")
+	Optional<Store> findByIdWithPhotos(@Param("id") Long id);
 
 	List<Store> findTop10ByOrderByBookmarkCntDesc();
 }

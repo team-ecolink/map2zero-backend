@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class StorePhotoService {
 
 	public StorePhoto getMainPhoto(Store store) {
-		List<StorePhoto> photos = store.getStorePhotos();
+		List<StorePhoto> photos = store.getPhotos();
 
 		return photos.stream()
 			.filter(photo -> photo.getGivenOrder() == 0)

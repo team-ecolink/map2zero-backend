@@ -22,6 +22,11 @@ public class StoreService {
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
 	}
 
+	public Store getByIdWithPhotos(Long storeId) {
+		return storeRepository.findByIdWithPhotos(storeId)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));
+	}
+
 	public Store getStoreGraphById(Long storeId) {
 		return storeRepository.findStoreGraphById(storeId).orElseThrow(
 			() -> new EntityNotFoundException(ErrorCode.STORE_NOT_FOUND));

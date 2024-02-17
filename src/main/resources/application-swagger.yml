@@ -11,3 +11,4 @@ swagger:
     map: '09. 맵 페이지'
     tag: '10. 태그'
     home: '11. 홈 화면 페이지'
+    admin: 'A. 어드민 관련 API'

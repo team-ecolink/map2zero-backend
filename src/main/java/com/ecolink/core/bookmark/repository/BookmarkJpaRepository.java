@@ -35,7 +35,7 @@ public class BookmarkJpaRepository {
 			.from(store)
 			.join(bookmark)
 			.on(bookmark.avatar.id.eq(avatarId), bookmark.store.eq(store))
-			.leftJoin(store.storePhotos, storePhoto)
+			.leftJoin(store.photos, storePhoto)
 			.on(storePhoto.givenOrder.eq(0))
 			.orderBy(bookmark.id.desc())
 			.limit(request.getSize() + 1L);
