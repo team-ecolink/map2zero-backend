@@ -12,6 +12,11 @@ import com.ecolink.core.product.domain.StoreProduct;
 
 public interface StoreProductRepository extends JpaRepository<StoreProduct, Long> {
 
+	@Query("select count(s) from StoreProduct s "
+		   + "where s.store.id = :id "
+		   + "and s.onSale = true ")
+	long countOnSaleByStoreId(@Param("id") Long storeId);
+
 	@Query("select sp from StoreProduct sp "
 		   + "join fetch sp.product "
 		   + "join fetch sp.store s "
