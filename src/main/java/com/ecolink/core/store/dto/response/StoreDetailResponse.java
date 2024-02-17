@@ -65,7 +65,7 @@ public record StoreDetailResponse(
 			.storeProductCnt(productCnt)
 			.averageScore(store.roundedAverageScore())
 			.address(store.getAddress())
-			.photos(store.getStorePhotos().stream()
+			.photos(store.getPhotos().stream()
 				.map(StorePhoto::getFile).toList())
 			.operatingHours(store.getStoreOperatingHour().stream()
 				.map(OperatingHourDto::of).toList())
