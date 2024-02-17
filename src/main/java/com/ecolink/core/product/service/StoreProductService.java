@@ -113,4 +113,8 @@ public class StoreProductService {
 			.orElse(null);
 	}
 
+	public Long getProductOnSaleCount(Long storeId) {
+		return storeProductRepository.countOnSaleByStoreId(storeId);
+	}
+
 }
