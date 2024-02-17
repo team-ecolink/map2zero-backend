@@ -1,5 +1,7 @@
 package com.ecolink.core.store.dto;
 
+import org.locationtech.jts.geom.Point;
+
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.store.domain.Store;
@@ -25,27 +27,28 @@ public class MapStoreInfoDto {
 	@Schema(description = "리뷰 평점", example = "4.4")
 	private final double averageScore;
 	@Schema(description = "경도", example = "126.9960")
-	private final double x;
+	private final Double x;
 	@Schema(description = "위도", example = "37.5601")
-	private final double y;
+	private final Double y;
 	@Schema(description = "매장 대표 사진")
 	private final ImageFile photo;
 	@Schema(description = "현재 위치로부터 거리(미터단위)", example = "1743")
-	private final double distance;
+	private final Long distance;
 	@Schema(description = "북마크 여부", example = "false")
 	private final boolean isBookmarked;
 
 	@QueryProjection
-	public MapStoreInfoDto(Store store, ImageFile file, double distance, boolean isBookmarked) {
+	public MapStoreInfoDto(Store store, ImageFile file, Double distance, boolean isBookmarked) {
 		this.id = store.getId();
 		this.name = store.getName();
 		this.address = store.getAddress();
 		this.reviewCnt = store.getReviewCnt();
 		this.averageScore = store.roundedAverageScore();
-		this.x = roundCoordinate(store.getCoordinates().getX());
-		this.y = roundCoordinate(store.getCoordinates().getY());
+		Point coordinates = store.getCoordinates();
+		this.x = coordinates != null ? roundCoordinate(coordinates.getX()) : null;
+		this.y = coordinates != null ? roundCoordinate(coordinates.getY()) : null;
 		this.photo = file;
-		this.distance = Math.round(distance);
+		this.distance = distance != null ? Math.round(distance) : null;
 		this.isBookmarked = isBookmarked;
 	}
 

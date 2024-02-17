@@ -99,6 +99,7 @@ public class StoreJpaRepository {
 			.from(store)
 			.leftJoin(store.storePhotos, storePhoto)
 			.on(storePhoto.givenOrder.eq(0))
+			.where(store.coordinates.isNotNull())
 			.orderBy(distance.asc());
 
 		processBookmark(common, avatarId);
