@@ -1,4 +1,4 @@
-package com.ecolink.core.product_recommend.controller;
+package com.ecolink.core.admin.controller;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.common.response.ApiResponse;
-import com.ecolink.core.product_recommend.dto.ProductInfoDto;
-import com.ecolink.core.product_recommend.service.ProductRecommendService;
+import com.ecolink.core.admin.dto.ProductInfoDto;
+import com.ecolink.core.admin.service.ProductRecommendService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

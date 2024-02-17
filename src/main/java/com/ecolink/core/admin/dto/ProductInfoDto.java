@@ -1,4 +1,4 @@
-package com.ecolink.core.product_recommend.dto;
+package com.ecolink.core.admin.dto;
 
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.product.domain.StoreProduct;
