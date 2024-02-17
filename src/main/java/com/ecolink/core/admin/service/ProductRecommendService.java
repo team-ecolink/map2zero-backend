@@ -1,4 +1,4 @@
-package com.ecolink.core.product_recommend.service;
+package com.ecolink.core.admin.service;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.product.domain.StoreProduct;
 import com.ecolink.core.product.service.StoreProductService;
-import com.ecolink.core.product_recommend.constant.RecommendType;
-import com.ecolink.core.product_recommend.dto.ProductInfoDto;
-import com.ecolink.core.product_recommend.repository.ProductRecommendRepository;
+import com.ecolink.core.admin.constant.RecommendType;
+import com.ecolink.core.admin.dto.ProductInfoDto;
+import com.ecolink.core.admin.repository.ProductRecommendRepository;
 
 import lombok.RequiredArgsConstructor;
 

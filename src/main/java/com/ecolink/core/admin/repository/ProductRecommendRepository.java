@@ -1,4 +1,4 @@
-package com.ecolink.core.product_recommend.repository;
+package com.ecolink.core.admin.repository;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ecolink.core.product.domain.StoreProduct;
-import com.ecolink.core.product_recommend.constant.RecommendType;
-import com.ecolink.core.product_recommend.domain.ProductRecommend;
+import com.ecolink.core.admin.constant.RecommendType;
+import com.ecolink.core.admin.domain.ProductRecommend;
 
 public interface ProductRecommendRepository extends JpaRepository<ProductRecommend, Long> {
 
