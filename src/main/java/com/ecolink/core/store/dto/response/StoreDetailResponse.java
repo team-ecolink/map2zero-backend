@@ -37,8 +37,8 @@ public record StoreDetailResponse(
 	int reviewCnt,
 	@Schema(description = "매장 평점", example = "4.8")
 	double averageScore,
-	@Schema(description = "매장 상품 수", example = "30")
-	int storeProductCnt,
+	@Schema(description = "판매중인 상품 수", example = "30")
+	long storeProductCnt,
 	@Schema(description = "매장 주소")
 	Address address,
 	@Schema(description = "매장 사진")
@@ -51,7 +51,7 @@ public record StoreDetailResponse(
 	boolean isBookmarked
 ) {
 
-	public static StoreDetailResponse of(Store store, boolean isBookmarked) {
+	public static StoreDetailResponse of(Store store, Long productCnt, boolean isBookmarked) {
 		return StoreDetailResponse.builder()
 			.id(store.getId())
 			.name(store.getName())
@@ -62,10 +62,10 @@ public record StoreDetailResponse(
 			.naverMapUrl(store.getNaverMapUrl())
 			.bookmarkCnt(store.getBookmarkCnt())
 			.reviewCnt(store.getReviewCnt())
-			.storeProductCnt(store.getProductCnt())
+			.storeProductCnt(productCnt)
 			.averageScore(store.roundedAverageScore())
 			.address(store.getAddress())
-			.photos(store.getStorePhotos().stream()
+			.photos(store.getPhotos().stream()
 				.map(StorePhoto::getFile).toList())
 			.operatingHours(store.getStoreOperatingHour().stream()
 				.map(OperatingHourDto::of).toList())

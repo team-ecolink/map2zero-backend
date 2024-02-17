@@ -97,8 +97,9 @@ public class StoreJpaRepository {
 				getDistanceExpression(currentPosition, distance),
 				avatarId != null ? bookmark.isNotNull() : Expressions.FALSE))
 			.from(store)
-			.leftJoin(store.storePhotos, storePhoto)
+			.leftJoin(store.photos, storePhoto)
 			.on(storePhoto.givenOrder.eq(0))
+			.where(store.coordinates.isNotNull())
 			.orderBy(distance.asc());
 
 		processBookmark(common, avatarId);

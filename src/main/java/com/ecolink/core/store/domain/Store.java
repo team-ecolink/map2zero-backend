@@ -8,10 +8,12 @@ import org.locationtech.jts.geom.Point;
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.event.domain.Event;
+import com.ecolink.core.file.domain.MultiPhotoContainer;
 import com.ecolink.core.manager.domain.StoreRegistration;
 import com.ecolink.core.product.domain.StoreProduct;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -35,7 +37,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "store", indexes = @Index(name = "idx_store_name", columnList = "name"))
-public class Store extends BaseTimeEntity {
+public class Store extends BaseTimeEntity implements MultiPhotoContainer<StorePhoto> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,8 +79,8 @@ public class Store extends BaseTimeEntity {
 	@JoinColumn(name = "store_registration_id")
 	private StoreRegistration storeRegistration;
 
-	@OneToMany(mappedBy = "store")
-	private List<StorePhoto> storePhotos = new ArrayList<>();
+	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<StorePhoto> photos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "store")
 	private List<StoreProduct> storeProducts = new ArrayList<>();

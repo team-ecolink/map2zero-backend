@@ -38,7 +38,8 @@ public class StoreSearchService {
 
 	public StoreDetailResponse getStoreDetailPage(Long storeId, Long avatarId) {
 		return StoreDetailResponse.of(storeService.getStoreGraphById(storeId),
-			bookmarkService.existsBookmark(avatarId, storeId));
+			storeProductService.getProductOnSaleCount(storeId),
+			avatarId != null && bookmarkService.existsBookmark(avatarId, storeId));
 	}
 
 	public CursorPage<StoreSearchDto, Long> searchStores(StoreSearchRequest request, Long avatarId) {

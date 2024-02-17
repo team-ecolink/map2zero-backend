@@ -65,7 +65,7 @@ public class SecurityConfig {
 
 	CorsConfigurationSource websiteConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://eco-link.netlify.app"));
+		configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://map2zero.com"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "PATCH"));
 		configuration.setAllowedHeaders(List.of(AUTHORIZATION_HEADER, "Content-Type"));
 		configuration.setExposedHeaders(List.of(AUTHORIZATION_HEADER));

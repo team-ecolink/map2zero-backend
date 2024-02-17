@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ProfilePhotoService {
 
-	private static final String DEFAULT_PROFILE_PHOTO_URL = "https://k.kakaocdn.net/dn/1G9kp/btsAot8liOn/8CWudi3uy07rvFNUkk3ER0/img_640x640.jpg";
+	private static final String DEFAULT_PROFILE_PHOTO_URL = "https://map2zero-bucket.s3.ap-northeast-2.amazonaws.com/public/static/map2zero_default_photo.jpeg";
 	private final ProfilePhotoRepository profilePhotoRepository;
 
 	@Transactional

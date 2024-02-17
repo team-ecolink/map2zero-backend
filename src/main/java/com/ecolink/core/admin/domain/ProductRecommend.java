@@ -1,8 +1,8 @@
-package com.ecolink.core.product_recommend.domain;
+package com.ecolink.core.admin.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.product.domain.StoreProduct;
-import com.ecolink.core.product_recommend.constant.RecommendType;
+import com.ecolink.core.admin.constant.RecommendType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

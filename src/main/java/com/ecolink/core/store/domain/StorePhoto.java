@@ -2,6 +2,7 @@ package com.ecolink.core.store.domain;
 
 import com.ecolink.core.common.domain.BaseTimeEntity;
 import com.ecolink.core.common.domain.ImageFile;
+import com.ecolink.core.file.domain.MultiPhoto;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class StorePhoto extends BaseTimeEntity {
+public class StorePhoto extends BaseTimeEntity implements MultiPhoto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +39,15 @@ public class StorePhoto extends BaseTimeEntity {
 	@JoinColumn(name = "store_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store;
+
+	private StorePhoto(Integer givenOrder, ImageFile file, Store store) {
+		this.givenOrder = givenOrder;
+		this.file = file;
+		this.store = store;
+	}
+
+	public static StorePhoto of(ImageFile file, int order, Store store) {
+		return new StorePhoto(order, file, store);
+	}
 
 }
