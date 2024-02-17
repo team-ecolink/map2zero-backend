@@ -2,20 +2,26 @@ package com.ecolink.core.map.controller;
 
 import com.ecolink.core.map.util.ContentDetailFetcher;
 import com.ecolink.core.map.util.ContentListFetcher;
+import com.ecolink.core.map.util.StoreDetailFetcher;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 public class StoreMapController {
 
 	private final ContentListFetcher contentListFetcher;
 	private final ContentDetailFetcher contentDetailFetcher;
-	public StoreMapController(ContentListFetcher contentListFetcher, ContentDetailFetcher contentDetailFetcher) {
+	private final StoreDetailFetcher storeDetailFetcher;
+
+	public StoreMapController(ContentListFetcher contentListFetcher, ContentDetailFetcher contentDetailFetcher,
+		StoreDetailFetcher storeDetailFetcher) {
 		this.contentListFetcher = contentListFetcher;
 		this.contentDetailFetcher = contentDetailFetcher;
+		this.storeDetailFetcher = storeDetailFetcher;
 	}
 
 	@Tag(name = "${swagger.map-data}")
@@ -31,6 +37,13 @@ public class StoreMapController {
 	@GetMapping("/data")
 	public void getContentsDetailAll() {
 		contentDetailFetcher.fetchAndStoreContentDetail();
+	}
+
+	@Tag(name = "${swagger.map-data}")
+	@Operation(summary = "상점 데이터 등록 API", description = "상점 상세 데이터 조회 및 등록 API")
+	@GetMapping("/store")
+	public void getStoreDetailAll() {
+		storeDetailFetcher.fetchAndStoreInfoDetail();
 	}
 
 }

@@ -20,19 +20,19 @@ public class ContentDetailDto {
 	private String cotContsName;
 
 	@Schema(description = "운영시간", example = "매일 11:00-21:30/ 비건 베이커리만 화 휴무")
-	private String cotValue03;
+	private String cotValue_03;
 
 	@Schema(description = "취급품목(메뉴)", example = "제로웨이스트 제품, 비건 식품, 리필 세제류, 비건베이커리")
-	private String cotValue04;
+	private String cotValue_04;
 
 	@Schema(description = "인스타그램", example = "http://www.instagram.com/zerowaste_jigu")
-	private String cotValue05;
+	private String cotValue_05;
 
 	@Schema(description = "제로페이", example = "가능")
-	private String cotValue06;
+	private String cotValue_06;
 
 	@Schema(description = "인터넷 쇼핑몰", example = "https://smartstore.naver.com/peaceontable")
-	private String cotValue07;
+	private String cotValue_07;
 
 	@Schema(description = "매장 주소 (새 주소)", example = "서울특별시 마포구 성미산로 155")
 	private String cotAddrFullNew;
@@ -101,10 +101,10 @@ public class ContentDetailDto {
 	private String cotThemeSubId;
 
 	@Schema(description = "기타 정보 1", example = "")
-	private String cotExtraData01;
+	private String cotExtraData_01;
 
 	@Schema(description = "링크 URL", example = "https://www.jigushop.co.kr/")
-	private String cotExtraData02;
+	private String cotExtraData_02;
 
 	@Schema(description = "동영상 URL", example = "")
 	private String cotMovieUrl;

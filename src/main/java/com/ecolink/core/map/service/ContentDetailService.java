@@ -44,11 +44,11 @@ public class ContentDetailService {
 	private MapContent mapDetailToMapEntity(ContentDetailDto dto) {
 		MapContent mapContent = new MapContent();
 		mapContent.setCotContsName(dto.getCotContsName());
-		mapContent.setCotValue03(dto.getCotValue03());
-		mapContent.setCotValue04(dto.getCotValue04());
-		mapContent.setCotValue05(dto.getCotValue05());
-		mapContent.setCotValue06(dto.getCotValue06());
-		mapContent.setCotValue07(dto.getCotValue07());
+		mapContent.setCotValue03(dto.getCotValue_03());
+		mapContent.setCotValue04(dto.getCotValue_04());
+		mapContent.setCotValue05(dto.getCotValue_05());
+		mapContent.setCotValue06(dto.getCotValue_06());
+		mapContent.setCotValue07(dto.getCotValue_07());
 		mapContent.setCotAddrFullNew(dto.getCotAddrFullNew());
 		mapContent.setCotAddrFullOld(dto.getCotAddrFullOld());
 		mapContent.setCotTelNo(dto.getCotTelNo());
@@ -74,8 +74,8 @@ public class ContentDetailService {
 		mapContent.setCotContsStat(dto.getCotContsStat());
 		mapContent.setCotWriter(dto.getCotWriter());
 		mapContent.setCotThemeSubId(dto.getCotThemeSubId());
-		mapContent.setCotExtraData01(dto.getCotExtraData01());
-		mapContent.setCotExtraData02(dto.getCotExtraData02());
+		mapContent.setCotExtraData01(dto.getCotExtraData_01());
+		mapContent.setCotExtraData02(dto.getCotExtraData_02());
 		mapContent.setCotMovieUrl(dto.getCotMovieUrl());
 		mapContent.setCotVoiceUrl(dto.getCotVoiceUrl());
 		mapContent.setCotContsDetail(dto.getCotContsDetail());
@@ -91,4 +91,5 @@ public class ContentDetailService {
 
 		return mapContent;
 	}
+
 }

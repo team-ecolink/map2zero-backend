@@ -35,4 +35,11 @@ public class Address {
 	@Schema(description = "지번 주소", example = "흑석동 54-149 1층")
 	private String lotNumber;
 
+	public Address(String province, String city, String roadName, String lotNumber) {
+		this.province = province;
+		this.city = city;
+		this.roadName = roadName;
+		this.lotNumber = lotNumber;
+	}
+
 }
