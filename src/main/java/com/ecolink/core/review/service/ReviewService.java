@@ -48,8 +48,8 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public void saveReview(Review review) {
-		reviewRepository.save(review);
+	public Review saveReview(Review review) {
+		return reviewRepository.save(review);
 	}
 
 	/**
