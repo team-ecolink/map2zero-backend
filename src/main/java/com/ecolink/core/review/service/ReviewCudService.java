@@ -46,8 +46,7 @@ public class ReviewCudService {
 		Store store = storeService.getById(request.getStoreId());
 		Avatar writer = avatarService.getById(avatarId);
 
-		Review review = new Review(request, store, writer);
-		reviewService.saveReview(review);
+		Review review = reviewService.saveReview(new Review(request, store, writer));
 
 		if (request.getTagIds() != null) {
 			List<Tag> tags = request.getTagIds().stream()
@@ -60,8 +59,7 @@ public class ReviewCudService {
 			});
 		}
 
-		store.addReviewCount();
-		store.addTotalScore(request.getScore());
+		store.addReview(review);
 
 		if (files != null && files.size() > 5)
 			throw new PhotoLimitExceededException(ErrorCode.PHOTO_LIMIT_EXCEEDED);
@@ -75,7 +73,7 @@ public class ReviewCudService {
 		if (!review.getWriter().getId().equals(principal.getAvatarId()) && !AuthorityUtil.hasAdminAuthority(principal))
 			throw new AccessDeniedException(ErrorCode.NOT_REVIEW_WRITER);
 
-		review.getStore().subtractReviewCount();
+		review.getStore().subtractReview(review);
 		multiPhotoService.removePhotos(review);
 		reviewService.deleteReview(review);
 	}

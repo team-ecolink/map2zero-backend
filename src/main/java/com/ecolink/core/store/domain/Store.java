@@ -11,6 +11,7 @@ import com.ecolink.core.event.domain.Event;
 import com.ecolink.core.file.domain.MultiPhotoContainer;
 import com.ecolink.core.manager.domain.StoreRegistration;
 import com.ecolink.core.product.domain.StoreProduct;
+import com.ecolink.core.review.domain.Review;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -114,19 +115,17 @@ public class Store extends BaseTimeEntity implements MultiPhotoContainer<StorePh
 		this.bookmarkCnt--;
 	}
 
-	public void addReviewCount() {
+	public void addReview(Review review) {
 		this.reviewCnt++;
+		this.totalScore += review.getScore();
 	}
 
-	public void subtractReviewCount() {
+	public void subtractReview(Review review) {
 		if (this.reviewCnt <= 0) {
 			throw new IllegalStateException("리뷰 수는 음수가 될 수 없습니다.");
 		}
 		this.reviewCnt--;
-	}
-
-	public void addTotalScore(int score) {
-		this.totalScore += score;
+		this.totalScore -= review.getScore();
 	}
 
 	public void addProductCnt() {
