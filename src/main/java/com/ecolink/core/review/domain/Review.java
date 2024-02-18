@@ -66,4 +66,16 @@ public class Review extends BaseTimeEntity implements MultiPhotoContainer<Review
 		this.writer = avatar;
 		this.store = store;
 	}
+
+	public void addReviewLikeCount() {
+		this.likeCnt++;
+	}
+
+	public void subtractReviewLikeCount() {
+		if (this.likeCnt <= 0) {
+			throw new IllegalStateException("좋아요 수는 음수가 될 수 없습니다.");
+		}
+		this.likeCnt--;
+	}
+
 }

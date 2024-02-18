@@ -21,8 +21,14 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @Service
 public class ReviewService {
+
 	private final ReviewRepository reviewRepository;
 	private final ReviewJpaRepository reviewJpaRepository;
+
+	public Review getById(Long reviewId) {
+		return reviewRepository.findById(reviewId)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+	}
 
 	public Page<Review> getByStore(Long storeId, Pageable pageable) {
 		return reviewRepository.findByStore(storeId, pageable);
@@ -55,5 +61,5 @@ public class ReviewService {
 	public void deleteReview(Review review) {
 		reviewRepository.delete(review);
 	}
-
+  
 }
