@@ -45,13 +45,13 @@ public enum ErrorCode {
 	/**
 	 * 리뷰 관련 오류
 	 */
-	REVIEW_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "S-001", "주어진 식별자로 리뷰를 찾을 수 없습니다."),
+	REVIEW_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "R-001", "주어진 식별자로 리뷰를 찾을 수 없습니다."),
 
 	/**
 	 * 리뷰 좋아요 관련 오류
 	 */
-	REVIEWLIKE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "B-001", "좋아요가 이미 존재합니다."),
-	REVIEWLIKE_NOT_FOUND(HttpStatus.BAD_REQUEST, "B-002", "취소할 좋아요를 찾을 수 없습니다."),
+	REVIEWLIKE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "RL-001", "좋아요가 이미 존재합니다."),
+	REVIEWLIKE_NOT_FOUND(HttpStatus.BAD_REQUEST, "RL-002", "취소할 좋아요를 찾을 수 없습니다."),
 
 	/**
 	 * 인증 관련 오류

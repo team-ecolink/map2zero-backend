@@ -13,7 +13,7 @@ import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.error.ErrorCode;
 
 import com.ecolink.core.common.error.exception.ReviewLikeAlreadyExistsException;
-import com.ecolink.core.common.error.exception.ReviewLikeNotFoundException;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.like.domain.ReviewLike;
 import com.ecolink.core.like.repository.ReviewLikeRepository;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
@@ -48,7 +48,7 @@ public class ReviewLikeService {
 	}
 
 	@Transactional
-	public ReviewLike addReviewLike(Long reviewId, Long avatarId) {
+	public void addReviewLike(Long reviewId, Long avatarId) {
 		Avatar avatar = avatarService.getById(avatarId);
 		Review review = reviewService.getById(reviewId);
 
@@ -57,16 +57,15 @@ public class ReviewLikeService {
 		}
 
 		ReviewLike reviewLike = new ReviewLike(review, avatar);
-		ReviewLike savedReviewLike = reviewLikeRepository.save(reviewLike);
+		reviewLikeRepository.save(reviewLike);
 
 		review.addReviewLikeCount();
 
-		return savedReviewLike;
 	}
 
 	public ReviewLike getReviewLike(Long reviewId, Long avatarId) {
 		return reviewLikeRepository.findReviewLikeByAvatarIdAndReviewId(avatarId, reviewId)
-			.orElseThrow(() -> new ReviewLikeNotFoundException(ErrorCode.REVIEWLIKE_NOT_FOUND));
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEWLIKE_NOT_FOUND));
 	}
 
 	@Transactional
