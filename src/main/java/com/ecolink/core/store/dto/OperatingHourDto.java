@@ -1,6 +1,8 @@
 package com.ecolink.core.store.dto;
 
 import java.time.LocalTime;
+import java.util.Comparator;
+import java.util.List;
 
 import com.ecolink.core.store.domain.StoreOperatingHours;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -29,5 +31,27 @@ public record OperatingHourDto(
 			.endTime(operatingHours.getEndTime())
 			.regularHoliday(operatingHours.isRegularHoliday())
 			.build();
+	}
+
+	public static List<OperatingHourDto> sort(List<StoreOperatingHours> operatingHours) {
+		return operatingHours.stream()
+			.map(OperatingHourDto::of)
+			.sorted(Comparator
+				.comparing(OperatingHourDto::regularHoliday)
+				.thenComparing((OperatingHourDto dto) -> getDayOfWeekOrder(dto.dayOfWeek())))
+			.toList();
+	}
+
+	private static int getDayOfWeekOrder(String dayOfWeek) {
+		return switch (dayOfWeek) {
+			case "월" -> 1;
+			case "화" -> 2;
+			case "수" -> 3;
+			case "목" -> 4;
+			case "금" -> 5;
+			case "토" -> 6;
+			case "일" -> 7;
+			default -> throw new IllegalArgumentException("Invalid day of week: " + dayOfWeek);
+		};
 	}
 }
