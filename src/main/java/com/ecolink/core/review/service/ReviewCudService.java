@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class ReviewCreateService {
+public class ReviewCudService {
 
 	private final ReviewService reviewService;
 	private final StoreService storeService;

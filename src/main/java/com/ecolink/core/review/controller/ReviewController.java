@@ -25,7 +25,7 @@ import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.review.dto.request.CreateReviewRequest;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
-import com.ecolink.core.review.service.ReviewCreateService;
+import com.ecolink.core.review.service.ReviewCudService;
 import com.ecolink.core.review.service.ReviewSearchService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +46,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewController {
 
 	private final ReviewSearchService reviewSearchService;
-	private final ReviewCreateService reviewCreateService;
+	private final ReviewCudService reviewCudService;
 
 	@Tag(name = "${swagger.tag.store}")
 	@Operation(summary = "리뷰 리스트 조회 API - 인증 선택",
@@ -98,7 +98,7 @@ public class ReviewController {
 		@Parameter(description = "추가할 리뷰 정보")
 		@RequestPart("request") @Valid CreateReviewRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		reviewCreateService.createReview(request, files, principal.getAvatarId());
+		reviewCudService.createReview(request, files, principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 
