@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.avatar.dto.request.MyPageReviewRequest;
 import com.ecolink.core.avatar.dto.response.MyPageReviewResponse;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.repository.ReviewJpaRepository;
 import com.ecolink.core.review.repository.ReviewRepository;
@@ -19,8 +21,14 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @Service
 public class ReviewService {
+
 	private final ReviewRepository reviewRepository;
 	private final ReviewJpaRepository reviewJpaRepository;
+
+	public Review getById(Long reviewId) {
+		return reviewRepository.findById(reviewId)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+	}
 
 	public Page<Review> getByStore(Long storeId, Pageable pageable) {
 		return reviewRepository.findByStore(storeId, pageable);
@@ -38,4 +46,5 @@ public class ReviewService {
 	public void saveReview(Review review) {
 		reviewRepository.save(review);
 	}
+
 }
