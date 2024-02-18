@@ -41,7 +41,7 @@ public class ReviewJpaRepository {
 			.on(reviewPhoto.givenOrder.eq(0))
 			.leftJoin(review.reviewLikes, reviewLike)
 			.on(reviewLike.avatar.id.eq(viewerId))
-			.where(cursorCondition(request.getCursor()))
+			.where(cursorCondition(request.getCursor()), review.writer.id.eq(writerId))
 			.orderBy(review.id.desc())
 			.limit(request.getSize() + 1L);
 
