@@ -18,7 +18,7 @@ public class MyPageBookmarkRequest {
 
 	@Parameter(description = "조회 사이즈")
 	@NotNull
-	@Range(min = 1, max = 16)
+	@Range(min = 1, max = 100)
 	private final Integer size;
 
 	public MyPageBookmarkRequest(Long cursor, Integer size) {
