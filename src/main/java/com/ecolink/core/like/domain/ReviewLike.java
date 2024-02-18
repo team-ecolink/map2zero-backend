@@ -35,4 +35,9 @@ public class ReviewLike extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Review review;
 
+	public ReviewLike(Review review, Avatar avatar) {
+		this.review = review;
+		this.avatar = avatar;
+	}
+
 }

@@ -66,4 +66,9 @@ public class Review extends BaseTimeEntity implements MultiPhotoContainer<Review
 		this.writer = avatar;
 		this.store = store;
 	}
+
+	public void addReviewLikeCount() {
+		this.likeCnt++;
+	}
+
 }

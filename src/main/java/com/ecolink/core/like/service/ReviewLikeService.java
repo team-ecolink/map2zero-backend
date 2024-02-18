@@ -8,9 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecolink.core.avatar.domain.Avatar;
+import com.ecolink.core.avatar.service.AvatarService;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.ReviewLikeAlreadyExistsException;
 import com.ecolink.core.like.domain.ReviewLike;
 import com.ecolink.core.like.repository.ReviewLikeRepository;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
+import com.ecolink.core.review.domain.Review;
+import com.ecolink.core.review.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class ReviewLikeService {
 
 	private final ReviewLikeRepository reviewLikeRepository;
+	private final AvatarService avatarService;
+	private final ReviewService reviewService;
 
 	public Page<GetReviewResponse> findReviewLike(Page<GetReviewResponse> reviews, Long avatarId) {
 		Set<ReviewLike> reviewLikes = new HashSet<>(reviewLikeRepository.findAllByReviewList(
@@ -31,6 +39,26 @@ public class ReviewLikeService {
 		reviews.stream().filter(response -> reviewIds.contains(response.getId()))
 			.forEach(GetReviewResponse::setLikedTrue);
 		return reviews;
+	}
+
+	public boolean existsReviewLike(Long avatarId, Long reviewId) {
+		return reviewLikeRepository.existsByAvatarAndReview(avatarId, reviewId);
+	}
+	@Transactional
+	public ReviewLike addReviewLike(Long reviewId, Long avatarId) {
+		Avatar avatar = avatarService.getById(avatarId);
+		Review review = reviewService.getById(reviewId);
+
+		if (existsReviewLike(avatarId, reviewId)) {
+			throw new ReviewLikeAlreadyExistsException(ErrorCode.REVIEWLIKE_ALREADY_EXISTS);
+		}
+
+		ReviewLike reviewLike = new ReviewLike(review, avatar);
+		ReviewLike savedReviewLike = reviewLikeRepository.save(reviewLike);
+
+		review.addReviewLikeCount();
+
+		return savedReviewLike;
 	}
 
 }
