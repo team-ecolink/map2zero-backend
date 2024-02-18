@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.error.ErrorCode;
+
 import com.ecolink.core.common.error.exception.ReviewLikeAlreadyExistsException;
+import com.ecolink.core.common.error.exception.ReviewLikeNotFoundException;
 import com.ecolink.core.like.domain.ReviewLike;
 import com.ecolink.core.like.repository.ReviewLikeRepository;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
@@ -44,6 +46,7 @@ public class ReviewLikeService {
 	public boolean existsReviewLike(Long avatarId, Long reviewId) {
 		return reviewLikeRepository.existsByAvatarAndReview(avatarId, reviewId);
 	}
+
 	@Transactional
 	public ReviewLike addReviewLike(Long reviewId, Long avatarId) {
 		Avatar avatar = avatarService.getById(avatarId);
@@ -59,6 +62,21 @@ public class ReviewLikeService {
 		review.addReviewLikeCount();
 
 		return savedReviewLike;
+	}
+
+	public ReviewLike getReviewLike(Long reviewId, Long avatarId) {
+		return reviewLikeRepository.findReviewLikeByAvatarIdAndReviewId(avatarId, reviewId)
+			.orElseThrow(() -> new ReviewLikeNotFoundException(ErrorCode.REVIEWLIKE_NOT_FOUND));
+	}
+
+	@Transactional
+	public void deleteReviewLike(Long reviewId, Long avatarId) {
+		ReviewLike reviewLike = getReviewLike(reviewId, avatarId);
+		Review review = reviewLike.getReview();
+
+		reviewLikeRepository.delete(reviewLike);
+
+		review.deleteReviewLikeCount();
 	}
 
 }

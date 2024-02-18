@@ -2,6 +2,7 @@ package com.ecolink.core.like.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,19 @@ public class ReviewLikeController {
 		@RequestBody ReviewLikeRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		reviewLikeService.addReviewLike(request.reviewId(), principal.getAvatarId());
+		return ApiResponse.ok();
+	}
+
+	@Tag(name = "${swagger.tag.review-like}")
+	@Operation(summary = "리뷰 좋아요 취소 API - 인증 필요",
+		description = "리뷰 좋아요 취소 - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@DeleteMapping
+	public ApiResponse<Void> deleteReviewLike(
+		@RequestBody ReviewLikeRequest request,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		reviewLikeService.deleteReviewLike(request.reviewId(), principal.getAvatarId());
 		return ApiResponse.ok();
 	}
 
