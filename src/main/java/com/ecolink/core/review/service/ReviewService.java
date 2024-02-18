@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecolink.core.avatar.dto.request.MyPageReviewRequest;
 import com.ecolink.core.avatar.dto.response.MyPageReviewResponse;
+import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.EntityNotFoundException;
 import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.repository.ReviewJpaRepository;
 import com.ecolink.core.review.repository.ReviewRepository;
@@ -34,8 +36,24 @@ public class ReviewService {
 		return reviewJpaRepository.findByWriter(request, writerId, viewerId);
 	}
 
+	public Review getByIdWithStoreAndPhotos(Long reviewId) {
+		return reviewRepository.findByIdWithStoreAndPhotos(reviewId)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+	}
+
 	@Transactional
 	public void saveReview(Review review) {
 		reviewRepository.save(review);
 	}
+
+	/**
+	 * cascade 옵션으로 ReviewTag, ReviewLikes 전부 함께 삭제 됨
+	 * ReviewPhoto 는 파일 저장소에서도 이미지 파일을 지워야만 하므로
+	 * 반드시 이 메서드를 호출하기 전에 별도 제거 필요함
+	 */
+	@Transactional
+	public void deleteReview(Review review) {
+		reviewRepository.delete(review);
+	}
+
 }

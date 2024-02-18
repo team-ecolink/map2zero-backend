@@ -100,7 +100,13 @@ public enum ErrorCode {
 	/**
 	 *
 	 */
-	STORE_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "SP-001", "주어진 식별자로 매장 제품을 찾을 수 없습니다.");
+	STORE_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "SP-001", "주어진 식별자로 매장 제품을 찾을 수 없습니다."),
+
+	/**
+	 * 리뷰 관련 오류
+	 */
+	REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST, "R-001", "주어진 식별자로 리뷰를 찾을 수 없습니다."),
+	NOT_REVIEW_WRITER(HttpStatus.BAD_REQUEST, "R-002", "해당 리뷰의 작성자가 아닙니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
