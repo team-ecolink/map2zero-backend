@@ -1,5 +1,7 @@
 package com.ecolink.core.review.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,17 +15,23 @@ import com.ecolink.core.review.domain.Review;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	@Query("select r from Review r "
-		+ "join fetch r.writer w "
-		+ "join fetch w.photo "
-		+ "where r.store.id = :storeId")
+		   + "join fetch r.writer w "
+		   + "join fetch w.photo "
+		   + "where r.store.id = :storeId")
 	Page<Review> findByStore(@Param("storeId") Long storeId, Pageable pageable);
 
 	@Query("select r from Review r "
-		+ "join fetch r.writer w "
-		+ "join fetch w.photo "
-		+ "where r.store.id = :storeId "
-		+ "and w.id = :avatarId")
+		   + "join fetch r.writer w "
+		   + "join fetch w.photo "
+		   + "where r.store.id = :storeId "
+		   + "and w.id = :avatarId")
 	Page<Review> findByStoreAndAvatar(@Param("storeId") Long storeId, @Param("avatarId") Long avatarId,
 		Pageable pageable);
+
+	@Query("select r from Review r "
+		   + "join fetch r.store s "
+		   + "left join fetch r.photos "
+		   + "where r.id = :reviewId ")
+	Optional<Review> findByIdWithStoreAndPhotos(@Param("reviewId") Long reviewId);
 
 }

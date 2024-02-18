@@ -54,10 +54,10 @@ public class Review extends BaseTimeEntity implements MultiPhotoContainer<Review
 	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ReviewPhoto> photos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "review")
+	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
 	private List<ReviewTag> reviewTags = new ArrayList<>();
 
-	@OneToMany(mappedBy = "review")
+	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
 	private List<ReviewLike> reviewLikes = new ArrayList<>();
 
 	public Review(CreateReviewRequest request, Store store, Avatar avatar) {

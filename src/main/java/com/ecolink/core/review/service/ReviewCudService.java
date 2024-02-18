@@ -6,16 +6,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.avatar.domain.Avatar;
 import com.ecolink.core.avatar.service.AvatarService;
 import com.ecolink.core.common.error.ErrorCode;
+import com.ecolink.core.common.error.exception.AccessDeniedException;
 import com.ecolink.core.common.error.exception.PhotoLimitExceededException;
+import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.file.constant.FilePath;
 import com.ecolink.core.file.service.MultiPhotoService;
 import com.ecolink.core.review.domain.Review;
 import com.ecolink.core.review.domain.ReviewPhoto;
 import com.ecolink.core.review.domain.ReviewTag;
 import com.ecolink.core.review.dto.request.CreateReviewRequest;
+import com.ecolink.core.review.dto.request.DeleteReviewRequest;
 import com.ecolink.core.store.domain.Store;
 import com.ecolink.core.store.service.StoreService;
 import com.ecolink.core.tag.constant.TagCategory;
@@ -27,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class ReviewCreateService {
+public class ReviewCudService {
 
 	private final ReviewService reviewService;
 	private final StoreService storeService;
@@ -64,4 +68,16 @@ public class ReviewCreateService {
 		if (files != null)
 			multiPhotoService.addPhotos(files, review, ReviewPhoto::of, FilePath.REVIEW_PHOTO);
 	}
+
+	@Transactional
+	public void deleteReview(DeleteReviewRequest request, UserPrincipal principal) {
+		Review review = reviewService.getByIdWithStoreAndPhotos(request.getReviewId());
+		if (!review.getWriter().getId().equals(principal.getAvatarId()) && !AuthorityUtil.hasAdminAuthority(principal))
+			throw new AccessDeniedException(ErrorCode.NOT_REVIEW_WRITER);
+
+		review.getStore().subtractReviewCount();
+		multiPhotoService.removePhotos(review);
+		reviewService.deleteReview(review);
+	}
+
 }

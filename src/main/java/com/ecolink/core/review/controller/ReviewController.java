@@ -10,9 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +26,9 @@ import com.ecolink.core.common.response.ApiPageResponse;
 import com.ecolink.core.common.response.ApiResponse;
 import com.ecolink.core.common.util.AuthorityUtil;
 import com.ecolink.core.review.dto.request.CreateReviewRequest;
+import com.ecolink.core.review.dto.request.DeleteReviewRequest;
 import com.ecolink.core.review.dto.response.GetReviewResponse;
-import com.ecolink.core.review.service.ReviewCreateService;
+import com.ecolink.core.review.service.ReviewCudService;
 import com.ecolink.core.review.service.ReviewSearchService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +49,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewController {
 
 	private final ReviewSearchService reviewSearchService;
-	private final ReviewCreateService reviewCreateService;
+	private final ReviewCudService reviewCudService;
 
 	@Tag(name = "${swagger.tag.store}")
 	@Operation(summary = "리뷰 리스트 조회 API - 인증 선택",
@@ -98,7 +101,20 @@ public class ReviewController {
 		@Parameter(description = "추가할 리뷰 정보")
 		@RequestPart("request") @Valid CreateReviewRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
-		reviewCreateService.createReview(request, files, principal.getAvatarId());
+		reviewCudService.createReview(request, files, principal.getAvatarId());
+		return ApiResponse.ok();
+	}
+
+	@Tag(name = "${swagger.tag.review}")
+	@Operation(summary = "리뷰 삭제 API - 인증 필요",
+		description = "리뷰 삭제 - 인증 필요",
+		security = {@SecurityRequirement(name = "session-token")})
+	@PreAuthorize("hasRole('USER')")
+	@DeleteMapping("/reviews")
+	public ApiResponse<Void> deleteReview(
+		@RequestBody @Valid DeleteReviewRequest request,
+		@AuthenticationPrincipal UserPrincipal principal) {
+		reviewCudService.deleteReview(request, principal);
 		return ApiResponse.ok();
 	}
 

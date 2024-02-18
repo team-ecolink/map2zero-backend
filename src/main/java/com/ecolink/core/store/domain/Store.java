@@ -118,6 +118,13 @@ public class Store extends BaseTimeEntity implements MultiPhotoContainer<StorePh
 		this.reviewCnt++;
 	}
 
+	public void subtractReviewCount() {
+		if (this.reviewCnt <= 0) {
+			throw new IllegalStateException("리뷰 수는 음수가 될 수 없습니다.");
+		}
+		this.reviewCnt--;
+	}
+
 	public void addTotalScore(int score) {
 		this.totalScore += score;
 	}
