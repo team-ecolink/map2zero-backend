@@ -24,6 +24,6 @@ public interface ReviewLikeRepository extends JpaRepository<ReviewLike, Long> {
 		+ "and rl.review.id = :reviewId")
 	boolean existsByAvatarAndReview(@Param("avatarId") Long avatarId, @Param("reviewId") Long reviewId);
 
-	Optional<ReviewLike> findReviewLikeByAvatarIdAndReviewId(Long avatarId, Long reviewId);
+	Optional<ReviewLike> findByAvatarIdAndReviewId(Long avatarId, Long reviewId);
 
 }

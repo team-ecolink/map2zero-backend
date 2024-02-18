@@ -45,7 +45,7 @@ public enum ErrorCode {
 	/**
 	 * 리뷰 관련 오류
 	 */
-	REVIEW_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "R-001", "주어진 식별자로 리뷰를 찾을 수 없습니다."),
+	REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST, "R-001", "주어진 식별자로 리뷰를 찾을 수 없습니다."),
 
 	/**
 	 * 리뷰 좋아요 관련 오류

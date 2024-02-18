@@ -49,12 +49,12 @@ public class ReviewLikeService {
 
 	@Transactional
 	public void addReviewLike(Long reviewId, Long avatarId) {
-		Avatar avatar = avatarService.getById(avatarId);
-		Review review = reviewService.getById(reviewId);
-
 		if (existsReviewLike(avatarId, reviewId)) {
 			throw new ReviewLikeAlreadyExistsException(ErrorCode.REVIEWLIKE_ALREADY_EXISTS);
 		}
+
+		Avatar avatar = avatarService.getById(avatarId);
+		Review review = reviewService.getById(reviewId);
 
 		ReviewLike reviewLike = new ReviewLike(review, avatar);
 		reviewLikeRepository.save(reviewLike);
@@ -64,7 +64,7 @@ public class ReviewLikeService {
 	}
 
 	public ReviewLike getReviewLike(Long reviewId, Long avatarId) {
-		return reviewLikeRepository.findReviewLikeByAvatarIdAndReviewId(avatarId, reviewId)
+		return reviewLikeRepository.findByAvatarIdAndReviewId(avatarId, reviewId)
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEWLIKE_NOT_FOUND));
 	}
 
@@ -75,7 +75,7 @@ public class ReviewLikeService {
 
 		reviewLikeRepository.delete(reviewLike);
 
-		review.deleteReviewLikeCount();
+		review.subtractReviewLikeCount();
 	}
 
 }

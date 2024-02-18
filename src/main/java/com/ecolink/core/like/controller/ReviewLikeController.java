@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecolink.core.auth.token.UserPrincipal;
 import com.ecolink.core.common.response.ApiResponse;
-import com.ecolink.core.like.dto.request.ReviewLikeRequest;
+import com.ecolink.core.like.dto.request.DeleteLikeRequest;
+import com.ecolink.core.like.dto.request.PostLikeRequest;
 import com.ecolink.core.like.service.ReviewLikeService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class ReviewLikeController {
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping
 	public ApiResponse<Void> addReviewLike(
-		@RequestBody ReviewLikeRequest request,
+		@RequestBody @Valid PostLikeRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		reviewLikeService.addReviewLike(request.reviewId(), principal.getAvatarId());
 		return ApiResponse.ok();
@@ -45,7 +47,7 @@ public class ReviewLikeController {
 	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping
 	public ApiResponse<Void> deleteReviewLike(
-		@RequestBody ReviewLikeRequest request,
+		@RequestBody @Valid DeleteLikeRequest request,
 		@AuthenticationPrincipal UserPrincipal principal) {
 		reviewLikeService.deleteReviewLike(request.reviewId(), principal.getAvatarId());
 		return ApiResponse.ok();
