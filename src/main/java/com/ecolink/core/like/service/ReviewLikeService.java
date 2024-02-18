@@ -50,7 +50,7 @@ public class ReviewLikeService {
 	@Transactional
 	public void addReviewLike(Long reviewId, Long avatarId) {
 		if (existsReviewLike(avatarId, reviewId)) {
-			throw new ReviewLikeAlreadyExistsException(ErrorCode.REVIEWLIKE_ALREADY_EXISTS);
+			throw new ReviewLikeAlreadyExistsException(ErrorCode.REVIEW_LIKE_ALREADY_EXISTS);
 		}
 
 		Avatar avatar = avatarService.getById(avatarId);
@@ -65,7 +65,7 @@ public class ReviewLikeService {
 
 	public ReviewLike getReviewLike(Long reviewId, Long avatarId) {
 		return reviewLikeRepository.findByAvatarIdAndReviewId(avatarId, reviewId)
-			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEWLIKE_NOT_FOUND));
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.REVIEW_LIKE_NOT_FOUND));
 	}
 
 	@Transactional
