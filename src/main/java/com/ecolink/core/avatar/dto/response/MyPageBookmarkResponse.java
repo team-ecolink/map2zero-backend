@@ -4,12 +4,15 @@ import com.ecolink.core.bookmark.domain.Bookmark;
 import com.ecolink.core.common.constant.Address;
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.store.domain.Store;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.querydsl.core.annotations.QueryProjection;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class MyPageBookmarkResponse {
 	@Schema(description = "북마크 ID", example = "1")
 	private final Long bookmarkId;
@@ -24,6 +27,12 @@ public class MyPageBookmarkResponse {
 	@Schema(description = "매장 사진")
 	private final ImageFile photo;
 
+	@Schema(description = "매장 평점", example = "4.8")
+	private final double averageScore;
+
+	@Schema(description = "매장 리뷰 수", example = "5")
+	private final int reviewCnt;
+
 	@QueryProjection
 	public MyPageBookmarkResponse(Bookmark bookmark, Store store, ImageFile photo) {
 		this.bookmarkId = bookmark.getId();
@@ -32,6 +41,8 @@ public class MyPageBookmarkResponse {
 		this.address = store.getAddress();
 		this.summary = store.getSummary();
 		this.photo = photo;
+		this.averageScore = store.roundedAverageScore();
+		this.reviewCnt = store.getReviewCnt();
 	}
 
 }
