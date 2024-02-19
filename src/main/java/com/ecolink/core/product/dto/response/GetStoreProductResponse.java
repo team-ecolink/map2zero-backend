@@ -27,7 +27,7 @@ public class GetStoreProductResponse {
 	@Schema(description = "메인 상품 여부", example = "false")
 	private final boolean main;
 
-	@Schema(description = "단위당 가격", example = "10000")
+	@Schema(description = "단위당 가격", example = "10,000원")
 	private final String price;
 
 	@Schema(description = "매장 상품 이름", example = "연필")

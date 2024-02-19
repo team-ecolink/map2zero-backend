@@ -4,8 +4,13 @@ import java.text.DecimalFormat;
 
 public class PriceUtil {
 
+	private PriceUtil() {
+	}
+
+	private static final DecimalFormat df = new DecimalFormat("###,###");
+
 	public static String formatPrice(int originalPrice) {
-		DecimalFormat df = new DecimalFormat("###,###");
 		return df.format(originalPrice) + "원";
 	}
+
 }
