@@ -2,6 +2,7 @@ package com.ecolink.core.product.dto.response;
 
 import com.ecolink.core.common.domain.ImageFile;
 import com.ecolink.core.product.domain.StoreProduct;
+import com.ecolink.core.product.util.PriceUtil;
 import com.ecolink.core.tag.domain.Product;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -26,8 +27,8 @@ public class GetStoreProductResponse {
 	@Schema(description = "메인 상품 여부", example = "false")
 	private final boolean main;
 
-	@Schema(description = "단위당 가격", example = "10000")
-	private final Integer price;
+	@Schema(description = "단위당 가격", example = "10,000원")
+	private final String price;
 
 	@Schema(description = "매장 상품 이름", example = "연필")
 	private final String name;
@@ -41,7 +42,7 @@ public class GetStoreProductResponse {
 		this.onSale = storeProduct.isOnSale();
 		this.refillable = storeProduct.isRefillable();
 		this.main = storeProduct.isMain();
-		this.price = storeProduct.getPrice();
+		this.price = PriceUtil.formatPrice(storeProduct.getPrice());
 		this.name = product.getName();
 		this.photo = photo;
 	}
