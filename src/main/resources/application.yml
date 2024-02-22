@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    group:
+      "default": "local"
+      "local": "oauth, s3, swagger"
+      "dev": "oauth, s3, dev-db, swagger"
+      "prod": "prod, oauth, s3, prod-db"
+  jpa:
+    properties:
+      hibernate:
+        # set default batch size
+        default_batch_fetch_size: 100
+    # turn OSIV off
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+springdoc:
+  # define target package of swagger scanning
+  packages-to-scan: com.ecolink
+  swagger-ui:
+    tags-sorter: alpha
+
+api:
+  prefix: "/api/v1"

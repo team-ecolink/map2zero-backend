@@ -1,0 +1,36 @@
+name: Test Build before Merge
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main", "develop" ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Set up JDK 17
+          uses: actions/setup-java@v3
+          with:
+            java-version: '17'
+            distribution: 'zulu'
+
+        - name: Copy Secrets
+          uses: ./.github/actions/copy_secret
+          with:
+            profile: local
+            oauth-secret: ${{ secrets.OAUTH_SECRET }}
+            s3-secret: ${{ secrets.S3_SECRET }}
+
+        - name: Run MySQL image for test
+          run: docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=map2zero mysql:8.0.31
+
+        - name: Build with Gradle
+          uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
+          with:
+            arguments: build
