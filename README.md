@@ -1,6 +1,8 @@
 # Map:Zero
+<p align="center" ><img src= "https://github.com/team-ecolink/map2zero-backend/assets/85255237/f18c41b4-8b16-42de-91ec-0f769df2b1ed" width="400"/></p>
 
-- 서비스 개요
+## 개요
+**지속가능한 삶을 위한 ESG 서비스 Map:Zero**(맵투제로)의 서버 레포지토리입니다.
 
 ## 목차
 #### [1. 서비스 소개](#서비스-소개)
