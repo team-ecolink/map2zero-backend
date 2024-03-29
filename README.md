@@ -85,7 +85,7 @@
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/e76d43cb-ee2b-438a-9a6a-164107deba68" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/c9032d0b-80dd-46c8-ae86-2e90cd904f5f" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/600c7111-8e78-460a-87ab-3d6ca557e6b5" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/d6bca184-cafd-47be-8d81-29f5c04cd2e4" />
+<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/8ba03626-03b5-4ce3-9bc2-2f5162d1d95d" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/1545898f-7e14-45e1-8edb-cce60467a3dc" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/72a3f729-38f0-401c-a4d1-de4e661da795" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/91ed3635-e4ee-4314-bc67-e5ac9fe92bff" />
