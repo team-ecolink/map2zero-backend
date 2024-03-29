@@ -94,14 +94,6 @@
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/c3b9c68d-91fe-490b-878a-566c0e566410" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/eb4193ce-888b-443b-a9c3-57f681fc9519" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/955a25e9-7bb6-4367-9f9e-3bb23ac2857e" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/6bb954ac-53fb-4210-bca6-064e86181e32" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/2528c4cd-63b2-4101-851a-a8f276574236" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/21162b43-9a78-4e74-9fc6-24afeca6346f" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/971a994b-5b4a-4b5e-846e-3cba3aea6ad7" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/1b2ca1f8-7461-4f41-8b03-94d01c395a3d" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/27eb8673-5ca9-4523-b4eb-e95da169773d" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/d537f598-0107-425b-a532-5e95cb0aa466" />
-<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/11222a30-ecd9-49f8-a83a-48b27a2278fd" />
 
 <!-- 담당: 성유진 -->
 ## Git Flow 전략
