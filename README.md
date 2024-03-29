@@ -10,7 +10,7 @@
 #### [3. ERD](#erd)
 #### [4. 서버 아키텍쳐](#서버-아키텍쳐)
 #### [5. Swagger](#swagger)
-#### [6. Git Flow 전략](#git-flow-전략)
+#### [6. Github Flow 전략](#github-flow-전략)
 #### [7. 컨벤션](#컨벤션)
 #### [8. Contributors](#contributors)
 
@@ -96,9 +96,9 @@
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/955a25e9-7bb6-4367-9f9e-3bb23ac2857e" />
 
 <!-- 담당: 성유진 -->
-## Git Flow 전략
+## Github Flow 전략
 <!-- 담당: 성유진 -->
-
+<img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/21eb8bd9-955c-47ad-b6c2-16062970ac94" />
 
 
 
