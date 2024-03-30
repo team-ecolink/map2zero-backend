@@ -73,7 +73,7 @@
 ## 서버 아키텍쳐
 <!-- 담당: 이준표 -->
 
-
+![Map2Zero-Architecture](https://github.com/team-ecolink/map2zero-backend/assets/85255237/a685d0d5-655b-4e41-8119-3c93c6c655b7)
 
 
 
