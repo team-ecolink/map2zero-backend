@@ -1,20 +1,31 @@
 # Map:Zero
+
 <p align="center" ><img src= "https://github.com/team-ecolink/map2zero-backend/assets/85255237/f18c41b4-8b16-42de-91ec-0f769df2b1ed" width="400"/></p>
 
 ## 개요
+
 **지속가능한 삶을 위한 ESG 서비스 Map:Zero**(맵투제로)의 서버 레포지토리입니다.
 
 ## 목차
+
 #### [1. 서비스 소개](#서비스-소개)
+
 #### [2. 기술 스택](#기술-스택)
+
 #### [3. ERD](#erd)
+
 #### [4. 서버 아키텍쳐](#서버-아키텍쳐)
+
 #### [5. Swagger](#swagger)
+
 #### [6. Github Flow 전략](#github-flow-전략)
+
 #### [7. 컨벤션](#컨벤션)
+
 #### [8. Contributors](#contributors)
 
 ## 서비스 소개
+
 <!-- 담당: 최이주 -->
 
 <br>
@@ -46,7 +57,9 @@
 <br>
 
 <!-- 담당: 최이주 -->
+
 ## 기술 스택
+
 <!-- 담당: 이준표 -->
 
 #### Server
@@ -59,18 +72,20 @@
 
 #### ETC
 
-
-
 <!-- 담당: 이준표 -->
+
 ## ERD
-<!-- 담당: 이현희 -->
-
-
-
-
 
 <!-- 담당: 이현희 -->
+
+![map2zero](https://github.com/team-ecolink/map2zero-backend/assets/101989268/ea3273a9-7b4a-418b-83b4-8d092d8d50b3)
+
+
+
+<!-- 담당: 이현희 -->
+
 ## 서버 아키텍쳐
+
 <!-- 담당: 이준표 -->
 
 ![Map2Zero-Architecture](https://github.com/team-ecolink/map2zero-backend/assets/85255237/a685d0d5-655b-4e41-8119-3c93c6c655b7)
@@ -80,7 +95,9 @@
 
 
 <!-- 담당: 이준표 -->
+
 ## Swagger
+
 <!-- 담당: 성유진 -->
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/e76d43cb-ee2b-438a-9a6a-164107deba68" />
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/c9032d0b-80dd-46c8-ae86-2e90cd904f5f" />
@@ -96,7 +113,9 @@
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/955a25e9-7bb6-4367-9f9e-3bb23ac2857e" />
 
 <!-- 담당: 성유진 -->
+
 ## Github Flow 전략
+
 <!-- 담당: 성유진 -->
 <img src = "https://github.com/team-ecolink/map2zero-backend/assets/88930580/21eb8bd9-955c-47ad-b6c2-16062970ac94" />
 
@@ -104,14 +123,18 @@
 
 
 <!-- 담당: 성유진 -->
+
 ## 컨벤션
-<!-- 담당: 최이주 -->
-
-
-
 
 <!-- 담당: 최이주 -->
+
+
+
+
+<!-- 담당: 최이주 -->
+
 ## Contributors
+
 <!-- 담당: 이현희 -->
 
 
