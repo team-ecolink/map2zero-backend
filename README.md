@@ -137,7 +137,14 @@
 
 <!-- 담당: 이현희 -->
 
-
+<table>
+  <tbody>
+      <td align="center"><a href="https://github.com/wnsvy607"><img src="https://github.com/team-ecolink/map2zero-backend/assets/101989268/aeda9d61-baf6-498a-acbd-ecfd4df5bb8e" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 이준표 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/heegane"><img src="https://github.com/team-ecolink/map2zero-backend/assets/101989268/baefc59c-10c0-4060-a0f6-19b5015f3055" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 이현희 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/cherryiJuice"><img src="https://github.com/team-ecolink/map2zero-backend/assets/101989268/5cef55b5-18f7-4ab4-b802-c397f2c61289" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 최이주</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/uuujini"><img src="https://github.com/team-ecolink/map2zero-backend/assets/101989268/bc2b5057-6f50-4696-b32e-0d2de4230124" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 성유진</b></sub></a><br /></td>
+  </tbody>
+</table>
 
 
 
