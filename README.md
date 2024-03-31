@@ -65,6 +65,8 @@
 <img width="197" alt="123" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/8908bef3-b387-457e-ae2a-1124965c8660">
 <img width="197" alt="131323" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/e36c751c-3184-4cc8-a659-25910f2f60d7">
 
+
+
 <!-- 담당: 최이주 -->
 
 ## 기술 스택
@@ -138,6 +140,12 @@
 <!-- 담당: 최이주 -->
 
 
+Feat: 새로운 기능 추가<br>
+Fix: 버그 수정<br>
+Refactor: 코드 리팩토링<br>
+Docs: 문서 수정<br>
+Style: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우<br>
+Chore: 빌드 업무 수정, 패키지 매니저 수정<br>
 
 
 <!-- 담당: 최이주 -->
