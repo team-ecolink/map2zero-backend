@@ -28,33 +28,42 @@
 
 <!-- 담당: 최이주 -->
 
+
+서울 내 다양한 지역에서 운영되고 있는
+**제로 웨이스트 샵들의 위치와 리뷰, 판매 제품 정보, 매장 이용 방법,
+다양한 이벤트를 한눈에 확인할 수 있는 플랫폼 서비스**<br><br>
+
+### 🌱 일반 사용자를 위한 기능
+#### 1. 내 위치 기준 가까운 매장 확인
+- 스마트 서울맵 API를 이용하여 가져온 제로웨이스트샵의 정보들을 네이버 지도 API를 통해 지도 기반으로 확인할 수 있다.<br><br>
+  <img width="197" alt="그림2" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/2b390c3d-015a-414f-a659-1a45c8b5b674">
+
+
+#### 2. 매장 상세 정보 제공 및 리뷰, 북마크 기능
+- 매장 위치, 운영 시간, 연락처, 리뷰, 판매 제품, 이벤트 정보와 같은 상세 정보를 확인할 수 있다.
+- 매장 북마크 기능과 리뷰 작성 기능을 제공한다.<br><br>
+  <img width="210" alt="12321" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/d05ecd96-1d9f-46a0-b673-5d2eae16e83e">
+  <img width="197" alt="12391" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/704e3351-576b-449e-8bc1-e3c381b4d844">
+
+
+#### 3. 매장 및 판매 제품 검색
+- 매장 이름으로 검색할 수 있으며 판매 제품 이름 기반으로 그 제품을 파는 매장을 검색할 수 있다.
+- 인기 검색어와 최근 검색어를 확인할 수 있다. <br><br>
+  <img width="197" alt="222" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/67106ee1-abe0-4f48-816f-0395229b5df0">
+
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+### 🌱 점주를 위한 기능
+매장 등록 신청 후 승인이 되면 매장 관리 가능
+#### 1. 매장 제품 등록 및 관리
+- 판매 중인 제품들을 등록할 수 있으며 재고 여부에 따라 판매중 여부를 설정할 수 있다.<br><br>
+<img width="197" alt="1441" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/2da4886a-6160-4bca-b296-c50a78b06fb6">
+<img width="197" alt="221" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/9a7cd6b3-3527-4f92-842f-985f2cbf31ae">
+
+#### 2. 매장 이벤트 등록 및 관리
+- 이벤트 정보를 등록할 수 있다. <br><br>
+<img width="197" alt="123" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/8908bef3-b387-457e-ae2a-1124965c8660">
+<img width="197" alt="131323" src="https://github.com/team-ecolink/map2zero-backend/assets/143402486/e36c751c-3184-4cc8-a659-25910f2f60d7">
 
 <!-- 담당: 최이주 -->
 
